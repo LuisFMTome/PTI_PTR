@@ -1,9 +1,9 @@
 <?php
-    $serverName = "your_server.database.windows.net"; // update me
+    $serverName = "tcp:sqldb05server1.database.windows.net"; // update me
     $connectionOptions = array(
-        "Database" => "your_database", // update me
-        "Uid" => "your_username", // update me
-        "PWD" => "your_password" // update me
+        "Database" => "sqldb1", // update me
+        "Uid" => "ptrptisqldb", // update me
+        "PWD" => "2SdULWb5ePk83jA" // update me
     );
     //Establishes the connection
     $conn = sqlsrv_connect($serverName, $connectionOptions);
