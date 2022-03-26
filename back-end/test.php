@@ -1,5 +1,5 @@
 <?php
-    $serverName = "tcp:sqldb05server1.database.windows.net"; // update me
+    $serverName = "sqldb05server1.database.windows.net"; // update me
     $connectionOptions = array(
         "Database" => "sqldb1", // update me
         "Uid" => "ptrptisqldb", // update me
