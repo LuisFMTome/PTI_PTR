@@ -20,5 +20,5 @@
     }
     sqlsrv_free_stmt($getResults);
 
-    echo ("test of string");
+    echo "test of string";
 ?>
