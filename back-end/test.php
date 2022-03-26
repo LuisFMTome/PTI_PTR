@@ -7,6 +7,9 @@
     );
     //Establishes the connection
     $conn = sqlsrv_connect($serverName, $connectionOptions);
+    if($conn === false) {
+        die(print_r(sqlsrv_errors(), true));
+    }
     $tsql= "SELECT TOP 20 pc.Name as CategoryName, p.name as ProductName
          FROM [SalesLT].[ProductCategory] pc
          JOIN [SalesLT].[Product] p
