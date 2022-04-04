@@ -4,14 +4,16 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Conta</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
     <link href="style.css" rel="stylesheet"/>
+    
 </head>
+
 <body>
     <nav class="navigation">
         <div class="top-nav-bar">
@@ -32,49 +34,36 @@
             </div>
         </div>
     </nav>
-    <div class="container">   
-        <div class="row">
+
+    <div class="account-page">
+        <div class="container">
             <div class="col-2">
-                <h1>Dê às suas compras <br> um novo impacto ambiental</h1>
-                <p>Todas as suas compras...</p>
-                <a href="produtos.html" class="btn">Compre agora<i class="fa fa-arrow-right"></i></a>
-            </div>
-            <div class="col-2">
-                <img src="img/product2.webp">
-            </div>
-        </div>
-        <div class="developers">
-            <div class="small-container">
-                <div class="row">
-                    <h2>Developers</h2>
-                    <div class="col-3">
-                        <img src="img/andre.jpg">
-                        <h3>André Santos</h3>
-                    </div>
-                    <div class="col-3">
-                        <img src="img/goncalo.jpg">
-                        <h3>Gonçalo Ferreira</h3>
-                    </div>
-                    <div class="col-3">
-                        <img src="img/joao.jpg">
-                        <h3>João Nunes</h3>
-                    </div>
-                    <div class="col-3">
-                        <img src="img/luis.jpg">
-                        <h3>Luís Tomé</h3>
-                    </div>
-                    <div class="col-3">
-                        <img src="img/manuel.jpg">
-                        <h3>Manuel Vicente</h3>
-                    </div>
-                    <div class="col-3">
-                        <img src="img/viana.jpg">
-                        <h3>João Viana</h3>
-                    </div>
+                <div class="form-container">
+                    <h2>Login</h2>
+                    <form id="LoginForm">
+                        <input type="text" placeholder="username">
+                        <input type="password" placeholder="password">
+                        <button type="submit" class="btn">Login</button>
+                        <a href="">Esqueci Password</a>
+                    </form>
                 </div>
             </div>
+            <div class="col-2">
+                <div class="form-container">
+                    <h2>Registar</h2>
+                    <form id="RegisterForm">
+                        <input type="text" placeholder="username">
+                        <input type="password" placeholder="password">
+                        <input type="email" placeholder="email">
+                        <button type="submit" class="btn">Registar</button>
+                    </form>
+                </div>
+            </div>
+
         </div>
-    </div> 
+    </div>
+
+    
 
     <section class="footer">
         <div class="container text-center">
@@ -99,7 +88,24 @@
                 </div>
             </div>
         </div>
-    
     </section>
+
+
+    <script>
+    var LoginForm = document.getElementById("LoginForm");
+    var RegisterForm = document.getElementById("RegisterForm");
+    var indicator = document.getElementById("indicator");
+
+        function register(){
+            RegisterForm.style.transform = "translateX (0px)";
+            LoginForm.style.transform = "translateX (0px)";
+        }
+
+        function login(){
+            RegisterForm.style.transform = "translateX (300px)";
+            LoginForm.style.transform = "translateX (300px)";
+        }
+    </script>
+
 </body>
 </html>
