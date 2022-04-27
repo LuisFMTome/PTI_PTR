@@ -228,15 +228,13 @@ th:last-child{
   text-align: right;
 }
 
-/*----- Página do Conta -----*/
+/*----- Página de Login / Registo -----*/
 
 .account-page{
   padding: 50px 0;
-  background: radial-gradient(#fff,green);
 }
 
 .account-page .container{
-  
   padding-left: 25px;
   padding-right: 25px;
 }
@@ -255,6 +253,7 @@ th:last-child{
   padding: 20px 0;
   margin: auto;
   box-shadow: 0 0 20px 0px rgba(0,0,0,0.1);
+  background: radial-gradient(#fff,green);
 }
 
 .form-container form{
@@ -370,6 +369,11 @@ form a{
   transform: scale(1.1);
 }
 
+.col-md-4 h3{
+  font-size: 20px;
+  font-weight: bold;
+}
+
 .title-box{
   background-color: green;
   color: #fff;
@@ -439,3 +443,52 @@ form a{
   width: 130px;
   margin-top: 35px;
 }
+
+/*----- Página das Contas -----*/
+
+.profile-button:focus {
+  background: green;
+  box-shadow: none
+}
+
+.profile-button:active {
+  background: green;
+  box-shadow: none
+}
+
+.back:hover {
+  color: green;
+  cursor: pointer
+}
+
+.row .col-md-6 .form-control{
+  margin-top: 9px;
+  margin-left: 30px;
+  border: 1px solid green !important;
+  border-top-left-radius: 20px !important;
+  border-bottom-left-radius: 20px !important;
+  border-top-right-radius: 20px !important;
+  border-bottom-right-radius: 20px !important;
+  box-shadow: none !important;
+}
+
+.row .col-md-12 .form-control{
+  margin-top: 9px;
+  margin-left: 30px;
+  margin-bottom: 9px;
+  border: 1px solid green !important;
+  border-top-left-radius: 20px !important;
+  border-bottom-left-radius: 20px !important;
+  border-top-right-radius: 20px !important;
+  border-bottom-right-radius: 20px !important;
+  box-shadow: none !important;
+}
+
+.row .mt-2 .labels{
+  margin-left: 32px;
+}
+
+.row .mt-3 .labels{
+  margin-left: 32px;
+}
+
