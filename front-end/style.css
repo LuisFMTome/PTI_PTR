@@ -492,3 +492,15 @@ form a{
   margin-left: 32px;
 }
 
+.title-box{
+  
+  margin-top: 9px;
+  margin-left: 30px;
+  border: 1px solid green !important;
+  border-top-left-radius: 20px !important;
+  border-bottom-left-radius: 20px !important;
+  border-top-right-radius: 20px !important;
+  border-bottom-right-radius: 20px !important;
+  box-shadow: none !important;
+
+}
