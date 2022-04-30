@@ -53,7 +53,7 @@
                     <h2>Registar</h2>
                     <form id="RegisterForm">
                         <label for="users">Escolha o tipo de utilizador:</label>
-                        <select id="choose" name="choose">
+                        <select id="choose" name="choose" onchange="getOption()">
                             <option value="comprador">Comprador</option>
                             <option value="transportadora">Transportadora</option>
                             <option value="fornecedor">Fornecedor</option>
@@ -61,6 +61,7 @@
                         <input type="text" placeholder="username">
                         <input type="password" placeholder="password">
                         <input type="email" placeholder="email">
+                        <div id="nif"></div>
                         <input type="submit" value="Registar" class="btnL">
                     </form>
                 </div>
@@ -112,6 +113,16 @@
             LoginForm.style.transform = "translateX (300px)";
         }
     </script>
+    <script type="text/javascript">
+        function getOption() {
+            if (document.getElementById("choose").value == 'transportadora'){
+                document.getElementById("nif").innerHTML = '<input type="nif" placeholder="nif" nome ="nif">';
+    }else if (document.getElementById("choose").value != 'transportadora'){
+                document.getElementById("nif").innerHTML = "";
+    }
+            
+        }
+        </script>
 
 </body>
 </html>
