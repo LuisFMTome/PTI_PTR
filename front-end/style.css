@@ -307,11 +307,13 @@ form input{
   border: 1px solid #ccc;
 }
 
-form .btn{
+form .btnL{
+  background: #ff523b;
+  color: #fff;
+  border-radius: 30px;
   width: 100%;
   border: none;
   cursor: pointer;
-  margin: 10px 0;
 }
 
 form .btn:focus{
