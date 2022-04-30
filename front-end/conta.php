@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conta</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
+    <link href="style.css" rel="stylesheet"/>
+    
+</head>
+
+<body>
+    <nav class="navigation">
+        <div class="top-nav-bar">
+            <div class="search-box">
+                <a href="index.html">
+                    <img src="img/logotipo.png" class="logo">
+                </a>
+                <input type="text" class="form-control">
+                <span class="input-group-text"><i class="fa fa-search"></i></span>
+            </div>
+            <div class="menu-bar">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="produtos.html">Mercado</a></li>
+                    <li><a href="conta.html"><i class="fa fa-user"></i></a></li>
+                    <li><a href="carinho.html"><i class="fa fa-shopping-basket"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="account-page">
+        <div class="container">
+            <div class="col-2">
+                <div class="form-container">
+                    <h2>Login</h2>
+                    <form id="LoginForm">
+                        <input type="text" placeholder="username">
+                        <input type="password" placeholder="password">
+                        <input type="submit" value="Login" class="btnL">
+                        <a href="">Esqueci Password</a>
+                    </form>
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="form-container">
+                    <h2>Registar</h2>
+                    <form id="RegisterForm" action="registar.php" method="post">
+                        <label for="users">Escolha o tipo de utilizador:</label>
+                        <select id="choose" name="tipoUtili">
+                            <option value="comprador">Consumidor</option>
+                            <option value="transportadora">Transportadora</option>
+                            <option value="fornecedor">Fornecedor</option>
+                        </select>
+                        <input type="text" placeholder="username" name="nome" required>
+                        <input type="password" placeholder="password" name="pass" required>
+                        <input type="email" placeholder="email" name="email" required>
+                        <input type="submit" value="Registar" name="registar" class="btnL">
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    
+
+    <section class="footer">
+        <div class="container text-center">
+            <div class="row">
+                <div class="col-md-3">
+                    <h1>Links Úteis</h1>
+                    <p>Política de Privacidade</p>
+                    <p>Termos de Uso</p>
+                    <p>Política de Returno</p>
+                    <p>Cupões de Desconto</p>
+                </div>
+                <div class="col-md-3">
+                    <h1>Grupo 10</h1>
+                    <p>Sobre Nós</p>
+                    <p>Contacta-nos</p>
+                    <p>Faculdade de Ciências</p>
+                    <p>Cupões de Desconto</p>
+                </div>
+                <div class="col-md-3 footer-image">
+                    <img src="img/logofcul.jpg">
+                    <p>Faculdade de Ciências da Universidade de Lisboa</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <script>
+    var LoginForm = document.getElementById("LoginForm");
+    var RegisterForm = document.getElementById("RegisterForm");
+    var indicator = document.getElementById("indicator");
+
+        function register(){
+            RegisterForm.style.transform = "translateX (0px)";
+            LoginForm.style.transform = "translateX (0px)";
+        }
+
+        function login(){
+            RegisterForm.style.transform = "translateX (300px)";
+            LoginForm.style.transform = "translateX (300px)";
+        }
+    </script>
+
+</body>
+</html>
