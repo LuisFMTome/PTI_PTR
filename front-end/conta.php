@@ -1,3 +1,8 @@
+<?php
+session_start(); 
+include("registar.php");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,6 +16,7 @@
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
     <link href="style.css" rel="stylesheet"/>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     
 </head>
 
@@ -53,7 +59,7 @@
                     <h2>Registar</h2>
                     <form id="RegisterForm" action="registar.php" method="post">
                         <label for="users">Escolha o tipo de utilizador:</label>
-                        <select id="choose" name="tipoUtili">
+                        <select id="choose" name="tipoUtili" onchange="getOption()">
                             <option value="comprador">Consumidor</option>
                             <option value="transportadora">Transportadora</option>
                             <option value="fornecedor">Fornecedor</option>
@@ -61,6 +67,7 @@
                         <input type="text" placeholder="username" name="nome" required>
                         <input type="password" placeholder="password" name="pass" required>
                         <input type="email" placeholder="email" name="email" required>
+                        <div id="nif"></div>
                         <input type="submit" value="Registar" name="registar" class="btnL">
                     </form>
                 </div>
@@ -112,6 +119,30 @@
             LoginForm.style.transform = "translateX (300px)";
         }
     </script>
+
+    <script type="text/javascript">
+        function getOption() {
+            if (document.getElementById("choose").value == 'transportadora'){
+                document.getElementById("nif").innerHTML = '<input type="nif" placeholder="nif" name="nif">';
+    }else if (document.getElementById("choose").value != 'transportadora'){
+                document.getElementById("nif").innerHTML = "";
+    }
+            
+        }
+    </script>
+
+    <?php
+        if(isset($_SESSION['existeMail'])){
+            ?>
+            
+            alert("Hello! I am an alert box!!");
+            
+            <?php
+            unset($_SESSION['sem_registo']);
+            
+        } 
+    
+    ?>
 
 </body>
 </html>
