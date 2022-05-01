@@ -1,6 +1,6 @@
 <?php
 session_start(); 
-include("registar.php");
+//include("registar.php");
 ?>
 
 <!DOCTYPE html>
