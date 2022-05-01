@@ -17,6 +17,7 @@ include("registar.php");
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
     <link href="style.css" rel="stylesheet"/>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="sweetalert2.all.min.js"></script>
     
 </head>
 
@@ -132,16 +133,22 @@ include("registar.php");
     </script>
 
     <?php
-        if(isset($_SESSION['existeMail'])){
+
+        echo "<p>teste</p>";
+        if(isset($_SESSION['status']) != ""){
+
+            echo "<p>teste2</p>";
             ?>
             
-            alert("Hello! I am an alert box!!");
+            <script>
+                alert('<?php echo $_SESSION['status']; ?>');
+            
+            </script>
             
             <?php
-            unset($_SESSION['sem_registo']);
-            
+            unset($_SESSION['status']); 
         } 
-    
+
     ?>
 
 </body>

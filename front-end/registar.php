@@ -1,5 +1,5 @@
 <?php
-    
+    session_start(); 
     $serverName = "sqldb05server1.database.windows.net"; // update me
     $connectionOptions = array(
         "Database" => "sqldb1", // update me
@@ -54,14 +54,17 @@ if(isset($_POST["registar"])){
                 if( $var === false ) {
                     die( print_r( sqlsrv_errors(), true));
             }
-            $_SESSION['existeMail'] = false;
+            $_SESSION['status'] = "Conta criada com sucesso";
+            $_SESSION['statusCode'] = "success";
             header('location: conta.php');
+
             
             
         }else{
 
             //print("email ja existe");
-            $_SESSION['existeMail'] = true;
+            $_SESSION['status'] = "Email ja existente";
+            $_SESSION['statusCode'] = "error";
             header('location: conta.php');
             
 
@@ -96,12 +99,14 @@ if(isset($_POST["registar"])){
                     die( print_r( sqlsrv_errors(), true));
             }
 
-            $_SESSION['existeMail'] = false;
+            $_SESSION['status'] = "Conta criada com sucesso";
+            $_SESSION['statusCode'] = "success";
             header('location: conta.php');
             
         }else{
 
-            $_SESSION['existeMail'] = true;
+            $_SESSION['status'] = "Email ja existente";
+            $_SESSION['statusCode'] = "error";
             header('location: conta.php');
             
 
@@ -135,15 +140,17 @@ if(isset($_POST["registar"])){
                 if( $var === false ) {
                     die( print_r( sqlsrv_errors(), true));
             }
-            $_SESSION['existeMail'] = false;
+            $_SESSION['status'] = "Conta criada com sucesso";
+            $_SESSION['statusCode'] = "success";
             header('location: conta.php');
             
         }else{
 
             //print("email ja existe");
-            $_SESSION['existeMail'] = true;
+            $_SESSION['status'] = "Email ja existente";
+            $_SESSION['statusCode'] = "error";
             header('location: conta.php');
-            echo "<script>alert('mail ja utilizado');</script>";
+            
 
         }
 
