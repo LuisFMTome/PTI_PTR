@@ -172,6 +172,7 @@
                 return actions.order.create({
                     purchase_units : [{
                         amount: {
+                            currency_code: EUR,
                             value: parseInt(price.innerText)
                         }
                     }]
