@@ -180,11 +180,10 @@
             onApprove: function (data, actions) {
                 return actions.order.capture().then(function (details) {
                     console.log(details)
-                    window.location.replace("success.php")
                 })
             },
             onCancel: function (data) {
-                window.location.replace("Oncancel.php")
+                window.location.replace("index.html")
             }
         }).render('#paypal-button-container');
     </script>
