@@ -1,5 +1,5 @@
 <?php
-    
+    session_start(); 
     $serverName = "sqldb05server1.database.windows.net"; // update me
     $connectionOptions = array(
         "Database" => "sqldb1", // update me
@@ -54,27 +54,32 @@ if(isset($_POST["registar"])){
                 if( $var === false ) {
                     die( print_r( sqlsrv_errors(), true));
             }
+            $_SESSION['status'] = "Conta criada com sucesso";
+            $_SESSION['statusCode'] = "success";
+            header('location: conta.php');
 
-        //header('location: conta.php');
+            
             
         }else{
 
             //print("email ja existe");
-            //header('location: conta.php');
-            echo "<script>alert('mail ja utilizado');</script>";
+            $_SESSION['status'] = "Email ja existente";
+            $_SESSION['statusCode'] = "error";
+            header('location: conta.php');
+            
 
         }
 
         
     } elseif ($tipo == 'transportadora'){
 
-
+        $nif = $_POST["nif"];
         $pass = md5($pass);
         //echo "<p>$nome</p>";
         //echo "<p>$mail</p>";
         //echo "<p>$pass</p>";
 
-        $user_check_query = "SELECT * FROM [dbo].[Transportadora] WHERE email='$mail'";
+        $user_check_query = "SELECT * FROM [dbo].[Transportadora] WHERE email='$mail' or nif='$nif'";
         //$stmt = sqlsrv_query( $conn, $user_check_query );
 
         $query = sqlsrv_query($conn, $user_check_query, array(), array( "Scrollable" => 'static' ));
@@ -83,9 +88,9 @@ if(isset($_POST["registar"])){
 
         if ($row_count === 0) {
 
-            $id = random_int(0, 9000);
+            //$id = random_int(0, 9000);
             
-            $to_insert = "INSERT INTO [dbo].[Transportadora] ([nome], [email], [pwd], [nif]) VALUES ('$nome', '$mail', '$pass', '$id')"; 
+            $to_insert = "INSERT INTO [dbo].[Transportadora] ([nome], [email], [pwd], [nif]) VALUES ('$nome', '$mail', '$pass', '$nif')"; 
 
             $params = array(1, "some data");
             $var = sqlsrv_query( $conn, $to_insert, $params);
@@ -94,13 +99,16 @@ if(isset($_POST["registar"])){
                     die( print_r( sqlsrv_errors(), true));
             }
 
-        //header('location: conta.php');
+            $_SESSION['status'] = "Conta criada com sucesso";
+            $_SESSION['statusCode'] = "success";
+            header('location: conta.php');
             
         }else{
 
-            //print("email ja existe");
-            //header('location: conta.php');
-            echo "<script>alert('mail ja utilizado');</script>";
+            $_SESSION['status'] = "Email ja existente";
+            $_SESSION['statusCode'] = "error";
+            header('location: conta.php');
+            
 
         }
 
@@ -132,14 +140,17 @@ if(isset($_POST["registar"])){
                 if( $var === false ) {
                     die( print_r( sqlsrv_errors(), true));
             }
-
-        //header('location: conta.php');
+            $_SESSION['status'] = "Conta criada com sucesso";
+            $_SESSION['statusCode'] = "success";
+            header('location: conta.php');
             
         }else{
 
             //print("email ja existe");
-            //header('location: conta.php');
-            echo "<script>alert('mail ja utilizado');</script>";
+            $_SESSION['status'] = "Email ja existente";
+            $_SESSION['statusCode'] = "error";
+            header('location: conta.php');
+            
 
         }
 
