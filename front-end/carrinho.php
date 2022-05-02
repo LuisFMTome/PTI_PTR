@@ -160,7 +160,7 @@
             </div>
         </section>
     </main>
-<script src="https://www.paypal.com/sdk/js?client-id=ATCfWOTCqypa0ftAUTCfSLiwM8UaQ0zUkWaDSzUIbFdQoo_bcR4mF_SDi7l-KJ5UXtZ3LcORC6FIhZ50&disable-funding=credit,card"></script>    <script>
+<script src="https://www.paypal.com/sdk/js?client-id=ATCfWOTCqypa0ftAUTCfSLiwM8UaQ0zUkWaDSzUIbFdQoo_bcR4mF_SDi7l-KJ5UXtZ3LcORC6FIhZ50&disable-funding=credit,card&currency=EUR"></script>    <script>
         var price = document.getElementById("total");
         console.log(price.innerText);
         paypal.Buttons({
@@ -172,7 +172,6 @@
                 return actions.order.create({
                     purchase_units : [{
                         amount: {
-                            currency_code: EUR,
                             value: parseInt(price.innerText)
                         }
                     }]
