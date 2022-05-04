@@ -191,10 +191,6 @@
                           </tr>
                         }
 
-                      <tr>
-                        <td>Tiger Nixon</td>
-                        <td>System Architect</td>
-                      </tr>
                     </tbody>
                     <tfoot>
                       <tr>

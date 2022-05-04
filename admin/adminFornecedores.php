@@ -1,3 +1,22 @@
+<?php
+    session_start(); 
+    $serverName = "sqldb05server1.database.windows.net"; // update me
+    $connectionOptions = array(
+        "Database" => "sqldb1", // update me
+        "Uid" => "ptrptisqldb", // update me
+        "PWD" => "2SdULWb5ePk83jA" // update me
+    );
+    //Establishes the connection
+    $conn = sqlsrv_connect($serverName, $connectionOptions);
+    if($conn === false) {
+        die(print_r(sqlsrv_errors(), true));
+    }
+    $fornecedores = "SELECT * FROM [dbo].[Fornecedor]";
+    $query = sqlsrv_query($conn, $fornecedores, array(), array( "Scrollable" => 'static' ));
+    
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -155,17 +174,20 @@
                         <th>Nome</th>
                         <th>Morada</th>
                         <th>Código-Postal</th>
-                        <th>Nº de Produtos Registados</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>Tiger Nixon</td>
-                        <td>System Architect</td>
-                        <td>Edinburgh</td>
-                        <td>61</td>
-                        <td>2011/04/25</td>
-                      </tr>
+                    <?php
+                        while($row = sqlsrv_fetch_array( $query, SQLSRV_FETCH_ASSOC)){
+                          ?>
+                          <tr>
+                              <td><?php echo $row['fid'] ?></td>
+                              <td><?php echo $row['nome'] ?></td>
+                              <td><?php echo $row['email'] ?></td>
+                              <td><?php echo $row['morada'] ?></td>
+                              <td><?php echo $row['codigoPostal'] ?></td>
+                          </tr>
+                        }
                     </tbody>
                     <tfoot>
                       <tr>
