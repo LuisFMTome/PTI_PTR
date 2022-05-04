@@ -187,7 +187,7 @@
                               <td><?php echo $row['morada'] ?></td>
                               <td><?php echo $row['codigoPostal'] ?></td>
                           </tr>
-                        }
+                        <?php } ?>
                     </tbody>
                     <tfoot>
                       <tr>
