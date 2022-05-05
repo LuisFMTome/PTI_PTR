@@ -160,7 +160,7 @@
             </div>
         </section>
     </main>
-<script src="https://www.paypal.com/sdk/js?client-id=ATCfWOTCqypa0ftAUTCfSLiwM8UaQ0zUkWaDSzUIbFdQoo_bcR4mF_SDi7l-KJ5UXtZ3LcORC6FIhZ50&disable-funding=credit,card"></script>    <script>
+<script src="https://www.paypal.com/sdk/js?client-id=ATCfWOTCqypa0ftAUTCfSLiwM8UaQ0zUkWaDSzUIbFdQoo_bcR4mF_SDi7l-KJ5UXtZ3LcORC6FIhZ50&disable-funding=credit,card&currency=EUR"></script>    <script>
         var price = document.getElementById("total");
         console.log(price.innerText);
         paypal.Buttons({
@@ -180,11 +180,10 @@
             onApprove: function (data, actions) {
                 return actions.order.capture().then(function (details) {
                     console.log(details)
-                    window.location.replace("success.php")
                 })
             },
             onCancel: function (data) {
-                window.location.replace("Oncancel.php")
+                window.location.replace("index.html")
             }
         }).render('#paypal-button-container');
     </script>
