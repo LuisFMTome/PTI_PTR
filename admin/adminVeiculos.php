@@ -1,3 +1,18 @@
+<?php
+    session_start(); 
+    $serverName = "sqldb05server1.database.windows.net"; // update me
+    $connectionOptions = array(
+        "Database" => "sqldb1", // update me
+        "Uid" => "ptrptisqldb", // update me
+        "PWD" => "2SdULWb5ePk83jA" // update me
+    );
+    //Establishes the connection
+    $conn = sqlsrv_connect($serverName, $connectionOptions);
+    if($conn === false) {
+        die(print_r(sqlsrv_errors(), true));
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -79,9 +94,10 @@
               </div>
             </li>
             <li>
-              <a href="adminTransportadoras.html"
+              <a href = "adminTransportadoras.html"
                 class="nav-link px-3 sidebar-link"
-                
+                data-bs-toggle="collapse"
+                href="#layouts"
               >
                 <span class="me-2"><i class="bi bi-book-fill"></i></span>
                 <span>Transportadoras</span>
@@ -90,7 +106,7 @@
               </a>
             </li>
             <li>
-              <a href="adminFornecedores.html" class="nav-link px-3">
+              <a href="AdminFornecedores.html" class="nav-link px-3">
                 <span class="me-2"><i class="bi bi-book-fill"></i></span>
                 <span>Fornecedores</span>
               </a>
@@ -109,38 +125,25 @@
     <main class="mt-5 pt-3">
       <div class="container-fluid mt-lg-1">
         <div class="row">
-          <div class="col-md-3 mb-3">
-            <div class="card bg-success text-white h-100">
-              <div class="card-body py-5">Número Consumidores</div>
-            
-            </div>
-          </div>
-          <div class="col-md-3 mb-3">
-            <div class="card bg-success text-white h-100">
-              <div class="card-body py-5">Número de Fornecedores</div>
-      
-            </div>
-          </div>
-          <div class="col-md-3 mb-3">
-            <div class="card bg-success text-white h-100">
-              <div class="card-body py-5">Número de Transportes</div>
-          
-              </div>
-            </div>
-            <div class="col-md-3 mb-3">
-              <div class="card bg-success text-white h-100">
-                <div class="card-body py-5">Número de Produtos</div>
-              
-              </div>
-            </div>
-          </div>
+        <div class="mb-4">
+            <select class="form-select" aria-label="Default select example" name="transportadoras">
+            <option selected>Selecionar a Transportadora:</option>
+            <?php
+                $counter = 0;
+                $transportadoras = "SELECT * FROM [dbo].[Transportadora]";
+                $queryTransportadoras = sqlsrv_query($conn, $transportadoras, array(), array( "Scrollable" => 'static' ));
+               
+                while($row = sqlsrv_fetch_array( $queryTransportadoras, SQLSRV_FETCH_ASSOC)){
+                        ?>
+                    
+                    <option value="<?php ++$counter; echo $counter;?>"><?php echo $row['nif']; ?></option>
+                    <?php } ?>
+            </select>
         </div>
-        
-        <div class="row">
           <div class="col-md-12 mb-3">
             <div class="card">
               <div class="card-header">
-                <span><i class="bi bi-table me-2"></i></span> Tabela de Consumidores
+                <span><i class="bi bi-table me-2"></i></span> Tabela de Transportadoras
               </div>
               <div class="card-body">
                 <div class="table-responsive">
@@ -151,26 +154,42 @@
                   >
                     <thead>
                       <tr>
-                        <th>Cid</th>
-                        <th>Nome</th>
+                        <th>Nif</th>
+                        <th>Nome Transportadora</th>
+                        <th>Email</th>
                         <th>Morada</th>
-                        <th>Código-Postal</th>
+                        <th>Código Postal</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>Tiger Nixon</td>
-                        <td>System Architect</td>
-                        <td>Edinburgh</td>
-                        <td>61</td>
-                      </tr>
+                      <?php
+                        if(!empty($_POST['transportadoras'])) {
+                            $selected = $_POST['transportadoras'];
+                            
+                        }else{
+                            $selected = "";
+                        }
+                        $veiculos = "SELECT matricula, categoria, produto FROM [dbo].[Veiculo] WHERE transportadora = '$selected'";
+                        $queryVeiculos = sqlsrv_query($conn, $veiculos, array(), array( "Scrollable" => 'static' ));
+                        while($row = sqlsrv_fetch_array( $queryVeiculos, SQLSRV_FETCH_ASSOC)){
+                          ?>
+                          <tr>
+                              <td><?php echo $row['nif']; ?></td>
+                              <td><?php echo $row['nome']; ?></td>
+                              <td><?php echo $row['email']; ?></td>
+                              <td><?php echo $row['morada']; ?></td>
+                              <td><?php echo $row['codigoPostal']; ?></td>
+                          </tr>
+                          <?php } ?>
+
                     </tbody>
                     <tfoot>
                       <tr>
-                        <th>Cid</th>
-                        <th>Nome</th>
+                        <th>Nif</th>
+                        <th>Nome Transportadora</th>
+                        <th>Email</th>
                         <th>Morada</th>
-                        <th>Código-Postal</th>>
+                        <th>Código Postal</th>
                       </tr>
                     </tfoot>
                   </table>
