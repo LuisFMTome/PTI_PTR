@@ -194,8 +194,11 @@
                     </tbody>
                     <tfoot>
                       <tr>
+                        <th>Nif</th>
                         <th>Nome Transportadora</th>
-                        <th>Número de Veículos</th>
+                        <th>Email</th>
+                        <th>Morada</th>
+                        <th>Código Postal</th>
                       </tr>
                     </tfoot>
                   </table>

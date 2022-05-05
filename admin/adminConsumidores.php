@@ -172,6 +172,7 @@
                       <tr>
                         <th>Cid</th>
                         <th>Nome</th>
+                        <th>Email</th>
                         <th>Morada</th>
                         <th>Código-Postal</th>
                       </tr>
