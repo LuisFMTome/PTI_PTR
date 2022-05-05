@@ -66,7 +66,7 @@
                         </div>
                     </div>
                     <div class="mt-5 text-center">
-                        <button class="btn btn-success" type="button"><input type="submit" value="registar Veiculos" name="register_Transp"></button>
+                        <button class="btn btn-success" type="button"><input type="submit" value="registar Veiculos" name="addTransporte"></button>
                     </div>
                 </form>
                 </div>
@@ -97,15 +97,20 @@
                     $query = "SELECT * FROM [dbo].[Veiculo]";
                     $results = mysqli_query($conn, $query);
                     $row = 0;
-                    while($row = mysqli_fetch_array($results)) {
-                        echo"<tr>";
-                        echo "<th scope="row"class="text-center">1</th>";
-                        echo"<td class="text-center">"$row['categoria']"</td>";
-                        echo"<td class="text-center">"$row['matricula']"</td>";
-                        echo"<td class="text-center">"$row['transportadora']"</td>";
-                        echo"<td class="text-center">"$row['categoria']"</td>";
-                        echo"<td class="text-center">"$row['produto']"</td>";
-                        echo"<tr>"
+                    if (sqlsrv_has_rows($results) != -1) {
+                        echo ("nao há veiculos");
+                    } else {
+                        while($row = mysqli_fetch_array($results)) {
+                            echo"<tr>";
+                            echo "<th scope="row"class="text-center">1</th>";
+                            echo"<td class="text-center">"$row['categoria']"</td>";
+                            echo"<td class="text-center">"$row['matricula']"</td>";
+                            echo"<td class="text-center">"$row['transportadora']"</td>";
+                            echo"<td class="text-center">"$row['categoria']"</td>";
+                            echo"<td class="text-center">"$row['produto']"</td>";
+                            echo"<tr>"
+                        }
+                    }
                     ?>
                     </tbody>
                   </table>
