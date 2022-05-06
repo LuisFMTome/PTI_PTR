@@ -39,13 +39,13 @@ if (isset($_POST["login"])) {
                 echo ("Email/password not found");
                 $_SESSION["status"] = "Conta com o email inserido não existe";
                 $_SESSION["statusCode"] = "error";
-                header("location: index.html");
+                header("location: conta.php");
             } else {
                 echo ("Login feito");
                 $_SESSION["email"] = $row["email"];
                 $_SESSION["nome"] = $row["nome"];
                 $_SESSION["tipo"] = "Consumidor";
-                header("Location: index.html");
+                header("Location: index.php");
             }
         }
     } elseif ($tipo == 'transportadora') {
@@ -64,13 +64,13 @@ if (isset($_POST["login"])) {
                 echo ("Email/password not found");
                 $_SESSION["status"] = "Conta com o email inserido não existe";
                 $_SESSION["statusCode"] = "error";
-                header("location: index.html");
+                header("location: conta.php");
             } else {
                 echo ("Login feito");
                 $_SESSION["email"] = $row["email"];
                 $_SESSION["nome"] = $row["nome"];
                 $_SESSION["tipo"] = "Transportadora";
-                header("Location: index.html");
+                header("Location: index.php");
             }
         }
     } elseif ($tipo == 'fornecedor') {
@@ -89,13 +89,13 @@ if (isset($_POST["login"])) {
                 echo ("Email/password not found");
                 $_SESSION["status"] = "Conta com o email inserido não existe";
                 $_SESSION["statusCode"] = "error";
-                header("location: index.html");
+                header("location: conta.php");
             } else {
                 echo ("Login feito");
                 $_SESSION["email"] = $row["email"];
                 $_SESSION["nome"] = $row["nome"];
                 $_SESSION["tipo"] = "Fornecedor";
-                header("Location: index.html");
+                header("Location: index.php");
             }
         }
     }

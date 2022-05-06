@@ -141,10 +141,10 @@ session_start();
 
     <?php
 
-    echo "<p>teste</p>";
+    //echo "<p>teste</p>";
     if (isset($_SESSION['status']) != "") {
 
-        echo "<p>teste2</p>";
+        //echo "<p>teste2</p>";
     ?>
 
         <script>
