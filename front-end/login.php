@@ -42,7 +42,7 @@ if (isset($_POST["login"])) {
                 header("location: conta.php");
             } else {
                 echo ("Login feito");
-                $_SESSION["email"] = $row["email"];
+                $_SESSION["email"] = $mail;
                 $_SESSION["nome"] = $row["nome"];
                 $_SESSION["tipo"] = "Consumidor";
                 header("Location: index.php");
@@ -67,7 +67,7 @@ if (isset($_POST["login"])) {
                 header("location: conta.php");
             } else {
                 echo ("Login feito");
-                $_SESSION["email"] = $row["email"];
+                $_SESSION["email"] = $mail;
                 $_SESSION["nome"] = $row["nome"];
                 $_SESSION["tipo"] = "Transportadora";
                 header("Location: index.php");
@@ -92,7 +92,7 @@ if (isset($_POST["login"])) {
                 header("location: conta.php");
             } else {
                 echo ("Login feito");
-                $_SESSION["email"] = $row["email"];
+                $_SESSION["email"] = $mail;
                 $_SESSION["nome"] = $row["nome"];
                 $_SESSION["tipo"] = "Fornecedor";
                 header("Location: index.php");

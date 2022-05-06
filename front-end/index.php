@@ -1,6 +1,6 @@
 <?php
 session_start();
-//$mailTeste = $_SESSION['tipo'];
+//$mailTeste = $_SESSION['email'];
 //echo "$mailTeste";
 ?>
 
@@ -33,12 +33,13 @@ session_start();
 
 
                     <?php 
-                    if (isset($_SESSION['tipo']) != "") {
+                    if (isset($_SESSION['email']) != "") {
 
                         if(isset($_SESSION["tipo"]) == "Consumidor"){
 
                     ?>
                         <li><a href="perfilUtilizador.html">Perfil</a></li>
+
                     <?php 
                         }elseif(isset($_SESSION["tipo"]) == "Fornecedor"){
 
@@ -57,9 +58,28 @@ session_start();
                         }
 
                     }?>
-                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.php">Home</a></li>
                     <li><a href="produtos.html">Mercado</a></li>
-                    <li><a href="conta.html"><i class="fa fa-user"></i></a></li>
+
+                    <?php 
+                    if (isset($_SESSION['email']) != "") {
+
+                    ?>
+                    
+                    <li><a href="logout.php">logout</a></li>
+
+                    <?php    
+                    }else{
+
+                    ?>
+                    
+                    <li><a href="conta.php"><i class="fa fa-user"></i></a></li>
+                    
+                    <?php
+
+                    }
+                    ?>
+
                     <li><a href="carinho.html"><i class="fa fa-shopping-basket"></i></a></li>
                 </ul>
             </div>

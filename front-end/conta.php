@@ -34,9 +34,9 @@ session_start();
             </div>
             <div class="menu-bar">
                 <ul>
-                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.php">Home</a></li>
                     <li><a href="produtos.html">Mercado</a></li>
-                    <li><a href="conta.html"><i class="fa fa-user"></i></a></li>
+                    <li><a href="conta.php"><i class="fa fa-user"></i></a></li>
                     <li><a href="carinho.html"><i class="fa fa-shopping-basket"></i></a></li>
                 </ul>
             </div>
