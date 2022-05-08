@@ -1,6 +1,8 @@
 <?php
 session_start();
 //$mailTeste = $_SESSION['email'];
+//$ola = isset($_SESSION["tipo"]);
+//echo "$ola";
 //echo "$mailTeste";
 ?>
 
@@ -35,20 +37,20 @@ session_start();
                     <?php 
                     if (isset($_SESSION['email']) != "") {
 
-                        if(isset($_SESSION["tipo"]) == "Consumidor"){
+                        if($_SESSION["tipo"] == "Consumidor"){
 
                     ?>
                         <li><a href="perfilUtilizador.html">Perfil</a></li>
 
                     <?php 
-                        }elseif(isset($_SESSION["tipo"]) == "Fornecedor"){
+                        }elseif($_SESSION["tipo"] == "Fornecedor"){
 
                             ?>
                             
                             <li><a href="perfilFornecedor.html">Perfil</a></li>
 
                             <?php
-                        }elseif(isset($_SESSION["tipo"]) == "Transportadora"){
+                        }elseif($_SESSION["tipo"] == "Transportadora"){
 
                             ?>
                             
