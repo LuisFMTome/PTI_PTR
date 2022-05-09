@@ -1,7 +1,5 @@
 <?php 
 session_start();
-//include('login.php');
-//include('registar.php');
 ?>
 
 <!DOCTYPE html>
@@ -10,7 +8,7 @@ session_start();
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registo Armazém</title>
+    <title>Registo Produto</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -52,20 +50,19 @@ session_start();
     <div class="container rounded bg-white mt-5 mb-5">
         <div class="row">
             <div class="col-md-5">
-
-                <form id="RegisterArm" action="registarArm.php" method="post">
-                    <div class="p-2 py-5">
+                <div class="p-2 py-5">
+                    <form action="registarPro.php" method="post">
                         <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h4 class="text-right">Registo de Armazém</h4>
+                            <h4 class="text-right">Registo de Produto</h4>
                         </div>
                         <div class="row mt-3">
                             <div class="col-md-12">
-                                <label class="labels">Nome do Armazém</label>
-                                <input type="text" class="form-control" placeholder="Nome do Armazém" name="nome" value="">
+                                <label class="labels">Nome do Produto</label>
+                                <input type="text" class="form-control" placeholder="Nome do Produto" name="nome" value="">
                             </div>
                             <div class="col-md-12">
                                 <label class="labels">Morada</label>
-                                <input type="text" class="form-control" placeholder="Morada" name='morada' value="">
+                                <input type="text" class="form-control" placeholder="Morada" name="morada" value="">
                             </div>
                             <div class="col-md-12">
                                 <label class="labels">Código Postal</label>
@@ -78,25 +75,25 @@ session_start();
                     
                         </div>
                         <div class="mt-5 text-center">
-                            <button class="btn btn-success" name="addArm" type="submit">Registar Armazém</button>
+                            <button class="btn btn-success" name="addPro" type="submit">Registar Produto</button>
                         </div>
-                    </div>
-                </form>
-
+                    </form>
+                </div>
             </div>
             <div class="col-md-6">
             
-                <h4 class="text-right p-4">Armazéns Registados</h1>
+                <h4 class="text-right p-4">Produtos Registados</h1>
                 <div style="overflow-x:auto;">
                 <table class="table table-bordered table-lg table-light align-top">
                     <thead>
                       <tr>
                         <th scope="col" class="text-center">#</th>
-                        <th scope="col" class="text-center">Nome</th>
+                        <th scope="col" class="text-center">Nome do Produto</th>
                         <th scope="col" class="text-center">Morada</th>
                         <th scope="col" class="text-center">Código Postal</th>
                         <th scope="col" class="text-center">Tipo</th>
                         <th scope="col" class="text-center">Ação</th>
+                        
                       </tr>
                     </thead>
                     <tbody>
@@ -107,8 +104,7 @@ session_start();
                         <td class="text-center">@mdo</td>
                         <td class="text-center">@mdo</td>
                         <td class="text-center"><a href="Delete">Delete</a></td>
-                      </tr>
-        
+                     
                     </tbody>
                   </table>
                 </div>
@@ -140,4 +136,22 @@ session_start();
             </div>
         </div>
     </section>
+
+    <?php
+
+        //echo "<p>teste</p>";
+        if (isset($_SESSION['msg']) != "") {
+
+            //echo "<p>teste2</p>";
+        ?>
+
+            <script>
+                alert('<?php echo $_SESSION['msg']; ?>');
+            </script>
+
+        <?php
+            unset($_SESSION['msg']);
+        }
+
+        ?>
     </body>

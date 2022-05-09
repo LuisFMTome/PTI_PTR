@@ -26,7 +26,7 @@ session_start();
     <nav class="navigation">
         <div class="top-nav-bar">
             <div class="search-box">
-                <a href="index.html">
+                <a href="index.php">
                     <img src="img/logotipo.png" class="logo">
                 </a>
                 <input type="text" class="form-control">

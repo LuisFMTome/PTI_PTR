@@ -22,11 +22,11 @@
         $idArm = random_int(0, 9000);
         $mailForn = $_SESSION['email'];
 
-        echo "<p>$nome</p>";
-        echo "<p>$morada</p>";
-        echo "<p>$cPostal</p>";
-        echo "<p>$tipo</p>";
-        echo "<p>$mailForn</p>";
+        //echo "<p>$nome</p>";
+        //echo "<p>$morada</p>";
+        //echo "<p>$cPostal</p>";
+        //echo "<p>$tipo</p>";
+        //echo "<p>$mailForn</p>";
 
 
         $user_check_query = "SELECT * FROM [dbo].[Fornecedor] WHERE email='{$mailForn}'"; //Nome da coluna password provavelmente errados
