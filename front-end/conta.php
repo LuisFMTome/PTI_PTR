@@ -26,7 +26,7 @@ session_start();
     <nav class="navigation">
         <div class="top-nav-bar">
             <div class="search-box">
-                <a href="index.html">
+                <a href="index.php">
                     <img src="img/logotipo.png" class="logo">
                 </a>
                 <input type="text" class="form-control">
@@ -34,9 +34,9 @@ session_start();
             </div>
             <div class="menu-bar">
                 <ul>
-                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.php">Home</a></li>
                     <li><a href="produtos.html">Mercado</a></li>
-                    <li><a href="conta.html"><i class="fa fa-user"></i></a></li>
+                    <li><a href="conta.php"><i class="fa fa-user"></i></a></li>
                     <li><a href="carinho.html"><i class="fa fa-shopping-basket"></i></a></li>
                 </ul>
             </div>
@@ -141,10 +141,10 @@ session_start();
 
     <?php
 
-    echo "<p>teste</p>";
+    //echo "<p>teste</p>";
     if (isset($_SESSION['status']) != "") {
 
-        echo "<p>teste2</p>";
+        //echo "<p>teste2</p>";
     ?>
 
         <script>
