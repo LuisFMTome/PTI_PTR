@@ -16,8 +16,6 @@ session_start();
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
     <link href="style.css" rel="stylesheet"/>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script src="sweetalert2.all.min.js"></script>
     
 </head>
 
