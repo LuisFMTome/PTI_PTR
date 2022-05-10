@@ -68,7 +68,7 @@ session_start();
                     <h2>Registar</h2>
                     <form id="RegisterForm" action="registar.php" method="post">
                         <label for="users">Escolha o tipo de utilizador:</label>
-                        <select id="choose" name="tipoUtili">
+                        <select id="choose" name="tipoUtili" onchange= "getOption()">
                             <option value="comprador">Consumidor</option>
                             <option value="transportadora">Transportadora</option>
                             <option value="fornecedor">Fornecedor</option>
@@ -76,7 +76,7 @@ session_start();
                         <input type="text" placeholder="username" name="nome" required>
                         <input type="password" placeholder="password" name="pass" required>
                         <input type="email" placeholder="email" name="email" required>
-                        <div id="nif"></div>
+                        <?php echo "<div id='nif'></div>";?>
                         <input type="submit" value="Registar" name="registar" class="btnL">
                     </form>
                 </div>
