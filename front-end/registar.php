@@ -79,7 +79,7 @@ if(isset($_POST["registar"])){
         //echo "<p>$mail</p>";
         //echo "<p>$pass</p>";
 
-        $user_check_query = "SELECT * FROM [dbo].[Transportadora] WHERE email='$mail' or nif='$nif'";
+        $user_check_query = "SELECT * FROM [dbo].[Transportadora] WHERE email='$mail' OR nif='$nif'";
         //$stmt = sqlsrv_query( $conn, $user_check_query );
 
         $query = sqlsrv_query($conn, $user_check_query, array(), array( "Scrollable" => 'static' ));
