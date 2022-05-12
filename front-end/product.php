@@ -11,21 +11,15 @@ session_start();
     if($conn === false) {
         die(print_r(sqlsrv_errors(), true));
     }
-
-    $page = isset($_GET['page']) && file_exists($_GET['page']).'.php' ? $_GET['page']: 'mercado';
-    include $page.'.php';
-    $pagina = isset($_GET['p']) && is_numeric($_GET['p']) ? $_GET['p']: 1;
-
-    $produtosPágina = 9;
-    $Queyprodutos = "SELECT * FROM [dbo].[Produto] ORDER BY pid LIMIT ?,?;";
-    $QueryTotalProdutos = "SELECT * FROM [dbo].[Produto]";
-    $queryProdutos_execute = sqlsrv_query($conn, $Queryprodutos, array(($pagina - 1)*$produtosPágina,$produtosPágina), array( "Scrollable" => 'static' ));
-    $total_produtos_execute = sqlsrv_query($QueryTotalProdutos);
-    $total_produtos = sqlsrv_num_rows($total_produtos_execute);
-    $produtos = sqlsrv_fetch_array( $queryProdutos_execute, SQLSRV_FETCH_ASSOC)
-    
-    ?>
-
+    if(isset($_GET['id'])){
+        $query = 'SELECT * FROM [dbo].[Produto] WHERE pid = ?';
+        $result = sqlsrv_query($conn, $Queryprodutos, array($_GET['id']), array( "Scrollable" => 'static' ));
+        $produto = sqlsrv_fetch_array( $result, SQLSRV_FETCH_ASSOC)
+        if(!$produto){
+            exit("Produto não existe")
+        }
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -115,70 +109,26 @@ session_start();
         </div>
         
     </section>
-    <section class="produtos">
-        <div class="container">
-            <div class="title-box">
-                <h2>Produtos</h2>
-            </div>
-            <?php
-                $counter = 0;
-               
-                foreach($produtos as $produto){
-                    if($counter < $produtosPágina + 1){
-                        ?>
-                    
-                    
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="product-top">
-                        <a href="mercado.php?page=product&id=<?=$row['pid']?>">
-                        <img src="img/categoria1.jpeg">
-                        </a>
-                        <div class="overlay-right">
-                            <button type="button" class="btn btn-secondary" title="Adicionar ao Carrinho">
-                                <i class="fa fa-shopping-cart"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="product-bottom text-center">
-                        <h3><?php echo $row['nome']?></h3>
-                        <h5>900€</h5>
-
-                    </div>
-                </div>
-                <?php ++$counter;
-                    if($counter % 3 == 0){
-                        echo "</div>";
-                        
-                    }
-                }
-
-                }
-                if($counter % 3 != 0){
-                    echo "</div>";
-                    
-                }                
-                    ?>
-
-                <div class="buttons">
-                    <?php if($pagina > 1): ?>
-                        <a href="mercado.php?p=<?=$pagina-1?>
-                        <button type="button" class="btn btn-success">Previous</button>
-                        </a>
-                    <?php endif;?>
-                    <?php if($total_produtos > ($pagina*$produtosPágina)-$produtosPágina+count($produtos)):?>
-                        <a href="mercado.php?p=<?=$pagina+1?>
-                            <button type="button" class="btn btn-success">Next</button>
-                        </a>
-                    <?php endif;?>
-
-                </div>
-                
-            </div>
-            
+    <div class="product-top">
+        <img src="img/categoria1.jpeg">
+        <div class="overlay-right">
+            <button type="button" class="btn btn-secondary" title="Adicionar ao Carrinho">
+                <i class="fa fa-shopping-cart"></i>
+             </button>
         </div>
+    </div>
+    <div class="product-bottom text-center">
+        <h3><?php echo $row['nome']?></h3>
+        <h5>900€</h5>
 
-    </section>
+    </div>
+
+
+
+
+
+
+
     <section class="footer">
         <div class="container text-center">
             <div class="row">
@@ -204,4 +154,3 @@ session_start();
         </div>
     </section>
 </body>
-</html>
