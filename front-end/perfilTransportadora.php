@@ -70,7 +70,7 @@
                         } else {
                             echo"<table>";
                             echo "<tr>";
-                                echo"<th>id</th>";
+                                echo"<th>nif</th>";
                                 echo"<th>nome</th>";
                                 echo"<th>email</th>";
                                 echo"<th>morada</th>";
@@ -87,6 +87,7 @@
                             }
                             echo"</table>";
                         }
+                        echo "<br>";
                         echo "<br>";
                         ?>
                     </div>
@@ -121,10 +122,10 @@
                     <h4 class="text-right">Eliminar Conta</h4>
                 </div>
                 <div class="row mt-3">
-                    <form action="delete_conta.php" method="post"></form>
+                    <form action="delete_conta.php" method="post">
                         <div class="col-md-12">
                             <label class="labels">Password</label>
-                            <input type="password" class="form-control" placeholder="Password" value="">
+                            <input type="password" class="form-control" placeholder="Password" name = "password" value="">
                         </div>
                         <div class="mt-5 text-center">
                             <button class="btn btn-success" type="button"><input type="submit" value="Eliminar conta" name="delete_conta"></button>

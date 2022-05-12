@@ -90,6 +90,7 @@
                             echo"</table>";
                         }
                         echo "<br>";
+                        echo "<br>";
                         ?>
                     </div>
                     <div class="d-flex justify-content-between align-items-center mb-3">
@@ -125,7 +126,7 @@
                         <form action="delete_conta.php" method="post">
                             <div class="col-md-12">
                                 <label class="labels">Password</label>
-                                <input type="password" class="form-control" placeholder="Password" value="">
+                                <input type="password" class="form-control" placeholder="Password" name = "password" value="">
                             </div>
                             <div class="mt-5 text-center">
                                 <button class="btn btn-success" type="button"><input type="submit" value="Eliminar conta" name="delete_conta"></button>

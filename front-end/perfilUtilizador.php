@@ -80,6 +80,7 @@
                             echo"</table>";
                         }
                         echo "<br>";
+                        echo "<br>";
                         ?>
                     
                 </div>
