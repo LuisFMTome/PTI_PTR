@@ -24,10 +24,11 @@
 
         //verificar se a matricula esta em uso ou nao
 
-        $user_check_query = "SELECT * FROM [dbo].[Veiculo] WHERE matricula='{$matricula}'";
-        $row_count = sqlsrv_num_rows($user_check_query);
+        $stmt = "SELECT * FROM [dbo].[Veiculo] WHERE matricula='{$matricula}'";
+        $queryy = sqlsrv_query($conn, $stmt, array(), array( "Scrollable" => 'static' ));
 
-        if ($row_count === 0){
+        echo "<p>$queryy</p>";
+        if ($queryy){
 
             $query = "SELECT * FROM [dbo].[Transportadora] WHERE email='{$mailTran}'";
             $result = sqlsrv_query($conn, $query);
@@ -43,10 +44,23 @@
 
             echo "<p>$nif</p>";
 
+            $to_insert = "INSERT INTO [dbo].[Veiculo] ([matricula], [transportadora], [categoria], [produto]) VALUES ('$matricula', '$nif', '$categoria', '$produto')"; 
+
+            $params = array(1, "inserir armazem");
+            $var = sqlsrv_query( $conn, $to_insert, $params);
+
+            if( $var === false ) {
+                die( print_r( sqlsrv_errors(), true));
+            }
+
+            $_SESSION['msg'] = "matricula registada";
+            //header('location: registoTransportes.php');
+
 
         }else{
 
             $_SESSION['msg'] = "matricula ja registada";
+            //header('location: registoTransportes.php');
 
         }
 

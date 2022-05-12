@@ -94,19 +94,19 @@ $row_count = sqlsrv_num_rows($query);
                         <div class="row mt-3">
                             <div class="col-md-12">
                                 <label class="labels">Nome do Armazém</label>
-                                <input type="text" class="form-control" placeholder="Nome do Armazém" name="nome" value="">
+                                <input type="text" class="form-control" placeholder="Nome do Armazém" name="nome" value="" Required>
                             </div>
                             <div class="col-md-12">
                                 <label class="labels">Morada</label>
-                                <input type="text" class="form-control" placeholder="Morada" name='morada' value="">
+                                <input type="text" class="form-control" placeholder="Morada" name='morada' value="" Required>
                             </div>
                             <div class="col-md-12">
                                 <label class="labels">Código Postal</label>
-                                <input type="text" class="form-control" placeholder="Código Postal" name="cPostal" value="">
+                                <input type="text" class="form-control" placeholder="Código Postal" name="cPostal" value="" Required>
                             </div>
                             <div class="col-md-12">
                                 <label class="labels">Tipo</label>
-                                <input type="text" class="form-control" placeholder="Tipo" name="tipo" value="">
+                                <input type="text" class="form-control" placeholder="Tipo" name="tipo" value="" Required>
                             </div>
                     
                         </div>
