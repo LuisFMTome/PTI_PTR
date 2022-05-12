@@ -7,16 +7,27 @@ $email = htmlspecialchars($_POST["email_empresa"]);
 $morada = htmlspecialchars($_POST["morada_empresa"]);
 $codigo_postal = htmlspecialchars($_POST["codPostal_empresa"]);
 
-$update_v = "UPDATE [Consumidor] SET [dbo].[Consumidor] ([nome], [email], [morada], [codigoPostal]) VALUES ('$nome', '$email', '$morada', '$codigo_postal') WHERE nome='$_SESSION[username]'";
-    $res1 = sqlsrv_query($conn, $update_v);
-    if($res1){
-        echo "Dados alterados com sucesso";
-        header( "refresh:5; url=perfil_vol.php" );
-    } else {
-        die(print_r(sqlsrv_errors(), true));
-        header( "refresh:5; url=conta.html" );
-    }
+$name = $_SESSION["nome"];
 
-    mysqli_close($conn);
+$update_v = "UPDATE [Transportadora] SET nome = '$nome', email = '$email', morada = '$morada', codigoPostal = '$codigo_postal' WHERE nome = '{$name}'";
+
+$res1 = sqlsrv_query($conn, $update_v);
+
+if ($res1 === false) {
+    echo "Result = false";
+    die(print_r(sqlsrv_errors(), true));
+} else {
+    if (sqlsrv_has_rows($res1) != -1) {
+        echo ("session name not found");
+        $_SESSION["status"] = "conta com sessao iniciada nao encontrada";
+        $_SESSION["statusCode"] = "error";
+        header("Location: perfilTransportadora.php");
+    } else {
+        echo ("Dados mudados com sucesso");
+        $_SESSION["nome"] = $nome;
+        $_SESSION["email"] = $email;
+        header("Location: perfilTransportadora.php");
+    }
+}
    
 ?>
