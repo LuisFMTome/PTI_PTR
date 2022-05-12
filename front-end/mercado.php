@@ -12,17 +12,17 @@ session_start();
         die(print_r(sqlsrv_errors(), true));
     }
 
-    $page = isset($_GET['page']) && file_exists($_GET['page']).'.php' ? $_GET['page']: 'mercado';
-    include $page.'.php';
+    //$page = isset($_GET['page']) && file_exists($_GET['page']).'.php' ? $_GET['page']: 'mercado';
+    //include $page.'.php';
     $pagina = isset($_GET['p']) && is_numeric($_GET['p']) ? $_GET['p']: 1;
 
     $produtosPágina = 9;
-    $Queyprodutos = "SELECT * FROM [dbo].[Produto] ORDER BY pid LIMIT ?,?;";
+    $Queryprodutos = "SELECT * FROM [dbo].[Produto]"; //ORDER BY pid ASC LIMIT ?;
     $QueryTotalProdutos = "SELECT * FROM [dbo].[Produto]";
-    $queryProdutos_execute = sqlsrv_query($conn, $Queryprodutos, array(($pagina - 1)*$produtosPágina,$produtosPágina), array( "Scrollable" => 'static' ));
-    $total_produtos_execute = sqlsrv_query($QueryTotalProdutos);
+    $queryProdutos_execute = sqlsrv_query($conn, $Queryprodutos, array(), array( "Scrollable" => 'static' ));
+    $total_produtos_execute = sqlsrv_query($conn,$QueryTotalProdutos,array(),array( "Scrollable" => 'static' ));
     $total_produtos = sqlsrv_num_rows($total_produtos_execute);
-    $produtos = sqlsrv_fetch_array( $queryProdutos_execute, SQLSRV_FETCH_ASSOC)
+    
     
     ?>
 
@@ -120,18 +120,22 @@ session_start();
             <div class="title-box">
                 <h2>Produtos</h2>
             </div>
+            <div class="row">
             <?php
                 $counter = 0;
                
-                foreach($produtos as $produto){
-                    if($counter < $produtosPágina + 1){
+                if($total_produtos > 0){
+
+                    while ($row2 = sqlsrv_fetch_array($queryProdutos_execute)) {
+                        if($counter < $produtosPágina){
                         ?>
+                
                     
                     
-            <div class="row">
+            
                 <div class="col-md-3">
                     <div class="product-top">
-                        <a href="mercado.php?page=product&id=<?=$row['pid']?>">
+                        <a href="mercado.php?page=product&id=<?=$row2['pid']?>">
                         <img src="img/categoria1.jpeg">
                         </a>
                         <div class="overlay-right">
@@ -141,23 +145,30 @@ session_start();
                         </div>
                     </div>
                     <div class="product-bottom text-center">
-                        <h3><?php echo $row['nome']?></h3>
+                        <h3><?php  echo $row2['nome'];?></h3>
                         <h5>900€</h5>
 
                     </div>
                 </div>
                 <?php ++$counter;
+                
+                
                     if($counter % 3 == 0){
                         echo "</div>";
+                        echo "<div class='row'>";
                         
                     }
                 }
-
+                    
                 }
                 if($counter % 3 != 0){
                     echo "</div>";
                     
-                }                
+                } 
+            }
+
+                
+                               
                     ?>
 
                 <div class="buttons">
@@ -166,7 +177,7 @@ session_start();
                         <button type="button" class="btn btn-success">Previous</button>
                         </a>
                     <?php endif;?>
-                    <?php if($total_produtos > ($pagina*$produtosPágina)-$produtosPágina+count($produtos)):?>
+                    <?php if($counter == $produtosPágina):?>
                         <a href="mercado.php?p=<?=$pagina+1?>
                             <button type="button" class="btn btn-success">Next</button>
                         </a>
@@ -200,8 +211,55 @@ session_start();
                     <img src="img/logofcul.jpg">
                     <p>Faculdade de Ciências da Universidade de Lisboa</p>
                 </div>
+
             </div>
         </div>
     </section>
+    <table class="table table-bordered table-lg table-light align-top">
+                    <thead>
+                      <tr>
+                        <th scope="col" class="text-center">#</th>
+                        <th scope="col" class="text-center">Nome do Produto</th>
+                        <th scope="col" class="text-center">Morada</th>
+                        <th scope="col" class="text-center">Código Postal</th>
+                        <th scope="col" class="text-center">Tipo</th>
+                        <th scope="col" class="text-center">Ação</th>
+                        
+                      </tr>
+                    </thead>
+                    <tbody>
+<?php 
+
+                        
+                            
+
+    $produtos_query = "SELECT * FROM [dbo].[Produto]";
+    //$stmt = sqlsrv_query( $conn, $user_check_query );
+    $produtos = sqlsrv_query($conn, $produtos_query);
+
+    $query2 = sqlsrv_query($conn, $produtos_query, array(), array( "Scrollable" => 'static' ));
+    $row_count2 = sqlsrv_num_rows($query2);
+
+    if($row_count2 > 0){
+
+        while ($row2 = sqlsrv_fetch_array($produtos)) {
+
+            echo "<tr>";
+            echo "<td>" . $row2['pid'] . "</td>";
+            echo "<td>" . $row2['nome'] . "</td>";
+            echo "<td>" . $row2['morada'] . "</td>";
+            echo "<td>" . $row2['codigoPostal'] . "</td>";
+            echo "<td class='text-center'><a href='Delete'>Delete</a></td>";
+            echo "</tr>";
+
+    }
+
+
+    }
+
+?>
+                     
+                    </tbody>
+                </table>
 </body>
 </html>
