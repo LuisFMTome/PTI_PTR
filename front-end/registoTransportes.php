@@ -128,4 +128,22 @@ session_start();
             </div>
         </div>
     </section>
+
+    <?php
+
+        //echo "<p>teste</p>";
+        if (isset($_SESSION['msg']) != "") {
+
+            //echo "<p>teste2</p>";
+        ?>
+
+            <script>
+                alert('<?php echo $_SESSION['msg']; ?>');
+            </script>
+
+        <?php
+            unset($_SESSION['msg']);
+        }
+
+        ?>
     </body>

@@ -14,13 +14,20 @@ session_start();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<<<<<<< HEAD
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
+    <link href="style.css" rel="stylesheet"/>
+    
+=======
     <!--<link rel="icon" type="image/x-icon" href="assets/favicon.ico" /> -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
     <link href="style.css" rel="stylesheet" />
-    <script src="js/libs/jquery.min.js" type="text/javascript"></script>
+    <!--<script src="js/libs/jquery.min.js" type="text/javascript"></script>-->
     <!--<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="sweetalert2.all.min.js"></script> -->
 
+>>>>>>> main
 </head>
 
 <body>
@@ -51,7 +58,7 @@ session_start();
                     <h2>Login</h2>
                     <form id="LoginForm" method="post" action="login.php">
                         <label for="users">Escolha o tipo de utilizador:</label>
-                        <select id="choose" name="tipoUtili">
+                        <select id="choose1" name="tipoUtili">
                             <option value="comprador">Consumidor</option>
                             <option value="transportadora">Transportadora</option>
                             <option value="fornecedor">Fornecedor</option>
@@ -68,7 +75,7 @@ session_start();
                     <h2>Registar</h2>
                     <form id="RegisterForm" action="registar.php" method="post">
                         <label for="users">Escolha o tipo de utilizador:</label>
-                        <select id="choose" name="tipoUtili">
+                        <select id="choose2" name="tipoUtili" onchange= "getOption()">
                             <option value="comprador">Consumidor</option>
                             <option value="transportadora">Transportadora</option>
                             <option value="fornecedor">Fornecedor</option>
@@ -76,7 +83,7 @@ session_start();
                         <input type="text" placeholder="username" name="nome" required>
                         <input type="password" placeholder="password" name="pass" required>
                         <input type="email" placeholder="email" name="email" required>
-                        <div id="nif"></div>
+                        <?php echo "<div id='nif'></div>";?>
                         <input type="submit" value="Registar" name="registar" class="btnL">
                     </form>
                 </div>
@@ -131,9 +138,9 @@ session_start();
 
     <script type="text/javascript">
         function getOption() {
-            if (document.getElementById("choose").value == 'transportadora') {
+            if (document.getElementById("choose2").value == 'transportadora') {
                 document.getElementById("nif").innerHTML = '<input type="nif" placeholder="nif" name="nif">';
-            } else if (document.getElementById("choose").value != 'transportadora') {
+            } else if (document.getElementById("choose2").value != 'transportadora') {
                 document.getElementById("nif").innerHTML = "";
             }
 

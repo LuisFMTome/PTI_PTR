@@ -126,7 +126,7 @@
       <div class="container-fluid mt-lg-1">
         <div class="row">
         <div class="mb-4">
-            <select class="form-select" aria-label="Default select example" name="transportadoras">
+            <select class="form-select" aria-label="Default select example" name="transportadoras" method="post">
             <option selected>Selecionar a Transportadora:</option>
             <?php
                 $counter = 0;
@@ -168,11 +168,13 @@
                             
                         }else{
                             $selected = "";
+                            
                         }
                         $veiculos = "SELECT matricula, categoria, produto FROM [dbo].[Veiculo] WHERE transportadora = '$selected'";
                         $queryVeiculos = sqlsrv_query($conn, $veiculos, array(), array( "Scrollable" => 'static' ));
                         while($row = sqlsrv_fetch_array( $queryVeiculos, SQLSRV_FETCH_ASSOC)){
                           ?>
+
                           <tr>
                               <td><?php echo $row['nif']; ?></td>
                               <td><?php echo $row['nome']; ?></td>

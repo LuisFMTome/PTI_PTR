@@ -2,6 +2,39 @@
 session_start();
 //include('login.php');
 //include('registar.php');
+
+$serverName = "sqldb05server1.database.windows.net"; // update me
+$connectionOptions = array(
+    "Database" => "sqldb1", // update me
+    "Uid" => "ptrptisqldb", // update me
+    "PWD" => "2SdULWb5ePk83jA" // update me
+);
+//Establishes the connection
+$conn = sqlsrv_connect($serverName, $connectionOptions);
+if($conn === false) {
+    die(print_r(sqlsrv_errors(), true));
+}
+
+
+$mailForn = $_SESSION['email'];
+//arranjar id do fornecedor
+$user_check_query = "SELECT * FROM [dbo].[Fornecedor] WHERE email='{$mailForn}'"; //Nome da coluna password provavelmente errados
+$result = sqlsrv_query($conn, $user_check_query);
+if( $result === false ) {
+    die( print_r( sqlsrv_errors(), true));
+}
+if( sqlsrv_fetch( $result ) === false) {
+    die( print_r( sqlsrv_errors(), true));
+}
+$idF = sqlsrv_get_field( $result, 0);
+
+//arranjar numero de armanzens do fornecedor
+
+$user_check_query2 = "SELECT * FROM [dbo].[Armazem] WHERE fornecedor='$idF'";
+//$stmt = sqlsrv_query( $conn, $user_check_query );
+$armazens = sqlsrv_query($conn, $user_check_query2);
+$query = sqlsrv_query($conn, $user_check_query2, array(), array( "Scrollable" => 'static' ));
+$row_count = sqlsrv_num_rows($query);
 ?>
 
 <!DOCTYPE html>
@@ -61,19 +94,19 @@ session_start();
                         <div class="row mt-3">
                             <div class="col-md-12">
                                 <label class="labels">Nome do Armazém</label>
-                                <input type="text" class="form-control" placeholder="Nome do Armazém" name="nome" value="">
+                                <input type="text" class="form-control" placeholder="Nome do Armazém" name="nome" value="" Required>
                             </div>
                             <div class="col-md-12">
                                 <label class="labels">Morada</label>
-                                <input type="text" class="form-control" placeholder="Morada" name='morada' value="">
+                                <input type="text" class="form-control" placeholder="Morada" name='morada' value="" Required>
                             </div>
                             <div class="col-md-12">
                                 <label class="labels">Código Postal</label>
-                                <input type="text" class="form-control" placeholder="Código Postal" name="cPostal" value="">
+                                <input type="text" class="form-control" placeholder="Código Postal" name="cPostal" value="" Required>
                             </div>
                             <div class="col-md-12">
                                 <label class="labels">Tipo</label>
-                                <input type="text" class="form-control" placeholder="Tipo" name="tipo" value="">
+                                <input type="text" class="form-control" placeholder="Tipo" name="tipo" value="" Required>
                             </div>
                     
                         </div>
@@ -100,14 +133,23 @@ session_start();
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <th scope="row"class="text-center">1</th>
-                        <td class="text-center">Mark</td>
-                        <td class="text-center">Otto</td>
-                        <td class="text-center">@mdo</td>
-                        <td class="text-center">@mdo</td>
-                        <td class="text-center"><a href="Delete">Delete</a></td>
-                      </tr>
+
+                    <?php 
+
+                    if ($row_count > 0) {
+                        while ($row = sqlsrv_fetch_array($armazens)) {
+
+                            echo "<tr>";
+                            echo "<td>" . $row['aid'] . "</td>";
+                            echo "<td>" . $row['nome'] . "</td>";
+                            echo "<td>" . $row['morada'] . "</td>";
+                            echo "<td>" . $row['codigoPostal'] . "</td>";
+                            echo "<td>" . $row['tipo'] . "</td>";
+                            echo "<td class='text-center'><a href='Delete'>Delete</a></td>";
+                            echo "</tr>";
+                        }
+                    }
+                    ?>
         
                     </tbody>
                   </table>
