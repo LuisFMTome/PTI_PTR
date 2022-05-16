@@ -13,10 +13,10 @@ session_start();
     }
     if(isset($_GET['id'])){
         $query = 'SELECT * FROM [dbo].[Produto] WHERE pid = ?';
-        $result = sqlsrv_query($conn, $Queryprodutos, array($_GET['id']), array( "Scrollable" => 'static' ));
-        $produto = sqlsrv_fetch_array( $result, SQLSRV_FETCH_ASSOC)
+        $result = sqlsrv_query($conn, $query, array($_GET['id']), array( "Scrollable" => 'static' ));
+        $produto = sqlsrv_fetch_array( $result, SQLSRV_FETCH_ASSOC);
         if(!$produto){
-            exit("Produto não existe")
+            exit("Produto não existe");
         }
     }
 ?>
@@ -109,7 +109,7 @@ session_start();
         </div>
         
     </section>
-    <div class="product-top">
+    <div class="product-top row align-items-center">
         <img src="img/categoria1.jpeg">
         <div class="overlay-right">
             <button type="button" class="btn btn-secondary" title="Adicionar ao Carrinho">
@@ -118,7 +118,7 @@ session_start();
         </div>
     </div>
     <div class="product-bottom text-center">
-        <h3><?php echo $row['nome']?></h3>
+        <h3><?php echo $produto['nome']?></h3>
         <h5>900€</h5>
 
     </div>
