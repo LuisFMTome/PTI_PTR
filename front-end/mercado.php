@@ -12,16 +12,22 @@ session_start();
         die(print_r(sqlsrv_errors(), true));
     }
 
-    //$page = isset($_GET['page']) && file_exists($_GET['page']).'.php' ? $_GET['page']: 'mercado';
-    //include $page.'.php';
     $pagina = isset($_GET['p']) && is_numeric($_GET['p']) ? $_GET['p']: 1;
+    //$id = isset($_GET['id']) && is_numeric($_GET['id']) ? $_GET['id']: -1;
 
     $produtosPágina = 9;
-    $Queryprodutos = "SELECT * FROM [dbo].[Produto]"; //ORDER BY pid ASC LIMIT ?;
+    $produtoInicial = ($pagina-1)*$produtosPágina;
+    
+    $Queryprodutos = "SELECT * FROM [dbo].[Produto] ORDER BY nome OFFSET " . $produtoInicial . " ROWS FETCH NEXT " . $produtosPágina . " ROWS ONLY";
+    //"SELECT * FROM [dbo].[Produto] ORDER BY nome OFFSET " . $produtoInicial . "ROWS FETCH NEXT" . $produtosPágina . "ROWS ONLY";
+    //"SELECT * FROM [dbo].[Produto] ORDER BY nome OFFSET 0 ROWS FETCH NEXT 8 ROWS ONlY";
     $QueryTotalProdutos = "SELECT * FROM [dbo].[Produto]";
     $queryProdutos_execute = sqlsrv_query($conn, $Queryprodutos, array(), array( "Scrollable" => 'static' ));
     $total_produtos_execute = sqlsrv_query($conn,$QueryTotalProdutos,array(),array( "Scrollable" => 'static' ));
     $total_produtos = sqlsrv_num_rows($total_produtos_execute);
+    $numeroPaginas = ceil($total_produtos/$produtosPágina);
+
+
     
     
     ?>
@@ -63,7 +69,7 @@ session_start();
     <section class="header">
         <div class="side-menu">
             <ul>
-                <li>Descontos<i class="fa fa-angle-right"></i>
+                <li>Alimetação<i class="fa fa-angle-right"></i>
                     <ul>
                         <li>Sub Menu 1</li>
                         <li>Sub Menu 1</li>
@@ -71,7 +77,7 @@ session_start();
                         <li>Sub Menu 1</li>
                     </ul>
                 </li>
-                <li>Computadores<i class="fa fa-angle-right"></i>
+                <li>Casa<i class="fa fa-angle-right"></i>
                     <ul>
                         <li>Sub Menu 2</li>
                         <li>Sub Menu 2</li>
@@ -79,7 +85,7 @@ session_start();
                         <li>Sub Menu 2</li>
                     </ul>
                 </li>
-                <li>Telemóveis<i class="fa fa-angle-right"></i>
+                <li>Desporto<i class="fa fa-angle-right"></i>
                     <ul>
                         <li>Sub Menu 3</li>
                         <li>Sub Menu 3</li>
@@ -87,7 +93,7 @@ session_start();
                         <li>Sub Menu 3</li>
                     </ul>
                 </li>
-                <li>Livros<i class="fa fa-angle-right"></i>
+                <li>Tecnologia<i class="fa fa-angle-right"></i>
                     <ul>
                         <li>Sub Menu 4</li>
                         <li>Sub Menu 4</li>
@@ -95,20 +101,12 @@ session_start();
                         <li>Sub Menu 4</li>
                     </ul>
                 </li>
-                <li>Jogos<i class="fa fa-angle-right"></i>
+                <li>Vestuário<i class="fa fa-angle-right"></i>
                     <ul>
                         <li>Sub Menu 5</li>
                         <li>Sub Menu 5</li>
                         <li>Sub Menu 5</li>
                         <li>Sub Menu 5</li>
-                    </ul>
-                </li>
-                <li>Alimentos<i class="fa fa-angle-right"></i>
-                    <ul>
-                        <li>Sub Menu 6</li>
-                        <li>Sub Menu 6</li>
-                        <li>Sub Menu 6</li>
-                        <li>Sub Menu 6</li>
                     </ul>
                 </li>
             </ul>
@@ -135,7 +133,7 @@ session_start();
             
                 <div class="col-md-3">
                     <div class="product-top">
-                        <a href="mercado.php?page=product&id=<?=$row2['pid']?>">
+                        <a href="product.php?id=<?=$row2['pid']?>">
                         <img src="img/categoria1.jpeg">
                         </a>
                         <div class="overlay-right">
@@ -170,21 +168,26 @@ session_start();
                 
                                
                     ?>
-
-                <div class="buttons">
-                    <?php if($pagina > 1): ?>
-                        <a href="mercado.php?p=<?=$pagina-1?>
-                        <button type="button" class="btn btn-success">Previous</button>
-                        </a>
-                    <?php endif;?>
-                    <?php if($counter == $produtosPágina):?>
-                        <a href="mercado.php?p=<?=$pagina+1?>
-                            <button type="button" class="btn btn-success">Next</button>
-                        </a>
-                    <?php endif;?>
-
-                </div>
-                
+                <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <?php for($pagina=1;$pagina<=$numeroPaginas;$pagina++): 
+                        if($pagina = $pagina){?>
+                        <li class="page-item">
+                            <a href="mercado.php?p=<?=$pagina?>" class="page-link">
+                                <?=$pagina?>
+                            </a>
+                        </li>
+                            
+                        <?php }else{?>
+                            <li class="page-item">
+                            <a href="mercado.php?p=<?=$pagina?>" class="page-link">
+                                <?=$pagina?>
+                            </a>
+                        </li>
+                        <?php }; ?>
+                    <?php endfor;?>
+                </ul>
+                </nav>
             </div>
             
         </div>
