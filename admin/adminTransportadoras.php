@@ -194,7 +194,7 @@
                     <tbody>
                     <?php
                         $transportadoras = "SELECT nif, nome, email, pwd, morada, codigoPostal FROM [dbo].[Transportadora]";
-                        $queryTransportadoras = sqlsrv_query($conn, $produtos, array(), array( "Scrollable" => 'static' ));
+                        $queryTransportadoras = sqlsrv_query($conn, $transportadoras, array(), array( "Scrollable" => 'static' ));
                         while($row = sqlsrv_fetch_array( $queryTransportadoras, SQLSRV_FETCH_ASSOC)){
                           ?>
 
