@@ -13,6 +13,7 @@
     }
 ?>
 
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -140,25 +141,38 @@
     <main class="mt-5 pt-3">
       <div class="container-fluid mt-lg-1">
         <div class="row">
-        <div class="mb-4">
-            <select class="form-select" aria-label="Default select example" name="fornecedores" method="post">
-            <option selected>Selecionar Fornecedor:</option>
-            <?php
-                $counter = 0;
-                $fornecedores = "SELECT * FROM [dbo].[Fornecedor]";
-                $queryFornecedores = sqlsrv_query($conn, $fornecedores, array(), array( "Scrollable" => 'static' ));
-               
-                while($row = sqlsrv_fetch_array( $queryFornecedores, SQLSRV_FETCH_ASSOC)){
-                        ?>
-                    
-                    <option value="<?php ++$counter; echo $counter;?>"><?php echo $row['fid']; ?></option>
-                    <?php } ?>
-            </select>
+          <div class="col-md-3 mb-3">
+            <div class="card bg-success text-white h-100">
+              <div class="card-body py-5">Número Consumidores</div>
+            
+            </div>
+          </div>
+          <div class="col-md-3 mb-3">
+            <div class="card bg-success text-white h-100">
+              <div class="card-body py-5">Número de Fornecedores</div>
+      
+            </div>
+          </div>
+          <div class="col-md-3 mb-3">
+            <div class="card bg-success text-white h-100">
+              <div class="card-body py-5">Número de Transportes</div>
+          
+              </div>
+            </div>
+            <div class="col-md-3 mb-3">
+              <div class="card bg-success text-white h-100">
+                <div class="card-body py-5">Número de Produtos</div>
+              
+              </div>
+            </div>
+          </div>
         </div>
+        
+        <div class="row">
           <div class="col-md-12 mb-3">
             <div class="card">
               <div class="card-header">
-                <span><i class="bi bi-table me-2"></i></span> Tabela de Armazéns
+                <span><i class="bi bi-table me-2"></i></span> Tabela de Transportes
               </div>
               <div class="card-body">
                 <div class="table-responsive">
@@ -169,44 +183,39 @@
                   >
                     <thead>
                       <tr>
-                        <th>Aid</th>
-                        <th>Nome</th>
+                        <th>Nif</th>
+                        <th>Nome Transportadora</th>
+                        <th>Email</th>
+                        <th>Pwd</th>
                         <th>Morada</th>
-                        <th>Código Postal</th>
-                        <th>Tipo</th>
+                        <th>Codigo Postal</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <?php
-                        if(!empty($_POST['fornecedores'])) {
-                            $selected = $_POST['fornecedores'];
-                            
-                        }else{
-                            $selected = "";
-                            
-                        }
-                        $produtos = "SELECT aid, nome, morada, codigoPostal, tipo FROM [dbo].[Armazem] WHERE fornecedor =" . $selected;
-                        $queryProdutos = sqlsrv_query($conn, $produtos, array(), array( "Scrollable" => 'static' ));
-                        while($row = sqlsrv_fetch_array( $queryProdutos, SQLSRV_FETCH_ASSOC)){
+                    <?php
+                        $transportadoras = "SELECT nif, nome, email, pwd, morada, codigoPostal FROM [dbo].[Transportadora]";
+                        $queryTransportadoras = sqlsrv_query($conn, $produtos, array(), array( "Scrollable" => 'static' ));
+                        while($row = sqlsrv_fetch_array( $queryTransportadoras, SQLSRV_FETCH_ASSOC)){
                           ?>
 
                           <tr>
-                              <td><?php echo $row['aid']; ?></td>
+                              <td><?php echo $row['nif']; ?></td>
                               <td><?php echo $row['nome']; ?></td>
+                              <td><?php echo $row['email']; ?></td>
+                              <td><?php echo $row['pwd']; ?></td>
                               <td><?php echo $row['morada']; ?></td>
                               <td><?php echo $row['codigoPostal']; ?></td>
-                              <td><?php echo $row['tipo']; ?></td>
                           </tr>
                           <?php } ?>
-
                     </tbody>
                     <tfoot>
                       <tr>
-                        <th>Aid</th>
-                        <th>Nome</th>
+                      <th>Nif</th>
+                        <th>Nome Transportadora</th>
+                        <th>Email</th>
+                        <th>Pwd</th>
                         <th>Morada</th>
-                        <th>Código Postal</th>
-                        <th>Tipo</th>
+                        <th>Codigo Postal</th>
                       </tr>
                     </tfoot>
                   </table>

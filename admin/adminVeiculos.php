@@ -94,25 +94,40 @@
               </div>
             </li>
             <li>
-              <a href = "adminTransportadoras.html"
+              <a href="adminTransportadoras.php"
                 class="nav-link px-3 sidebar-link"
-                data-bs-toggle="collapse"
-                href="#layouts"
               >
                 <span class="me-2"><i class="bi bi-book-fill"></i></span>
                 <span>Transportadoras</span>
-                <span class="ms-auto">
-                </span>
               </a>
             </li>
             <li>
-              <a href="AdminFornecedores.html" class="nav-link px-3">
+              <a href="adminVeiculos.php"
+                class="nav-link px-3 sidebar-link"
+              >
+              <span>Veículos</span>
+            </li>
+            <li>
+              <a href="adminFornecedores.php" class="nav-link px-3">
                 <span class="me-2"><i class="bi bi-book-fill"></i></span>
                 <span>Fornecedores</span>
               </a>
             </li>
             <li>
-              <a href="adminConsumidores.html" class="nav-link px-3">
+              <a href="adminProdutos.php"
+                class="nav-link px-3 sidebar-link"
+              >
+              <span>Produtos</span>
+              
+                <a href="adminArmazens.php"
+                  class="nav-link px-3 sidebar-link"
+                >
+                <span>Armazéns</span>
+              
+            </li>
+            <li>
+            <li>
+              <a href="adminConsumidores.php" class="nav-link px-3">
                 <span class="me-2"><i class="bi bi-book-fill"></i></span>
                 <span>Consumidores</span>
               </a>
@@ -170,7 +185,7 @@
                             $selected = "";
                             
                         }
-                        $veiculos = "SELECT matricula, categoria, produto FROM [dbo].[Veiculo] WHERE transportadora = '$selected'";
+                        $veiculos = "SELECT matricula, categoria, produto FROM [dbo].[Veiculo] WHERE transportadora =" . $selected;
                         $queryVeiculos = sqlsrv_query($conn, $veiculos, array(), array( "Scrollable" => 'static' ));
                         while($row = sqlsrv_fetch_array( $queryVeiculos, SQLSRV_FETCH_ASSOC)){
                           ?>
