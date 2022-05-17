@@ -180,24 +180,19 @@
                       <?php
                         if(!empty($_POST['transportadoras'])) {
                             $selected = $_POST['transportadoras'];
-                            
-                        }else{
-                            $selected = "";
-                            
-                        }
-                        $veiculos = "SELECT matricula, categoria, produto FROM [dbo].[Veiculo] WHERE transportadora =" . $selected;
-                        $queryVeiculos = sqlsrv_query($conn, $veiculos, array(), array( "Scrollable" => 'static' ));
-                        while($row = sqlsrv_fetch_array( $queryVeiculos, SQLSRV_FETCH_ASSOC)){
-                          ?>
-
-                          <tr>
-                              <td><?php echo $row['nif']; ?></td>
-                              <td><?php echo $row['nome']; ?></td>
-                              <td><?php echo $row['email']; ?></td>
-                              <td><?php echo $row['morada']; ?></td>
-                              <td><?php echo $row['codigoPostal']; ?></td>
-                          </tr>
-                          <?php } ?>
+                            $veiculos = "SELECT matricula, categoria, produto FROM [dbo].[Veiculo] WHERE transportadora =" . $selected;
+                            $queryVeiculos = sqlsrv_query($conn, $veiculos, array(), array( "Scrollable" => 'static' ));
+                            while($row = sqlsrv_fetch_array( $queryVeiculos, SQLSRV_FETCH_ASSOC)){
+                              ?>
+                              <tr>
+                                <td><?php echo $row['nif']; ?></td>
+                                <td><?php echo $row['nome']; ?></td>
+                                <td><?php echo $row['email']; ?></td>
+                                <td><?php echo $row['morada']; ?></td>
+                                <td><?php echo $row['codigoPostal']; ?></td>
+                              </tr>
+                      <?php }
+                           }?>
 
                     </tbody>
                     <tfoot>
