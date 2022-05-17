@@ -69,7 +69,7 @@ session_start();
     <section class="header">
         <div class="side-menu">
             <ul>
-                <li>Alimetação<i class="fa fa-angle-right"></i>
+                <li>Alimentação<i class="fa fa-angle-right"></i>
                     <ul>
                         <li>Sub Menu 1</li>
                         <li>Sub Menu 1</li>

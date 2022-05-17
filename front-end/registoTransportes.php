@@ -63,8 +63,14 @@ session_start();
                                 <input type="text" class="form-control" placeholder="Matrícula" name="matricula" value="">
                             </div>
                             <div class="col-md-12">
-                                <label class="labels">Produto</label>
-                                <input type="text" class="form-control" placeholder="Produto" name="produto" value="">
+                                <label class="labels">Quantidade de produtos</label>
+                                <select id="choose2" name="tipoUtili" onchange= "getOption()">
+                                    <option value="10">10</option>
+                                    <option value="20">30</option>
+                                    <option value="50">50</option>
+                                    <option value="70">70</option>
+                                    <option value="100">100</option>
+                                </select>
                             </div>
                             
                     
