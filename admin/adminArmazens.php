@@ -177,27 +177,22 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <?php
+                    <?php
                         if(!empty($_POST['fornecedores'])) {
                             $selected = $_POST['fornecedores'];
-                            
-                        }else{
-                            $selected = "";
-                            
-                        }
-                        $produtos = "SELECT aid, nome, morada, codigoPostal, tipo FROM [dbo].[Armazem] WHERE fornecedor =" . $selected;
-                        $queryProdutos = sqlsrv_query($conn, $produtos, array(), array( "Scrollable" => 'static' ));
-                        while($row = sqlsrv_fetch_array( $queryProdutos, SQLSRV_FETCH_ASSOC)){
-                          ?>
-
-                          <tr>
-                              <td><?php echo $row['aid']; ?></td>
-                              <td><?php echo $row['nome']; ?></td>
-                              <td><?php echo $row['morada']; ?></td>
-                              <td><?php echo $row['codigoPostal']; ?></td>
-                              <td><?php echo $row['tipo']; ?></td>
-                          </tr>
-                          <?php } ?>
+                            $veiculos = "SELECT aid, nome, morada, codigoPostal, tipo FROM [dbo].[Armazem] WHERE fornecedor =" . $selected;
+                            $queryVeiculos = sqlsrv_query($conn, $veiculos, array(), array( "Scrollable" => 'static' ));
+                            while($row = sqlsrv_fetch_array( $queryVeiculos, SQLSRV_FETCH_ASSOC)){
+                              ?>
+                              <tr>
+                                <td><?php echo $row['aid']; ?></td>
+                                <td><?php echo $row['nome']; ?></td>
+                                <td><?php echo $row['email']; ?></td>
+                                <td><?php echo $row['morada']; ?></td>
+                                <td><?php echo $row['codigoPostal']; ?></td>
+                              </tr>
+                      <?php }
+                           }?>
 
                     </tbody>
                     <tfoot>
