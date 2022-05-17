@@ -120,12 +120,21 @@ $row_count = sqlsrv_num_rows($query);
                             <div class="col-md-12">
                                 <label class="labels">Tipo</label>
 
-                                <select class="form-control" name="tipo">
+                                <select id="tipo1" class="form-control" name="tipo" onchange="getTipo();">
+                                    <option value="">Escolha um</option>
                                     <option value="Alimentação">Alimentação</option>
                                     <option value="Casa">Casa</option>
                                     <option value="Desporto">Desporto</option>
                                     <option value="Tecnologia">Tecnologia</option>
                                     <option value="Vestuário">Vestuário</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="labels">Sub Tipo</label>
+
+                                <select id="tipo2" class="form-control" name="tipo" onchange="getTipo();">
+                                    
                                 </select>
                             </div>
                     
@@ -212,6 +221,63 @@ $row_count = sqlsrv_num_rows($query);
         </div>
     </section>
 
+    <script>
+
+        var tipo = "";
+        let lista = ["Escolhe um tipo primeiro"];
+
+        function getTipo(){
+
+            tipo = document.getElementById("tipo1").value;
+            console.log(tipo);
+
+            console.log(tipo);
+            if(tipo == "Alimentação"){
+
+                lista = ["talheres", "fruta", "outros"];
+                console.log("tou ca");
+            }else if (tipo == "Desporto"){
+
+                lista = ["calçado", "equipamento", "acessórios"];
+
+            }else if (tipo == "Tecnologia"){
+
+                lista = ["PCs", "Playstation", "Nitendo"];
+
+            }else if (tipo == "Casa"){
+
+                lista = ["Armários", "Cadeiras", "Sofas"];
+                
+            }else if (tipo == "Vestuário"){
+
+                lista = ["Homem", "Mulher", "Criança"];
+            }
+
+            var myDiv = document.getElementById("tipo2");
+            myDiv.innerHTML = "";
+
+            lista.forEach(function(item){
+            let o=document.createElement("option");
+            o.text = item;
+            o.value = item;
+            tipo2.appendChild(o);
+            });
+
+        }
+
+        
+
+        lista.forEach(function(item){
+            let o=document.createElement("option");
+            o.text = item;
+            o.value = item;
+            tipo2.appendChild(o);
+        });
+
+    </script>
+
+
+    
     <?php
 
         //echo "<p>teste</p>";
