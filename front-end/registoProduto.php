@@ -154,6 +154,7 @@ $row_count = sqlsrv_num_rows($query);
                       <tr>
                         <th scope="col" class="text-center">Armazém</th>
                         <th scope="col" class="text-center">Produto</th>
+                        <th scope="col" class="text-center">Ação</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -179,7 +180,7 @@ $row_count = sqlsrv_num_rows($query);
                                         echo "<tr>";
                                         echo "<td>" . $row['nome'] . "</td>";
                                         echo "<td>" . $row2['nome'] . "</td>";
-
+                                        echo "<td class='text-center'><a href='Delete'>Delete</a></td>";
                                         echo "</tr>";
 
                                 }
