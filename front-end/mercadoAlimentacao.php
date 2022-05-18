@@ -18,10 +18,10 @@ session_start();
     $produtosPágina = 9;
     $produtoInicial = ($pagina-1)*$produtosPágina;
     
-    $Queryprodutos = "SELECT * FROM [dbo].[Produto] ORDER BY nome OFFSET " . $produtoInicial . " ROWS FETCH NEXT " . $produtosPágina . " ROWS ONLY";
+    $Queryprodutos = "SELECT * FROM [dbo].[Produto] WHERE tipo = 'Alimentacao' ORDER BY nome OFFSET " . $produtoInicial . " ROWS FETCH NEXT " . $produtosPágina . " ROWS ONLY";
     //"SELECT * FROM [dbo].[Produto] ORDER BY nome OFFSET " . $produtoInicial . "ROWS FETCH NEXT" . $produtosPágina . "ROWS ONLY";
     //"SELECT * FROM [dbo].[Produto] ORDER BY nome OFFSET 0 ROWS FETCH NEXT 8 ROWS ONlY";
-    $QueryTotalProdutos = "SELECT * FROM [dbo].[Produto]";
+    $QueryTotalProdutos = "SELECT * FROM [dbo].[Produto] WHERE tipo = 'Alimentacao'";
     $queryProdutos_execute = sqlsrv_query($conn, $Queryprodutos, array(), array( "Scrollable" => 'static' ));
     $total_produtos_execute = sqlsrv_query($conn,$QueryTotalProdutos,array(),array( "Scrollable" => 'static' ));
     $total_produtos = sqlsrv_num_rows($total_produtos_execute);
@@ -68,7 +68,7 @@ session_start();
     </nav>
     <section class="header">
         <div class="side-menu">
-            <ul class="list-group">
+        <ul>
             <a href="mercadoAlimentacao.php"><li>Alimentação<i class="fa fa-angle-right"></i></a>
                     <ul>
                         <li>Sub Menu 1</li>
@@ -101,7 +101,7 @@ session_start();
                         <li>Sub Menu 4</li>
                     </ul>
                 </li>
-                <a href="mercadoCasa.php"><li>Vestuário<i class="fa fa-angle-right"></i></a>
+                <a href="mercadoVestuario.php"><li>Vestuário<i class="fa fa-angle-right"></i></a>
                     <ul>
                         <li>Sub Menu 5</li>
                         <li>Sub Menu 5</li>
@@ -116,7 +116,7 @@ session_start();
     <section class="produtos">
         <div class="container">
             <div class="title-box">
-                <h2>Produtos</h2>
+                <h2>Produtos Alimentação </h2>
             </div>
             <div class="row">
             <?php
