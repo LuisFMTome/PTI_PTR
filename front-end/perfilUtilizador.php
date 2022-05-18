@@ -41,7 +41,7 @@
             <div class="col-md-3 border-right">
                 <div class="d-flex flex-column align-items-center text-center p-3 py-5">
                     <img class="rounded-circle mt-5" width="200px" src="img/empty.jpeg">
-                    <span class="font-weight-bold"><?php echo $_SESSION["nome"] ?></span>
+                    <span class="font-weight-bold"><?php echo $_SESSION["nome"]; ?></span>
                     <span class="text-black-50">
                         <button type="button" class="btn btn-success">Selecione uma foto</button>
                     </span>
@@ -54,11 +54,11 @@
                     </div>
                     <div class="row mt-3">
                         <?php 
-                        $consumidor_check_query = "SELECT * FROM [dbo].[Consumidor] WHERE email='{$_SESSION["email"]}'";
+                        $consumidor_check_query = "SELECT * FROM [dbo].[Consumidor] WHERE email= '$_SESSION[email]'";
                         $result = sqlsrv_query($conn, $consumidor_check_query);
 
                         if (sqlsrv_has_rows($result) != -1) {
-                            echo ("nenhum dado encontrado Utilizadores");
+                            echo ("nenhum dado encontrado");
                         } else {
                             echo"<table>";
                             echo "<tr>";
@@ -75,6 +75,10 @@
                                     echo "<td class='text-center'>".$row['email']."</td>";
                                     echo "<td class='text-center'>".$row['morada']."</td>";
                                     echo "<td class='text-center'>".$row['codigoPostal']."</td>";
+                                    $nome = $row['nome'];
+                                    $email = $row['email'];
+                                    $morada = $row['morada'];
+                                    $codigoPostal = $row['codigoPostal'];
                                 echo "</tr>";
                             }
                             echo"</table>";
@@ -91,23 +95,25 @@
                         <div class="row mt-3">
                             <div class="col-md-12">
                                 <label class="labels">Nome</label>
-                                <input type="text" class="form-control" placeholder="Nome" name="nome_novo" value="">
+                                <input type="text" class="form-control" placeholder="Nome" name="nome_novo" value="<?php echo $nome?>">
                             </div>
                             <div class="col-md-12">
                                 <label class="labels">Email</label>
-                                <input type="text" class="form-control" placeholder="Email" name="email_novo" value="">
+                                <input type="text" class="form-control" placeholder="Email" name="email_novo" value="<?php echo $email?>">
                             </div>
                             <div class="col-md-12">
                                 <label class="labels">Morada</label>
-                                <input type="text" class="form-control" placeholder="Morada" name="morada_nova" value="">
+                                <input type="text" class="form-control" placeholder="Morada" name="morada_nova" value="<?php echo $morada?>">
                             </div>
                             <div class="col-md-12">
                                 <label class="labels">Código Postal</label>
-                                <input type="text" class="form-control" placeholder="Código Postal" name="codPostal_novo" value="">
+                                <input type="text" class="form-control" placeholder="Código Postal" name="codPostal_novo" value="<?php echo $codigoPostal?>">
                             </div>
                         </div>
-                        <div class="mt-5 text-center">
-                            <button class="btn btn-success" type="button"><input type="submit" value="Save Profile" name="edit_utilizador"></button>
+                        <div class="mt-3 text-center">
+                            <div class="col-md-4">
+                                <input type="submit" value="Save Profile" name="edit_utilizador" class="btnL">
+                            </div>
                         </div>
                     </form>
                     <div class="d-flex justify-content-between align-items-center mb-3">
@@ -120,8 +126,10 @@
                                 <input type="password" class="form-control" placeholder="Password" name="password" value="">
                             </div>
                         </div>
-                        <div class="mt-5 text-center">
-                            <button class="btn btn-success" type="button"><input type="submit" value="Eliminar conta" name="delete_conta"></button>
+                        <div class="mt-3 text-center">
+                            <div class="col-md-4">
+                                <input type="submit" value="Eliminar conta" name="delete_conta" class="btnL">
+                            </div>
                         </div>
                     </form>
                 </div>

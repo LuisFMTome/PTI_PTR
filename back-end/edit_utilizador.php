@@ -2,21 +2,46 @@
 include "openconn.php";
 session_start();
 
-$nome = htmlspecialchars($_POST["nome"]);
-$email = htmlspecialchars($_POST["email"]);
-$morada = htmlspecialchars($_POST["morada"]);
-$codigo_postal = htmlspecialchars($_POST["codPostal"]);
+$nome = htmlspecialchars($_POST["nome_novo"]);
+$email = htmlspecialchars($_POST["email_novo"]);
+$morada = htmlspecialchars($_POST["morada_nova"]);
+$codigo_postal = htmlspecialchars($_POST["codPostal_novo"]);
 
-$update_v = "UPDATE [Consumidor] SET [dbo].[Consumidor] ([nome], [email], [morada], [codigo_postal]) VALUES ('$nome', '$email', '$morada', '$codigo_postal') WHERE nome='$_SESSION[username]'";
-    $res1 = sqlsrv_query($conn, $update_v);
-    if($res1){
-        echo "Dados alterados com sucesso";
-        header( "refresh:5; url=perfil_vol.php" );
-    } else {
+$name = $_SESSION["nome"];
+
+//echo $name . "<br>";
+//echo $nome . "<br>";
+
+if($nome === "" || $email === "" || $morada === "" || $codigo_postal === ""){
+    echo ("Foram inseridos dados invalidos");
+    //header("Location: perfilUtilizador.php");
+    header( "refresh:5; url=perfilUtilizador.php" );
+}else{
+    $update_c = "UPDATE [Consumidor] SET nome = '$nome', email = '$email', morada = '$morada', codigoPostal = '$codigo_postal' WHERE nome = '{$name}'";
+
+    $res1 = sqlsrv_query($conn, $update_c);
+
+    if ($res1 === false) {
+        echo "Result = false";
         die(print_r(sqlsrv_errors(), true));
-        header( "refresh:5; url=conta.html" );
+    } else {
+        if (sqlsrv_has_rows($res1) == -1) {
+            echo ("session name not found");
+            $_SESSION["status"] = "conta com sessao iniciada nao encontrada";
+            $_SESSION["statusCode"] = "error";
+            //header("Location: perfilUtilizador.php");
+            header( "refresh:5; url=perfilUtilizador.php" );
+        } else {
+            echo ("Dados mudados com sucesso");
+            $_SESSION["nome"] = $nome;
+            $_SESSION["email"] = $email;
+            //header("Location: perfilUtilizador.php");
+            header( "refresh:5; url=perfilUtilizador.php" );
+        }
     }
+}
 
-    mysqli_close($conn);
+
+sqlsrv_close($conn);
    
 ?>
