@@ -57,7 +57,7 @@ session_start();
                             <option value="transportadora">Transportadora</option>
                             <option value="fornecedor">Fornecedor</option>
                         </select>
-                        <input type="text" placeholder="username" name="email" required>
+                        <input type="text" placeholder="email" name="email" required>
                         <input type="password" placeholder="password" name="pass" required>
                         <input type="submit" value="Login" class="btnL" name="login">
                         <a href="">Esqueci Password</a>
