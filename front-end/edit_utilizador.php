@@ -29,14 +29,14 @@ if($nome === "" || $email === "" || $morada === "" || $codigo_postal === ""){
             echo ("session name not found");
             $_SESSION["status"] = "conta com sessao iniciada nao encontrada";
             $_SESSION["statusCode"] = "error";
-            //header("Location: perfilUtilizador.php");
-            header( "refresh:5; url=perfilUtilizador.php" );
+            header("Location: perfilUtilizador.php");
+            //header( "refresh:5; url=perfilUtilizador.php" );
         } else {
             echo ("Dados mudados com sucesso");
             $_SESSION["nome"] = $nome;
             $_SESSION["email"] = $email;
-            //header("Location: perfilUtilizador.php");
-            header( "refresh:5; url=perfilUtilizador.php" );
+            header("Location: perfilUtilizador.php");
+            //header( "refresh:5; url=perfilUtilizador.php" );
         }
     }
 }

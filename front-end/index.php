@@ -40,21 +40,21 @@ session_start();
                         if($_SESSION["tipo"] == "Consumidor"){
 
                     ?>
-                        <li><a href="perfilUtilizador.html">Perfil</a></li>
+                        <li><a href="perfilUtilizador.php">Perfil</a></li>
 
                     <?php 
                         }elseif($_SESSION["tipo"] == "Fornecedor"){
 
                             ?>
                             
-                            <li><a href="perfilFornecedor.html">Perfil</a></li>
+                            <li><a href="perfilFornecedor.php">Perfil</a></li>
 
                             <?php
                         }elseif($_SESSION["tipo"] == "Transportadora"){
 
                             ?>
                             
-                            <li><a href="perfilTransportadora.html">Perfil</a></li>
+                            <li><a href="perfilTransportadora.php">Perfil</a></li>
 
                             <?php
                         }
@@ -89,7 +89,16 @@ session_start();
     </nav>
     <div class="container">   
         <div class="row">
-            <div class="col-2">
+            <div class="col-2"> 
+                    <?php  
+                        if(isset($_SESSION['tipo'])){
+                            echo "<h1>Conta " . $_SESSION['tipo'] . " inicializada</h1>";
+                        } 
+                        if(isset($_SESSION['nome'])){
+                            echo "<h1>Bem Vindo " . $_SESSION['nome'] . "</h1>";
+                        }
+                    ?>
+                </h1>
                 <h1>Dê às suas compras <br> um novo impacto ambiental</h1>
                 <p>Todas as suas compras...</p>
                 <a href="produtos.html" class="btn">Compre agora<i class="fa fa-arrow-right"></i></a>

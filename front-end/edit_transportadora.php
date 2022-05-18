@@ -9,25 +9,31 @@ $codigo_postal = htmlspecialchars($_POST["codPostal_empresa"]);
 
 $name = $_SESSION["nome"];
 
-$update_v = "UPDATE [Transportadora] SET nome = '$nome', email = '$email', morada = '$morada', codigoPostal = '$codigo_postal' WHERE nome = '{$name}'";
+if($nome === "" || $email === "" || $morada === "" || $codigo_postal === ""){
+    echo ("Foram inseridos dados invalidos");
+    //header("Location: perfilTransportadora.php");
+    header( "refresh:5; url=perfilTransportadora.php" );
+}else{
+    $update_v = "UPDATE [Transportadora] SET nome = '$nome', email = '$email', morada = '$morada', codigoPostal = '$codigo_postal' WHERE nome = '{$name}'";
 
-$res1 = sqlsrv_query($conn, $update_v);
+    $res1 = sqlsrv_query($conn, $update_v);
 
-if ($res1 === false) {
-    echo "Result = false";
-    die(print_r(sqlsrv_errors(), true));
-} else {
-    if (sqlsrv_has_rows($res1) != -1) {
-        echo ("session name not found");
-        $_SESSION["status"] = "conta com sessao iniciada nao encontrada";
-        $_SESSION["statusCode"] = "error";
-        header("Location: perfilTransportadora.php");
+    if ($res1 === false) {
+        echo "Result = false";
+        die(print_r(sqlsrv_errors(), true));
     } else {
-        echo ("Dados mudados com sucesso");
-        $_SESSION["nome"] = $nome;
-        $_SESSION["email"] = $email;
-        header("Location: perfilTransportadora.php");
+        if (sqlsrv_has_rows($res1) != -1) {
+            echo ("session name not found");
+            $_SESSION["status"] = "conta com sessao iniciada nao encontrada";
+            $_SESSION["statusCode"] = "error";
+            header("Location: perfilTransportadora.php");
+        } else {
+            echo ("Dados mudados com sucesso");
+            $_SESSION["nome"] = $nome;
+            $_SESSION["email"] = $email;
+            header("Location: perfilTransportadora.php");
+        }
     }
 }
-   
+
 ?>
