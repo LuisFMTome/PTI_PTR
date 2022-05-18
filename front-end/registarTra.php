@@ -17,7 +17,11 @@
 
         $categoria =   $_POST["categoria"];
         $matricula =   $_POST["matricula"];
-        $produto =   $_POST["produto"];
+        $produto =   $_POST["quantidade"];
+
+        //echo "<p>$categoria</p>";
+        //echo "<p>$matricula</p>";
+        //echo "<p>$produto</p>";
         
         $mailTran = $_SESSION['email'];
 
@@ -26,9 +30,11 @@
 
         $stmt = "SELECT * FROM [dbo].[Veiculo] WHERE matricula='{$matricula}'";
         $queryy = sqlsrv_query($conn, $stmt, array(), array( "Scrollable" => 'static' ));
+        $row_count = sqlsrv_num_rows($queryy);
 
         echo "<p>$queryy</p>";
-        if ($queryy){
+        echo "<p>$row_count</p>";
+        if ($row_count === 0){
 
             $query = "SELECT * FROM [dbo].[Transportadora] WHERE email='{$mailTran}'";
             $result = sqlsrv_query($conn, $query);
@@ -54,13 +60,13 @@
             }
 
             $_SESSION['msg'] = "matricula registada";
-            //header('location: registoTransportes.php');
+            header('location: registoTransportes.php');
 
 
         }else{
 
-            $_SESSION['msg'] = "matricula ja registada";
-            //header('location: registoTransportes.php');
+            $_SESSION['msg'] = "matricula registada anteriormente";
+            header('location: registoTransportes.php');
 
         }
 
