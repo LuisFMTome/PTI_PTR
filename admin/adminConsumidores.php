@@ -172,7 +172,7 @@
           <div class="col-md-12 mb-3">
             <div class="card">
               <div class="card-header">
-                <span><i class="bi bi-table me-2"></i></span> Tabela de Transportes
+                <span><i class="bi bi-table me-2"></i></span> Tabela de Consumidores
               </div>
               <div class="card-body">
                 <div class="table-responsive">
@@ -184,7 +184,7 @@
                     <thead>
                       <tr>
                         <th>Cid</th>
-                        <th>Nome Transportadora</th>
+                        <th>Nome Consumidor</th>
                         <th>Email</th>
                         <th>Pwd</th>
                         <th>Morada</th>
@@ -194,7 +194,7 @@
                     <tbody>
                     <?php
                         $transportadoras = "SELECT cid, nome, email, pwd, morada, codigoPostal FROM [dbo].[Consumidor]";
-                        $queryTransportadoras = sqlsrv_query($conn, $produtos, array(), array( "Scrollable" => 'static' ));
+                        $queryTransportadoras = sqlsrv_query($conn, $transportadoras, array(), array( "Scrollable" => 'static' ));
                         while($row = sqlsrv_fetch_array( $queryTransportadoras, SQLSRV_FETCH_ASSOC)){
                           ?>
 
@@ -211,7 +211,7 @@
                     <tfoot>
                       <tr>
                         <th>Cid</th>
-                        <th>Nome Transportadora</th>
+                        <th>Nome Consumidor</th>
                         <th>Email</th>
                         <th>Pwd</th>
                         <th>Morada</th>

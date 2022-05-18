@@ -141,19 +141,21 @@
       <div class="container-fluid mt-lg-1">
         <div class="row">
         <div class="mb-4">
-            <select class="form-select" aria-label="Default select example" name="fornecedores" method="post">
+        <form method="POST">
+            <select class="form-select" aria-label="Default select example" name="fornecedores">
             <option selected>Selecionar Fornecedor:</option>
             <?php
-                $counter = 0;
                 $fornecedores = "SELECT * FROM [dbo].[Fornecedor]";
                 $queryFornecedores = sqlsrv_query($conn, $fornecedores, array(), array( "Scrollable" => 'static' ));
                
                 while($row = sqlsrv_fetch_array( $queryFornecedores, SQLSRV_FETCH_ASSOC)){
                         ?>
                     
-                    <option value="<?php ++$counter; echo $counter;?>"><?php echo $row['fid']; ?></option>
+                    <option value="<?php echo $row['fid'];?>"><?php echo $row['fid']; ?></option>
                     <?php } ?>
             </select>
+            <button type="submit" name="submit" value="" class="mt-4">Selecione</button>
+        </form>
         </div>
           <div class="col-md-12 mb-3">
             <div class="card">
@@ -179,6 +181,7 @@
                     <tbody>
                     <?php
                         if(!empty($_POST['fornecedores'])) {
+                            $mensagem = "";
                             $selected = $_POST['fornecedores'];
                             $veiculos = "SELECT aid, nome, morada, codigoPostal, tipo FROM [dbo].[Armazem] WHERE fornecedor =" . $selected;
                             $queryVeiculos = sqlsrv_query($conn, $veiculos, array(), array( "Scrollable" => 'static' ));
@@ -187,11 +190,14 @@
                               <tr>
                                 <td><?php echo $row['aid']; ?></td>
                                 <td><?php echo $row['nome']; ?></td>
-                                <td><?php echo $row['email']; ?></td>
                                 <td><?php echo $row['morada']; ?></td>
                                 <td><?php echo $row['codigoPostal']; ?></td>
+                                <td><?php echo $row['tipo']; ?></td>
                               </tr>
                       <?php }
+                           }else{
+                             $mensagem = "Selecione um fornecedor";
+
                            }?>
 
                     </tbody>
@@ -206,11 +212,13 @@
                     </tfoot>
                   </table>
                 </div>
+                
               </div>
             </div>
           </div>
         </div>
       </div>
+      <h2 class="display-4 mt-4 ml-4"><?php echo $mensagem?></h2>
     </main>
     <script src="./js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.2/dist/chart.min.js"></script>
