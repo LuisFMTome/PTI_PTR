@@ -141,24 +141,26 @@
       <div class="container-fluid mt-lg-1">
         <div class="row">
         <div class="mb-4">
-            <select class="form-select" aria-label="Default select example" name="transportadoras" method="post">
+        <form method="POST">
+            <select class="form-select" aria-label="Default select example" name="transportadoras">
             <option selected>Selecionar a Transportadora:</option>
             <?php
-                $counter = 0;
                 $transportadoras = "SELECT * FROM [dbo].[Transportadora]";
                 $queryTransportadoras = sqlsrv_query($conn, $transportadoras, array(), array( "Scrollable" => 'static' ));
                
                 while($row = sqlsrv_fetch_array( $queryTransportadoras, SQLSRV_FETCH_ASSOC)){
                         ?>
                     
-                    <option value="<?php ++$counter; echo $counter;?>"><?php echo $row['nif']; ?></option>
+                    <option value="<?php ++$counter; echo $counter;?>"><?php echo $row['nif'] ; ?></option>
                     <?php } ?>
             </select>
+            <button type="submit" name="submit" value="" class="mt-4">Selecione</button>
+        </form>
         </div>
           <div class="col-md-12 mb-3">
             <div class="card">
               <div class="card-header">
-                <span><i class="bi bi-table me-2"></i></span> Tabela de Transportadoras
+                <span><i class="bi bi-table me-2"></i></span> Tabela de Veiculos
               </div>
               <div class="card-body">
                 <div class="table-responsive">
@@ -169,39 +171,37 @@
                   >
                     <thead>
                       <tr>
-                        <th>Nif</th>
-                        <th>Nome Transportadora</th>
-                        <th>Email</th>
-                        <th>Morada</th>
-                        <th>Código Postal</th>
+                        <th>Matricula</th>
+                        <th>Categoria</th>
+                        <th>Produto</th>
                       </tr>
                     </thead>
                     <tbody>
                       <?php
                         if(!empty($_POST['transportadoras'])) {
+                            $mensagem = "";
                             $selected = $_POST['transportadoras'];
                             $veiculos = "SELECT matricula, categoria, produto FROM [dbo].[Veiculo] WHERE transportadora =" . $selected;
                             $queryVeiculos = sqlsrv_query($conn, $veiculos, array(), array( "Scrollable" => 'static' ));
                             while($row = sqlsrv_fetch_array( $queryVeiculos, SQLSRV_FETCH_ASSOC)){
                               ?>
                               <tr>
-                                <td><?php echo $row['nif']; ?></td>
-                                <td><?php echo $row['nome']; ?></td>
-                                <td><?php echo $row['email']; ?></td>
-                                <td><?php echo $row['morada']; ?></td>
-                                <td><?php echo $row['codigoPostal']; ?></td>
+                                <td><?php echo $row['matricula']; ?></td>
+                                <td><?php echo $row['categoria']; ?></td>
+                                <td><?php echo $row['produto']; ?></td>
                               </tr>
                       <?php }
-                           }?>
+                           }else{
+                            $mensagem = "Selecione uma Transportadora";
+
+                          }?>
 
                     </tbody>
                     <tfoot>
                       <tr>
-                        <th>Nif</th>
-                        <th>Nome Transportadora</th>
-                        <th>Email</th>
-                        <th>Morada</th>
-                        <th>Código Postal</th>
+                        <th>Matricula</th>
+                        <th>Categoria</th>
+                        <th>Produto</th>
                       </tr>
                     </tfoot>
                   </table>
@@ -211,6 +211,7 @@
           </div>
         </div>
       </div>
+      <h2 class="display-4 mt-4 ml-4"><?php echo $mensagem?></h2>
     </main>
     <script src="./js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.2/dist/chart.min.js"></script>
