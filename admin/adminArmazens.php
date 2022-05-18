@@ -94,25 +94,40 @@
               </div>
             </li>
             <li>
-              <a href = "adminTransportadoras.html"
+              <a href="adminTransportadoras.php"
                 class="nav-link px-3 sidebar-link"
-                data-bs-toggle="collapse"
-                href="#layouts"
               >
                 <span class="me-2"><i class="bi bi-book-fill"></i></span>
                 <span>Transportadoras</span>
-                <span class="ms-auto">
-                </span>
               </a>
             </li>
             <li>
-              <a href="AdminFornecedores.html" class="nav-link px-3">
+              <a href="adminVeiculos.php"
+                class="nav-link px-3 sidebar-link"
+              >
+              <span>Veículos</span>
+            </li>
+            <li>
+              <a href="adminFornecedores.php" class="nav-link px-3">
                 <span class="me-2"><i class="bi bi-book-fill"></i></span>
                 <span>Fornecedores</span>
               </a>
             </li>
             <li>
-              <a href="adminConsumidores.html" class="nav-link px-3">
+              <a href="adminProdutos.php"
+                class="nav-link px-3 sidebar-link"
+              >
+              <span>Produtos</span>
+              
+                <a href="adminArmazens.php"
+                  class="nav-link px-3 sidebar-link"
+                >
+                <span>Armazéns</span>
+              
+            </li>
+            <li>
+            <li>
+              <a href="adminConsumidores.php" class="nav-link px-3">
                 <span class="me-2"><i class="bi bi-book-fill"></i></span>
                 <span>Consumidores</span>
               </a>
@@ -126,24 +141,26 @@
       <div class="container-fluid mt-lg-1">
         <div class="row">
         <div class="mb-4">
-            <select class="form-select" aria-label="Default select example" name="transportadoras">
-            <option selected>Selecionar a Transportadora:</option>
+        <form method="POST">
+            <select class="form-select" aria-label="Default select example" name="fornecedores">
+            <option selected>Selecionar Fornecedor:</option>
             <?php
-                $counter = 0;
-                $transportadoras = "SELECT * FROM [dbo].[Transportadora]";
-                $queryTransportadoras = sqlsrv_query($conn, $transportadoras, array(), array( "Scrollable" => 'static' ));
+                $fornecedores = "SELECT * FROM [dbo].[Fornecedor]";
+                $queryFornecedores = sqlsrv_query($conn, $fornecedores, array(), array( "Scrollable" => 'static' ));
                
-                while($row = sqlsrv_fetch_array( $queryTransportadoras, SQLSRV_FETCH_ASSOC)){
+                while($row = sqlsrv_fetch_array( $queryFornecedores, SQLSRV_FETCH_ASSOC)){
                         ?>
                     
-                    <option value="<?php ++$counter; echo $counter;?>"><?php echo $row['nif']; ?></option>
+                    <option value="<?php echo $row['fid'];?>"><?php echo $row['fid']; ?></option>
                     <?php } ?>
             </select>
+            <button type="submit" name="submit" value="" class="mt-4">Selecione</button>
+        </form>
         </div>
           <div class="col-md-12 mb-3">
             <div class="card">
               <div class="card-header">
-                <span><i class="bi bi-table me-2"></i></span> Tabela de Transportadoras
+                <span><i class="bi bi-table me-2"></i></span> Tabela de Armazéns
               </div>
               <div class="card-body">
                 <div class="table-responsive">
@@ -154,51 +171,54 @@
                   >
                     <thead>
                       <tr>
-                        <th>Nif</th>
-                        <th>Nome Transportadora</th>
-                        <th>Email</th>
+                        <th>Aid</th>
+                        <th>Nome</th>
                         <th>Morada</th>
                         <th>Código Postal</th>
+                        <th>Tipo</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <?php
-                        if(!empty($_POST['transportadoras'])) {
-                            $selected = $_POST['transportadoras'];
-                            
-                        }else{
-                            $selected = "";
-                        }
-                        $veiculos = "SELECT matricula, categoria, produto FROM [dbo].[Veiculo] WHERE transportadora = '$selected'";
-                        $queryVeiculos = sqlsrv_query($conn, $veiculos, array(), array( "Scrollable" => 'static' ));
-                        while($row = sqlsrv_fetch_array( $queryVeiculos, SQLSRV_FETCH_ASSOC)){
-                          ?>
-                          <tr>
-                              <td><?php echo $row['nif']; ?></td>
-                              <td><?php echo $row['nome']; ?></td>
-                              <td><?php echo $row['email']; ?></td>
-                              <td><?php echo $row['morada']; ?></td>
-                              <td><?php echo $row['codigoPostal']; ?></td>
-                          </tr>
-                          <?php } ?>
+                    <?php
+                        if(!empty($_POST['fornecedores'])) {
+                            $mensagem = "";
+                            $selected = $_POST['fornecedores'];
+                            $veiculos = "SELECT aid, nome, morada, codigoPostal, tipo FROM [dbo].[Armazem] WHERE fornecedor =" . $selected;
+                            $queryVeiculos = sqlsrv_query($conn, $veiculos, array(), array( "Scrollable" => 'static' ));
+                            while($row = sqlsrv_fetch_array( $queryVeiculos, SQLSRV_FETCH_ASSOC)){
+                              ?>
+                              <tr>
+                                <td><?php echo $row['aid']; ?></td>
+                                <td><?php echo $row['nome']; ?></td>
+                                <td><?php echo $row['morada']; ?></td>
+                                <td><?php echo $row['codigoPostal']; ?></td>
+                                <td><?php echo $row['tipo']; ?></td>
+                              </tr>
+                      <?php }
+                           }else{
+                             $mensagem = "Selecione um fornecedor";
+
+                           }?>
 
                     </tbody>
                     <tfoot>
                       <tr>
-                        <th>Nif</th>
-                        <th>Nome Transportadora</th>
-                        <th>Email</th>
+                        <th>Aid</th>
+                        <th>Nome</th>
                         <th>Morada</th>
                         <th>Código Postal</th>
+                        <th>Tipo</th>
                       </tr>
                     </tfoot>
                   </table>
                 </div>
+                
               </div>
             </div>
           </div>
         </div>
       </div>
+      <h2 class="display-4 mt-4 ml-4"><?php echo $mensagem?></h2>
     </main>
     <script src="./js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.2/dist/chart.min.js"></script>

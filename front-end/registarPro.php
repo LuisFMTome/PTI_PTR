@@ -18,7 +18,7 @@
 
         $nome =   $_POST["nome"];
         $morada =   $_POST["morada"];
-        $cPostal =   $_POST["cPostal"];
+        $tipo =   $_POST["tipo"];
         //$tipo =   $_POST["tipo"];
         $pid = random_int(0, 9000);
 
@@ -49,8 +49,23 @@
 
         echo "<p>$row_count</p>";
         echo "<p>$morada</p>";
-        echo "<p>$idF</p>";
+        echo "<p>$tipo</p>";
 
+        $temp = sqlsrv_query($conn, $user_check_query2);
+
+        if( $temp === false ) {
+            die( print_r( sqlsrv_errors(), true));
+        }
+
+        if( sqlsrv_fetch( $temp ) === false) {
+            die( print_r( sqlsrv_errors(), true));
+        }
+
+        $cPostal = sqlsrv_get_field( $temp, 4);
+
+        echo "<p>$cPostal</p>";
+
+        
         if ($row_count === 0) {
 
             echo "entrar aqui";

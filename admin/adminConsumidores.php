@@ -1,3 +1,19 @@
+<?php
+    session_start(); 
+    $serverName = "sqldb05server1.database.windows.net"; // update me
+    $connectionOptions = array(
+        "Database" => "sqldb1", // update me
+        "Uid" => "ptrptisqldb", // update me
+        "PWD" => "2SdULWb5ePk83jA" // update me
+    );
+    //Establishes the connection
+    $conn = sqlsrv_connect($serverName, $connectionOptions);
+    if($conn === false) {
+        die(print_r(sqlsrv_errors(), true));
+    }
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -79,25 +95,40 @@
               </div>
             </li>
             <li>
-              <a href = "adminTransportadoras.html"
+              <a href="adminTransportadoras.php"
                 class="nav-link px-3 sidebar-link"
-                data-bs-toggle="collapse"
-                href="#layouts"
               >
                 <span class="me-2"><i class="bi bi-book-fill"></i></span>
                 <span>Transportadoras</span>
-                <span class="ms-auto">
-                </span>
               </a>
             </li>
             <li>
-              <a href="AdminFornecedores.html" class="nav-link px-3">
+              <a href="adminVeiculos.php"
+                class="nav-link px-3 sidebar-link"
+              >
+              <span>Veículos</span>
+            </li>
+            <li>
+              <a href="adminFornecedores.php" class="nav-link px-3">
                 <span class="me-2"><i class="bi bi-book-fill"></i></span>
                 <span>Fornecedores</span>
               </a>
             </li>
             <li>
-              <a href="adminConsumidores.html" class="nav-link px-3">
+              <a href="adminProdutos.php"
+                class="nav-link px-3 sidebar-link"
+              >
+              <span>Produtos</span>
+              
+                <a href="adminArmazens.php"
+                  class="nav-link px-3 sidebar-link"
+                >
+                <span>Armazéns</span>
+              
+            </li>
+            <li>
+            <li>
+              <a href="adminConsumidores.php" class="nav-link px-3">
                 <span class="me-2"><i class="bi bi-book-fill"></i></span>
                 <span>Consumidores</span>
               </a>
@@ -141,7 +172,7 @@
           <div class="col-md-12 mb-3">
             <div class="card">
               <div class="card-header">
-                <span><i class="bi bi-table me-2"></i></span> Tabela de Transportes
+                <span><i class="bi bi-table me-2"></i></span> Tabela de Consumidores
               </div>
               <div class="card-body">
                 <div class="table-responsive">
@@ -152,20 +183,39 @@
                   >
                     <thead>
                       <tr>
-                        <th>Nome Transportadora</th>
-                        <th>Número de Veículos</th>
+                        <th>Cid</th>
+                        <th>Nome Consumidor</th>
+                        <th>Email</th>
+                        <th>Pwd</th>
+                        <th>Morada</th>
+                        <th>Codigo Postal</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>Tiger Nixon</td>
-                        <td>System Architect</td>
-                      </tr>
+                    <?php
+                        $transportadoras = "SELECT cid, nome, email, pwd, morada, codigoPostal FROM [dbo].[Consumidor]";
+                        $queryTransportadoras = sqlsrv_query($conn, $transportadoras, array(), array( "Scrollable" => 'static' ));
+                        while($row = sqlsrv_fetch_array( $queryTransportadoras, SQLSRV_FETCH_ASSOC)){
+                          ?>
+
+                          <tr>
+                              <td><?php echo $row['cid']; ?></td>
+                              <td><?php echo $row['nome']; ?></td>
+                              <td><?php echo $row['email']; ?></td>
+                              <td><?php echo $row['pwd']; ?></td>
+                              <td><?php echo $row['morada']; ?></td>
+                              <td><?php echo $row['codigoPostal']; ?></td>
+                          </tr>
+                          <?php } ?>
                     </tbody>
                     <tfoot>
                       <tr>
-                        <th>Nome Transportadora</th>
-                        <th>Número de Veículos</th>
+                        <th>Cid</th>
+                        <th>Nome Consumidor</th>
+                        <th>Email</th>
+                        <th>Pwd</th>
+                        <th>Morada</th>
+                        <th>Codigo Postal</th>
                       </tr>
                     </tfoot>
                   </table>

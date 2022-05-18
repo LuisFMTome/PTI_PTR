@@ -94,15 +94,48 @@ $row_count = sqlsrv_num_rows($query);
                             </div>
                             <div class="col-md-12">
                                 <label class="labels">Morada</label>
-                                <input type="text" class="form-control" placeholder="Morada" name="morada" value="" required>
+                                
+                                <select class="form-control" name="morada">
+                                    
+                                    <?php
+                                    
+                                        $temp = sqlsrv_query($conn, $user_check_query2);
+                                        if ($row_count > 0) {
+                                            while ($rowP = sqlsrv_fetch_array($temp)) {
+
+                                                ?>
+                                                
+                                                <option value='<?php echo $rowP['morada']; ?>'><?php echo $rowP['morada']; ?></option>
+
+                                                <?php
+
+                                            }
+                                        }
+                                    ?>
+
+                                </select>
+
                             </div>
-                            <div class="col-md-12">
-                                <label class="labels">Código Postal</label>
-                                <input type="text" class="form-control" placeholder="Código Postal" name="cPostal" value="" required>
-                            </div>
+                            
                             <div class="col-md-12">
                                 <label class="labels">Tipo</label>
-                                <input type="text" class="form-control" placeholder="Tipo" name="tipo" value="" required>
+
+                                <select id="tipo1" class="form-control" name="tipo" onchange="getTipo();">
+                                    <option value="">Escolha um</option>
+                                    <option value="Alimentação">Alimentação</option>
+                                    <option value="Casa">Casa</option>
+                                    <option value="Desporto">Desporto</option>
+                                    <option value="Tecnologia">Tecnologia</option>
+                                    <option value="Vestuário">Vestuário</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="labels">Sub Tipo</label>
+
+                                <select id="tipo2" class="form-control" name="tipo" onchange="getTipo();">
+                                    
+                                </select>
                             </div>
                     
                         </div>
@@ -119,13 +152,9 @@ $row_count = sqlsrv_num_rows($query);
                 <table class="table table-bordered table-lg table-light align-top">
                     <thead>
                       <tr>
-                        <th scope="col" class="text-center">#</th>
-                        <th scope="col" class="text-center">Nome do Produto</th>
-                        <th scope="col" class="text-center">Morada</th>
-                        <th scope="col" class="text-center">Código Postal</th>
-                        <th scope="col" class="text-center">Tipo</th>
+                        <th scope="col" class="text-center">Armazém</th>
+                        <th scope="col" class="text-center">Produto</th>
                         <th scope="col" class="text-center">Ação</th>
-                        
                       </tr>
                     </thead>
                     <tbody>
@@ -149,11 +178,8 @@ $row_count = sqlsrv_num_rows($query);
                                     while ($row2 = sqlsrv_fetch_array($produtos)) {
 
                                         echo "<tr>";
-                                        echo "<td>" . $row2['pid'] . "</td>";
+                                        echo "<td>" . $row['nome'] . "</td>";
                                         echo "<td>" . $row2['nome'] . "</td>";
-                                        echo "<td>" . $row['morada'] . "</td>";
-                                        echo "<td>" . $row['codigoPostal'] . "</td>";
-                                        echo "<td>" . $row['tipo'] . "</td>";
                                         echo "<td class='text-center'><a href='Delete'>Delete</a></td>";
                                         echo "</tr>";
 
@@ -196,6 +222,63 @@ $row_count = sqlsrv_num_rows($query);
         </div>
     </section>
 
+    <script>
+
+        var tipo = "";
+        let lista = ["Escolhe um tipo primeiro"];
+
+        function getTipo(){
+
+            tipo = document.getElementById("tipo1").value;
+            console.log(tipo);
+
+            console.log(tipo);
+            if(tipo == "Alimentação"){
+
+                lista = ["talheres", "fruta", "outros"];
+                console.log("tou ca");
+            }else if (tipo == "Desporto"){
+
+                lista = ["calçado", "equipamento", "acessórios"];
+
+            }else if (tipo == "Tecnologia"){
+
+                lista = ["PCs", "Playstation", "Nitendo"];
+
+            }else if (tipo == "Casa"){
+
+                lista = ["Armários", "Cadeiras", "Sofas"];
+                
+            }else if (tipo == "Vestuário"){
+
+                lista = ["Homem", "Mulher", "Criança"];
+            }
+
+            var myDiv = document.getElementById("tipo2");
+            myDiv.innerHTML = "";
+
+            lista.forEach(function(item){
+            let o=document.createElement("option");
+            o.text = item;
+            o.value = item;
+            tipo2.appendChild(o);
+            });
+
+        }
+
+        
+
+        lista.forEach(function(item){
+            let o=document.createElement("option");
+            o.text = item;
+            o.value = item;
+            tipo2.appendChild(o);
+        });
+
+    </script>
+
+
+    
     <?php
 
         //echo "<p>teste</p>";

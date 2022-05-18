@@ -13,6 +13,7 @@
     }
 ?>
 
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -140,27 +141,38 @@
     <main class="mt-5 pt-3">
       <div class="container-fluid mt-lg-1">
         <div class="row">
-        <div class="mb-4">
-        <form method="POST">
-            <select class="form-select" aria-label="Default select example" name="transportadoras">
-            <option selected>Selecionar a Transportadora:</option>
-            <?php
-                $transportadoras = "SELECT * FROM [dbo].[Transportadora]";
-                $queryTransportadoras = sqlsrv_query($conn, $transportadoras, array(), array( "Scrollable" => 'static' ));
-               
-                while($row = sqlsrv_fetch_array( $queryTransportadoras, SQLSRV_FETCH_ASSOC)){
-                        ?>
-                    
-                    <option value="<?php ++$counter; echo $counter;?>"><?php echo $row['nif'] ; ?></option>
-                    <?php } ?>
-            </select>
-            <button type="submit" name="submit" value="" class="mt-4">Selecione</button>
-        </form>
+          <div class="col-md-3 mb-3">
+            <div class="card bg-success text-white h-100">
+              <div class="card-body py-5">Número Consumidores</div>
+            
+            </div>
+          </div>
+          <div class="col-md-3 mb-3">
+            <div class="card bg-success text-white h-100">
+              <div class="card-body py-5">Número de Fornecedores</div>
+      
+            </div>
+          </div>
+          <div class="col-md-3 mb-3">
+            <div class="card bg-success text-white h-100">
+              <div class="card-body py-5">Número de Transportes</div>
+          
+              </div>
+            </div>
+            <div class="col-md-3 mb-3">
+              <div class="card bg-success text-white h-100">
+                <div class="card-body py-5">Número de Produtos</div>
+              
+              </div>
+            </div>
+          </div>
         </div>
+        
+        <div class="row">
           <div class="col-md-12 mb-3">
             <div class="card">
               <div class="card-header">
-                <span><i class="bi bi-table me-2"></i></span> Tabela de Veiculos
+                <span><i class="bi bi-table me-2"></i></span> Tabela de Transportes
               </div>
               <div class="card-body">
                 <div class="table-responsive">
@@ -171,37 +183,39 @@
                   >
                     <thead>
                       <tr>
-                        <th>Matricula</th>
-                        <th>Categoria</th>
-                        <th>Produto</th>
+                        <th>Fid</th>
+                        <th>Nome Transportadora</th>
+                        <th>Email</th>
+                        <th>Pwd</th>
+                        <th>Morada</th>
+                        <th>Codigo Postal</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <?php
-                        if(!empty($_POST['transportadoras'])) {
-                            $mensagem = "";
-                            $selected = $_POST['transportadoras'];
-                            $veiculos = "SELECT matricula, categoria, produto FROM [dbo].[Veiculo] WHERE transportadora =" . $selected;
-                            $queryVeiculos = sqlsrv_query($conn, $veiculos, array(), array( "Scrollable" => 'static' ));
-                            while($row = sqlsrv_fetch_array( $queryVeiculos, SQLSRV_FETCH_ASSOC)){
-                              ?>
-                              <tr>
-                                <td><?php echo $row['matricula']; ?></td>
-                                <td><?php echo $row['categoria']; ?></td>
-                                <td><?php echo $row['produto']; ?></td>
-                              </tr>
-                      <?php }
-                           }else{
-                            $mensagem = "Selecione uma Transportadora";
+                    <?php
+                        $fornecedores = "SELECT fid, nome, email, pwd, morada, codigoPostal FROM [dbo].[Fornecedor]";
+                        $queryFornecedores = sqlsrv_query($conn, $fornecedores, array(), array( "Scrollable" => 'static' ));
+                        while($row = sqlsrv_fetch_array( $queryFornecedores, SQLSRV_FETCH_ASSOC)){
+                          ?>
 
-                          }?>
-
+                          <tr>
+                              <td><?php echo $row['fid']; ?></td>
+                              <td><?php echo $row['nome']; ?></td>
+                              <td><?php echo $row['email']; ?></td>
+                              <td><?php echo $row['pwd']; ?></td>
+                              <td><?php echo $row['morada']; ?></td>
+                              <td><?php echo $row['codigoPostal']; ?></td>
+                          </tr>
+                          <?php } ?>
                     </tbody>
                     <tfoot>
                       <tr>
-                        <th>Matricula</th>
-                        <th>Categoria</th>
-                        <th>Produto</th>
+                        <th>Fid</th>
+                        <th>Nome Transportadora</th>
+                        <th>Email</th>
+                        <th>Pwd</th>
+                        <th>Morada</th>
+                        <th>Codigo Postal</th>
                       </tr>
                     </tfoot>
                   </table>
@@ -211,7 +225,6 @@
           </div>
         </div>
       </div>
-      <h2 class="display-4 mt-4 ml-4"><?php echo $mensagem?></h2>
     </main>
     <script src="./js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.2/dist/chart.min.js"></script>

@@ -44,7 +44,7 @@
 
             echo "<p>$nif</p>";
 
-            $to_insert = "INSERT INTO [dbo].[Veiculo] ([matricula], [transportadora], [categoria], [produto]) VALUES ('$matricula', '$nif', '$categoria', '$produto')"; 
+            $to_insert = "INSERT INTO [dbo].[Veiculo] ([matricula], [transportadora], [categoria], [quantidade]) VALUES ('$matricula', '$nif', '$categoria', '$produto')"; 
 
             $params = array(1, "inserir armazem");
             $var = sqlsrv_query( $conn, $to_insert, $params);
