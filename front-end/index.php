@@ -1,3 +1,11 @@
+<?php
+session_start();
+//$mailTeste = $_SESSION['email'];
+//$ola = isset($_SESSION["tipo"]);
+//echo "$ola";
+//echo "$mailTeste";
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,20 +32,76 @@
             </div>
             <div class="menu-bar">
                 <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="produtos.html">Mercado</a></li>
-                    <li><a href="conta.html"><i class="fa fa-user"></i></a></li>
-                    <li><a href="carinho.html"><i class="fa fa-shopping-basket"></i></a></li>
+                    <li><a href="index.php">Home</a></li>
+                    <li><a href="mercado.php">Mercado</a></li>
+                    <?php 
+                    if (isset($_SESSION['email']) != "") {
+
+                        if($_SESSION["tipo"] == "Consumidor"){
+
+                    ?>
+                        <li><a href="perfilUtilizador.php">Perfil</a></li>
+
+                    <?php 
+                        }elseif($_SESSION["tipo"] == "Fornecedor"){
+
+                            ?>
+                            
+                            <li><a href="perfilFornecedor.php">Perfil</a></li>
+
+                            <?php
+                        }elseif($_SESSION["tipo"] == "Transportadora"){
+
+                            ?>
+                            
+                            <li><a href="perfilTransportadora.php">Perfil</a></li>
+
+                            <?php
+                        }
+
+                    }?>
+                    
+                    <li><a href="carrinho.php">Carrinho</a></li>
+
+                    <?php 
+                    if (isset($_SESSION['email']) != "") {
+
+                    ?>
+                    
+                    <li><a href="logout.php">Logout</a></li>
+
+                    <?php    
+                    }else{
+
+                    ?>
+                    
+                    <li><a href="conta.php">Login</i></a></li>
+                    
+                    <?php
+
+                    }
+                    ?>
+
+                    
                 </ul>
             </div>
         </div>
     </nav>
     <div class="container">   
         <div class="row">
-            <div class="col-2">
+            <div class="col-2"> 
+                    <?php  
+                        if(isset($_SESSION['tipo'])){
+                            echo "<h1>Conta " . $_SESSION['tipo'] . " inicializada</h1>";
+                        } 
+                        if(isset($_SESSION['nome'])){
+                            echo "<h1>Bem Vindo " . $_SESSION['nome'] . "</h1>";
+                        }
+                    ?>
+                </h1>
                 <h1>Dê às suas compras <br> um novo impacto ambiental</h1>
                 <p>Todas as suas compras...</p>
-                <a href="produtos.html" class="btn">Compre agora<i class="fa fa-arrow-right"></i></a>
+                <a href="mercado.php" class="btn">Compre agora<i class="fa fa-arrow-right"></i></a>
             </div>
             <div class="col-2">
                 <img src="img/product2.webp">
