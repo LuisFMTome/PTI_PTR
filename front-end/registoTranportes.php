@@ -25,20 +25,63 @@
             </div>
             <div class="menu-bar">
                 <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="produtos.html">Mercado</a></li>
+                    <li><a href="index.php">Home</a></li>
+                    <li><a href="mercado.php">Mercado</a></li>
                     <li class="dropdown">
                         <button class="dropbtn"><i class="fa fa-plus-circle"></i>
                           <i class="fa fa-caret-down"></i>
                         </button>
                         <div class="dropdown-content">
-                          <a href="registoProduto.html">Registar Produtos</a>
-                          <a href="registoArmazem.html">Registar Armazém</a>
-                          <a href="registoTransportes.html">Registar Transporte</a>
+                          <a href="registoTransportes.php">Registar Transporte</a>
                         </div>
                     </li>
-                    <li><a href="conta.html"><i class="fa fa-user"></i></a></li>
-                    <li><a href="carinho.html"><i class="fa fa-shopping-basket"></i></a></li>
+                    <?php 
+                    if (isset($_SESSION['email']) != "") {
+
+                        if($_SESSION["tipo"] == "Consumidor"){
+
+                    ?>
+                        <li><a href="perfilUtilizador.php">Perfil</a></li>
+
+                    <?php 
+                        }elseif($_SESSION["tipo"] == "Fornecedor"){
+
+                            ?>
+                            
+                            <li><a href="perfilFornecedor.php">Perfil</a></li>
+
+                            <?php
+                        }elseif($_SESSION["tipo"] == "Transportadora"){
+
+                            ?>
+                            
+                            <li><a href="perfilTransportadora.php">Perfil</a></li>
+
+                            <?php
+                        }
+
+                    }?>
+                    
+                    <li><a href="carrinho.php">Carrinho</a></li>
+
+                    <?php 
+                    if (isset($_SESSION['email']) != "") {
+
+                    ?>
+                    
+                    <li><a href="logout.php">Logout</a></li>
+
+                    <?php    
+                    }else{
+
+                    ?>
+                    
+                    <li><a href="conta.php">Login</i></a></li>
+                    
+                    <?php
+
+                    }
+                    ?>
                 </ul>
             </div>
         </div>

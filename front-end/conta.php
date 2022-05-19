@@ -37,9 +37,9 @@ session_start();
             <div class="menu-bar">
                 <ul>
                     <li><a href="index.php">Home</a></li>
-                    <li><a href="produtos.html">Mercado</a></li>
-                    <li><a href="conta.php"><i class="fa fa-user"></i></a></li>
-                    <li><a href="carinho.html"><i class="fa fa-shopping-basket"></i></a></li>
+                    <li><a href="mercado.php">Mercado</a></li>
+                    <li><a href="conta.php">Login</a></li>
+                    <li><a href="carinho.html">Carrinho</a></li>
                 </ul>
             </div>
         </div>
@@ -61,28 +61,11 @@ session_start();
                         <input type="password" placeholder="password" name="pass" required>
                         <input type="submit" value="Login" class="btnL" name="login">
                         <a href="">Esqueci Password</a>
+                        <br>
+                        <a href="criar_conta.php">Criar Conta</a>
                     </form>
                 </div>
             </div>
-            <div class="col-2">
-                <div class="form-container">
-                    <h2>Registar</h2>
-                    <form id="RegisterForm" action="registar.php" method="post">
-                        <label for="users">Escolha o tipo de utilizador:</label>
-                        <select id="choose2" name="tipoUtili" onchange= "getOption()">
-                            <option value="comprador">Consumidor</option>
-                            <option value="transportadora">Transportadora</option>
-                            <option value="fornecedor">Fornecedor</option>
-                        </select>
-                        <input type="text" placeholder="username" name="nome" required>
-                        <input type="password" placeholder="password" name="pass" required>
-                        <input type="email" placeholder="email" name="email" required>
-                        <?php echo "<div id='nif'></div>";?>
-                        <input type="submit" value="Registar" name="registar" class="btnL">
-                    </form>
-                </div>
-            </div>
-
         </div>
     </div>
 
