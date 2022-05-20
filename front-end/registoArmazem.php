@@ -59,8 +59,8 @@ $row_count = sqlsrv_num_rows($query);
                 <a href="index.php">
                     <img src="img/logotipo.png" class="logo">
                 </a>
-                <input type="text" class="form-control">
-                <span class="input-group-text"><i class="fa fa-search"></i></span>
+                <!--<input type="text" class="form-control">
+                <span class="input-group-text"><i class="fa fa-search"></i></span>-->
             </div>
             <div class="menu-bar">
                 <ul>

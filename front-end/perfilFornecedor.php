@@ -17,28 +17,31 @@
         session_start();
         include "openconn.php";
     ?>
-    <nav>
+    <nav class="navigation">
         <div class="top-nav-bar">
+            
             <div class="search-box">
-                <a href="index.html">
+                <a href="index.php">
                     <img src="img/logotipo.png" class="logo">
                 </a>
-                <input type="text" class="form-control">
-                <span class="input-group-text"><i class="fa fa-search"></i></span>
+                <!--<input type="text" class="form-control">
+                <span class="input-group-text"><i class="fa fa-search"></i></span>-->
             </div>
+            
             <div class="menu-bar">
                 <ul>
                     <li><a href="index.php">Home</a></li>
                     <li><a href="mercado.php">Mercado</a></li>
                     <li class="dropdown">
                         <button class="dropbtn"><i class="fa fa-plus-circle"></i>
-                          <i class="fa fa-caret-down"></i>
+                            <i class="fa fa-caret-down"></i>
                         </button>
                         <div class="dropdown-content">
-                          <a href="registoProduto.php">Registar Produtos</a>
-                          <a href="registoArmazem.php">Registar Armazém</a>
+                            <a href="registoProduto.php">Registar Produtos</a>
+                            <a href="registoArmazem.php">Registar Armazém</a>
                         </div>
                     </li>
+
                     <?php 
                     if (isset($_SESSION['email']) != "") {
 
@@ -86,10 +89,14 @@
 
                     }
                     ?>
+
+                    
                 </ul>
+                
             </div>
         </div>
     </nav>
+    
     <div class="container rounded bg-white mt-5 mb-5">
         <div class="row">
             <div class="col-md-3 border-right">

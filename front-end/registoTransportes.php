@@ -35,8 +35,8 @@ if($conn === false) {
                 <a href="index.php">
                     <img src="img/logotipo.png" class="logo">
                 </a>
-                <input type="text" class="form-control">
-                <span class="input-group-text"><i class="fa fa-search"></i></span>
+                <!--<input type="text" class="form-control">
+                <span class="input-group-text"><i class="fa fa-search"></i></span>-->
             </div>
             <div class="menu-bar">
                 <ul>
@@ -125,7 +125,7 @@ if($conn === false) {
                             </div>
                             <div class="col-md-12">
                                 <label class="labels">Quantidade de produtos</label>
-                                <select id="choose2" name="quantidade" onchange= "getOption()">
+                                <select id="choose2" name="quantidade" >
                                     <option value="10">10</option>
                                     <option value="20">30</option>
                                     <option value="50">50</option>

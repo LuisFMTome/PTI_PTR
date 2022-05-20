@@ -21,19 +21,22 @@ session_start();
     <link href="style.css" rel="stylesheet"/>
 </head>
 <body>
-    <nav class="navigation">
+<nav class="navigation">
         <div class="top-nav-bar">
+            
             <div class="search-box">
-                <a href="index.html">
+                <a href="index.php">
                     <img src="img/logotipo.png" class="logo">
                 </a>
-                <input type="text" class="form-control">
-                <span class="input-group-text"><i class="fa fa-search"></i></span>
+                <!--<input type="text" class="form-control">
+                <span class="input-group-text"><i class="fa fa-search"></i></span>-->
             </div>
+            
             <div class="menu-bar">
                 <ul>
                     <li><a href="index.php">Home</a></li>
                     <li><a href="mercado.php">Mercado</a></li>
+
                     <?php 
                     if (isset($_SESSION['email']) != "") {
 

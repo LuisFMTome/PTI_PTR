@@ -11,6 +11,9 @@
         die(print_r(sqlsrv_errors(), true));
     }
     session_start();
+
+    #ESTA PAGINA ESTA MAL (nao e necesssaria)
+
     if(isset($_POST["addTransporte"])){
 
         $veiculo =  htmlspecialchars($_POST["email_contacto"]);

@@ -59,7 +59,7 @@
                 die( print_r( sqlsrv_errors(), true));
             }
 
-            $_SESSION['msg'] = "matricula registada";
+            $_SESSION['msg'] = "Veículo registado";
             header('location: registoTransportes.php');
 
 
