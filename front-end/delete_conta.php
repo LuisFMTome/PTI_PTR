@@ -8,10 +8,10 @@ if (isset($_POST["delete_conta"])) {
     $name = $_SESSION["nome"];
     $password = htmlspecialchars($_POST["password"]);
     $password1 = md5($password);
-    echo $userTipe. "<br>";
-    echo $email. "<br>";
-    echo $password. "<br>";
-    echo $password1. "<br>";
+    //echo $userTipe. "<br>";
+    //echo $email. "<br>";
+    //echo $password. "<br>";
+    //echo $password1. "<br>";
 
     if($userTipe === "Consumidor"){
         $query = "SELECT * FROM [dbo].[Consumidor] WHERE email='{$email}' AND pwd = '{$password1}'";

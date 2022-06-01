@@ -8,9 +8,9 @@
     //Establishes the connection
     $conn = sqlsrv_connect($serverName, $connectionOptions);
     if($conn === false) {
-		echo "connection not established";
+		//echo "connection not established";
         die(print_r(sqlsrv_errors(), true));
     }else{
-	echo "connection established";
+	//echo "connection established";
 	}
 ?>

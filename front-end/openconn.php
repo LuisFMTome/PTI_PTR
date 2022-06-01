@@ -10,7 +10,6 @@
     if($conn === false) {
 		echo "connection not established";
         die(print_r(sqlsrv_errors(), true));
-    }else{
-	echo "connection established";
-	}
+    
+    }
 ?>

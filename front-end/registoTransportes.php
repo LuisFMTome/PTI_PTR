@@ -1,5 +1,17 @@
 <?php 
 session_start();
+
+$serverName = "sqldb05server1.database.windows.net"; // update me
+$connectionOptions = array(
+    "Database" => "sqldb1", // update me
+    "Uid" => "ptrptisqldb", // update me
+    "PWD" => "2SdULWb5ePk83jA" // update me
+);
+//Establishes the connection
+$conn = sqlsrv_connect($serverName, $connectionOptions);
+if($conn === false) {
+    die(print_r(sqlsrv_errors(), true));
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,13 +35,13 @@ session_start();
                 <a href="index.php">
                     <img src="img/logotipo.png" class="logo">
                 </a>
-                <input type="text" class="form-control">
-                <span class="input-group-text"><i class="fa fa-search"></i></span>
+                <!--<input type="text" class="form-control">
+                <span class="input-group-text"><i class="fa fa-search"></i></span>-->
             </div>
             <div class="menu-bar">
                 <ul>
                     <li><a href="index.php">Home</a></li>
-                    <li><a href="produtos.html">Mercado</a></li>
+                    <li><a href="mercado.php">Mercado</a></li>
                     <li class="dropdown">
                         <button class="dropbtn"><i class="fa fa-plus-circle"></i>
                           <i class="fa fa-caret-down"></i>
@@ -38,8 +50,53 @@ session_start();
                           <a href="registoTransportes.php">Registar Transporte</a>
                         </div>
                     </li>
-                    <li><a href="conta.php"><i class="fa fa-user"></i></a></li>
-                    <li><a href="carinho.html"><i class="fa fa-shopping-basket"></i></a></li>
+                    <?php 
+                    if (isset($_SESSION['email']) != "") {
+
+                        if($_SESSION["tipo"] == "Consumidor"){
+
+                    ?>
+                        <li><a href="perfilUtilizador.php">Perfil</a></li>
+
+                    <?php 
+                        }elseif($_SESSION["tipo"] == "Fornecedor"){
+
+                            ?>
+                            
+                            <li><a href="perfilFornecedor.php">Perfil</a></li>
+
+                            <?php
+                        }elseif($_SESSION["tipo"] == "Transportadora"){
+
+                            ?>
+                            
+                            <li><a href="perfilTransportadora.php">Perfil</a></li>
+
+                            <?php
+                        }
+
+                    }?>
+                    
+                    <li><a href="carrinho.php">Carrinho</a></li>
+
+                    <?php 
+                    if (isset($_SESSION['email']) != "") {
+
+                    ?>
+                    
+                    <li><a href="logout.php">Logout</a></li>
+
+                    <?php    
+                    }else{
+
+                    ?>
+                    
+                    <li><a href="conta.php">Login</i></a></li>
+                    
+                    <?php
+
+                    }
+                    ?>
                 </ul>
             </div>
         </div>
@@ -56,7 +113,11 @@ session_start();
                         <div class="row mt-3">
                             <div class="col-md-12">
                                 <label class="labels">Categoria</label>
-                                <input type="text" class="form-control" placeholder="Categoria" name="categoria" value="">
+                                <select id="" class="form-control" name="categoria">
+                                    <option value="Ligeiro sem reboque">Ligeiro sem reboque</option>
+                                    <option value="Ligeiro com reboque">Ligeiro com reboque</option>
+                                    <option value="Pesado">Pesado</option>
+                                </select>
                             </div>
                             <div class="col-md-12">
                                 <label class="labels">Matrícula</label>
@@ -64,7 +125,7 @@ session_start();
                             </div>
                             <div class="col-md-12">
                                 <label class="labels">Quantidade de produtos</label>
-                                <select id="choose2" name="tipoUtili" onchange= "getOption()">
+                                <select id="choose2" name="quantidade" >
                                     <option value="10">10</option>
                                     <option value="20">30</option>
                                     <option value="50">50</option>
@@ -88,21 +149,54 @@ session_start();
                 <table class="table table-bordered table-lg table-light align-top">
                     <thead>
                       <tr>
-                        <th scope="col" class="text-center">#</th>
-                        <th scope="col" class="text-center">Veículo</th>
+                        <th scope="col" class="text-center">Trasportadora</th>
                         <th scope="col" class="text-center">Matrícula</th>
-                        <th scope="col" class="text-center">Produto</th>
+                        <th scope="col" class="text-center">Categoria</th>
+                        <th scope="col" class="text-center">Quantidade</th>
                         <th scope="col" class="text-center">Acção</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <th scope="row"class="text-center">1</th>
-                        <td class="text-center">Mark</td>
-                        <td class="text-center">Otto</td>
-                        <td class="text-center">@mdo</td>
-                        <td class="text-center"><a href="Delete">Delete</a></td>
-                     
+                    <?php 
+                        # ir buscar nif de transportadora logged in
+
+                        $mailTran = $_SESSION['email'];
+                        $query = "SELECT * FROM [dbo].[Transportadora] WHERE email='{$mailTran}'";
+                        $result = sqlsrv_query($conn, $query);
+
+                        if( $result === false ) {
+                            die( print_r( sqlsrv_errors(), true));
+                        }
+                        if( sqlsrv_fetch( $result ) === false) {
+                            die( print_r( sqlsrv_errors(), true));
+                        }
+
+                        $nif = sqlsrv_get_field( $result, 0);
+                        $nomeTrans = sqlsrv_get_field( $result, 1);
+
+                        # ir buscar veiculos associados a esta transportadora
+
+                        $user_check_query = "SELECT * FROM [dbo].[Veiculo] WHERE transportadora ='$nif'";
+                        //$stmt = sqlsrv_query( $conn, $user_check_query );
+                        $veiculos = sqlsrv_query($conn, $user_check_query);
+                        $query = sqlsrv_query($conn, $user_check_query, array(), array( "Scrollable" => 'static' ));
+                        $row_count = sqlsrv_num_rows($query);
+
+
+                        if ($row_count > 0) {
+                            while ($row = sqlsrv_fetch_array($veiculos)) {
+
+                                echo "<tr>";
+                                echo "<td>" . $nomeTrans . "</td>";
+                                echo "<td>" . $row['matricula'] . "</td>";
+                                echo "<td>" . $row['categoria'] . "</td>";
+                                echo "<td>" . $row['quantidade'] . "</td>";
+                                echo "<td class='text-center'><a href='Delete'>Delete</a></td>";
+                                echo "</tr>";
+                            }
+                        }
+                        ?>
+
                     </tbody>
                   </table>
                 </div>
