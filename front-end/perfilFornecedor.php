@@ -63,7 +63,7 @@
                         <h4 class="text-right">Informações atuais de Perfil</h4><br></br>
                     </div>
                     <div class="row mt-3">
-                        <?php $fornecedor_check_query = "SELECT * FROM [dbo].[Fornecedor] WHERE email= '$_SESSION[email]'";
+                        <?php $fornecedor_check_query = "SELECT * FROM [dbo].[Fornecedor] WHERE email='{$_SESSION["email"]}'";
 
                         $result = sqlsrv_query($conn, $fornecedor_check_query);
 
@@ -85,10 +85,6 @@
                                     echo "<td class='text-center'>".$row['email']."</td>";
                                     echo "<td class='text-center'>".$row['morada']."</td>";
                                     echo "<td class='text-center'>".$row['codigoPostal']."</td>";
-                                    $nome = $row['nome'];
-                                    $email = $row['email'];
-                                    $morada = $row['morada'];
-                                    $codigoPostal = $row['codigoPostal'];
                                 echo "</tr>";
                             }
                             echo"</table>";
@@ -104,25 +100,23 @@
                         <div class="row mt-3">
                             <div class="col-md-12">
                                 <label class="labels">Nome</label>
-                                <input type="text" class="form-control" placeholder="Nome" name="nome_fornecedor" value="<?php echo $nome?>">
+                                <input type="text" class="form-control" placeholder="Nome" name="nome_fornecedor" value="">
                             </div>
                             <div class="col-md-12">
                                 <label class="labels">Email</label>
-                                <input type="text" class="form-control" placeholder="Email" name="email_fornecedor" value="<?php echo $email?>">
+                                <input type="text" class="form-control" placeholder="Email" name="email_fornecedor" value="">
                             </div>
                             <div class="col-md-12">
                                 <label class="labels">Morada</label>
-                                <input type="text" class="form-control" placeholder="Morada" name="morada_fornecedor" value="<?php echo $morada?>">
+                                <input type="text" class="form-control" placeholder="Morada" name="morada_fornecedor" value="">
                             </div>
                             <div class="col-md-12">
                                 <label class="labels">Código Postal</label>
-                                <input type="text" class="form-control" placeholder="Código Postal" name="codigoPostal_fornecedor" value="<?php echo $codigoPostal?>">
+                                <input type="text" class="form-control" placeholder="Código Postal" name="codigoPostal_fornecedor" value="">
                             </div>
                         </div>
-                        <div class="mt-3 text-center">
-                            <div class="col-md-4">
-                                <input type="submit" value="Save Profile" name="edit_fornecedor.php" class="btnL">
-                            </div>
+                        <div class="mt-5 text-center">
+                            <button class="btn btn-success" type="button"><input type="submit" value="Save Profile" name="edit_fornecedor.php"></button>
                         </div>
                     </form>
                     <div class="d-flex justify-content-between align-items-center mb-3">
@@ -134,10 +128,8 @@
                                 <label class="labels">Password</label>
                                 <input type="password" class="form-control" placeholder="Password" name = "password" value="">
                             </div>
-                            <div class="mt-3 text-center">
-                                <div class="col-md-4">
-                                    <input type="submit" value="Eliminar conta" name="delete_conta" class="btnL">
-                                </div>
+                            <div class="mt-5 text-center">
+                                <button class="btn btn-success" type="button"><input type="submit" value="Eliminar conta" name="delete_conta"></button>
                             </div>
                         </form>
                     </div>

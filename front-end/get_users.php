@@ -106,5 +106,92 @@ if (sqlsrv_has_rows($result2) != -1) {
     }
     echo"</table>";
 }
+echo"<br>";
+
+$armazem_query = "SELECT * FROM [dbo].[Armazem]";
+$result3 = sqlsrv_query($conn, $armazem_query);
+
+echo "Armazens: <br>";
+
+if (sqlsrv_has_rows($result3) != -1) {
+    echo ("nao há Armazens");
+} else {
+    echo"<table>";
+        echo "<tr>";
+        echo"<th>aid</th>";
+        echo"<th>fornecedor</th>";
+        echo"<th>nome</th>";
+        echo"<th>morada</th>";
+        echo"<th>codigoPostal</th>";
+        echo"<th>tipo</th>";
+        echo "</tr>";
+    while($row = sqlsrv_fetch_array($result3)) {
+        echo "<tr>";
+        echo "<td>" . $row['aid'] . "</td>";
+        echo "<td>" . $row['fornecedor'] . "</td>";
+        echo "<td>" . $row['nome'] . "</td>";
+        echo "<td>" . $row['morada'] . "</td>";
+        echo "<td>" . $row['codigoPostal'] . "</td>";
+        echo "<td>" . $row['tipo'] . "</td>";
+        echo "</tr>";
+    }
+    echo"</table>";
+}
+echo"<br>";
+
+$produto_query = "SELECT * FROM [dbo].[Produto]";
+$result4 = sqlsrv_query($conn, $produto_query);
+
+echo "Produtos: <br>";
+
+if (sqlsrv_has_rows($result4) != -1) {
+    echo ("nao há Produtos");
+} else {
+    echo"<table>";
+        echo "<tr>";
+        echo"<th>pid</th>";
+        echo"<th>nome</th>";
+        echo"<th>morada</th>";
+        echo"<th>codigoPostal</th>";
+        #echo"<th>tipo</th>";
+        echo "</tr>";
+    while($row = sqlsrv_fetch_array($result4)) {
+        echo "<tr>";
+        echo "<td>" . $row['pid'] . "</td>";
+        echo "<td>" . $row['nome'] . "</td>";
+        echo "<td>" . $row['morada'] . "</td>";
+        echo "<td>" . $row['codigoPostal'] . "</td>";
+        #echo "<td>" . $row['tipo'] . "</td>";
+        echo "</tr>";
+    }
+    echo"</table>";
+}
+echo"<br>";
+
+$transportes_query = "SELECT * FROM [dbo].[Veiculo]";
+$result5 = sqlsrv_query($conn, $transportes_query);
+
+echo "Transportes: <br>";
+
+if (sqlsrv_has_rows($result5) != -1) {
+    echo ("nao há Transportes");
+} else {
+    echo"<table>";
+        echo "<tr>";
+        echo"<th>categoria</th>";
+        echo"<th>matricula</th>";
+        echo"<th>transportadora</th>";
+        echo "</tr>";
+    while($row = sqlsrv_fetch_array($result5)) {
+        echo "<tr>";
+        echo"<td class=text-center>" . $row['categoria'] . "</td>";
+        echo"<td class=text-center>" . $row['matricula'] . "</td>";
+        echo"<td class=text-center>" . $row['transportadora'] . "</td>";
+        #echo"<td class=text-center>" . $row['produto'] . "</td>";
+        echo "</tr>";
+    }
+    echo"</table>";
+}
+echo"<br>";
 
 ?>

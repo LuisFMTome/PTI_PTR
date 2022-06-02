@@ -159,7 +159,7 @@ $row_count = sqlsrv_num_rows($query);
                     </thead>
                     <tbody>
                     <?php 
-
+                        $_SESSION["itemType"] = "produto";
                         if ($row_count > 0) {
                             while ($row = sqlsrv_fetch_array($armazens)) {
 
@@ -176,13 +176,13 @@ $row_count = sqlsrv_num_rows($query);
                                 if($row_count2 > 0){
 
                                     while ($row2 = sqlsrv_fetch_array($produtos)) {
-
                                         echo "<tr>";
+                                        echo "<form action='deleteItem.php' method='post'>";
                                         echo "<td>" . $row['nome'] . "</td>";
-                                        echo "<td>" . $row2['nome'] . "</td>";
-                                        echo "<td class='text-center'><a href='Delete'>Delete</a></td>";
+                                        echo "<td><input type='hidden' name='itemId' value=".$row2['pid'].">".$row2['nome']."</td>";
+                                        echo "<td><input type='submit' value='Eliminar produto' name='delete_produto' class=btnL></td>";
                                         echo "</tr>";
-
+                                        echo "</form>";
                                 }
 
                             }

@@ -135,20 +135,32 @@ $row_count = sqlsrv_num_rows($query);
                     <tbody>
 
                     <?php 
-
-                    if ($row_count > 0) {
+                    $fornecedor_query = "SELECT * FROM [dbo].[Fornecedor] WHERE email= '$_SESSION[email]'";
+                    $fornecedor = sqlsrv_query($conn, $fornecedor_query);
+                    $row_count1 = sqlsrv_num_rows($fornecedor);
+                    #if ($row_count1 > 0) {
+                        $row = sqlsrv_fetch_array($fornecedor);
+                        $fid = $row['fid'];
+                    #    }
+                    #echo $fid;
+                    $armazem_query = "SELECT * FROM [dbo].[Armazem] WHERE fornecedor= $fid";
+                    $armazens = sqlsrv_query($conn, $armazem_query);
+                    $row_count = sqlsrv_num_rows($armazens);
+                    $_SESSION["itemType"] = "armazem";
+                    #if ($row_count > 0) {
                         while ($row = sqlsrv_fetch_array($armazens)) {
-
                             echo "<tr>";
-                            echo "<td>" . $row['aid'] . "</td>";
+                            echo "<form action='deleteItem.php' method='post'>";
+                            echo "<td><input type='hidden' name='itemId' value=".$row['aid'].">".$row['aid']."</td>";
                             echo "<td>" . $row['nome'] . "</td>";
                             echo "<td>" . $row['morada'] . "</td>";
                             echo "<td>" . $row['codigoPostal'] . "</td>";
                             echo "<td>" . $row['tipo'] . "</td>";
-                            echo "<td class='text-center'><a href='Delete'>Delete</a></td>";
+                            echo "<td><input type='submit' value='Eliminar armazem' name='delete_armazem' class=btnL></td>";
+                            echo"</form>";
                             echo "</tr>";
                         }
-                    }
+                    #}
                     ?>
         
                     </tbody>
