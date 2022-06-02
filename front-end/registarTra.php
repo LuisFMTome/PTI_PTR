@@ -13,28 +13,21 @@
         die(print_r(sqlsrv_errors(), true));
     }
 
-    if(isset($_POST["addTra"])){
+    #if(isset($_POST["addTra"])){
 
         $categoria =   $_POST["categoria"];
         $matricula =   $_POST["matricula"];
-        $produto =   $_POST["quantidade"];
-
-        //echo "<p>$categoria</p>";
-        //echo "<p>$matricula</p>";
-        //echo "<p>$produto</p>";
-        
+        $produto =   $_POST["produto"];
         $mailTran = $_SESSION['email'];
-
+        echo $matricula;
 
         //verificar se a matricula esta em uso ou nao
 
         $stmt = "SELECT * FROM [dbo].[Veiculo] WHERE matricula='{$matricula}'";
-        $queryy = sqlsrv_query($conn, $stmt, array(), array( "Scrollable" => 'static' ));
-        $row_count = sqlsrv_num_rows($queryy);
-
-        echo "<p>$queryy</p>";
-        echo "<p>$row_count</p>";
-        if ($row_count === 0){
+        $queryy = sqlsrv_query($conn, $stmt); #array(), array( "Scrollable" => 'static' ));
+        
+        echo $queryy;
+        if ($queryy){
 
             $query = "SELECT * FROM [dbo].[Transportadora] WHERE email='{$mailTran}'";
             $result = sqlsrv_query($conn, $query);
@@ -60,15 +53,16 @@
             }
 
             $_SESSION['msg'] = "Veículo registado";
-            header('location: registoTransportes.php');
-
+            header( "refresh:5; url=registoTransportes.php" );
+            #header('location: registoTransportes.php');
 
         }else{
-
             $_SESSION['error'] = "Matricula registada anteriormente";
-            header('location: registoTransportes.php');
+            header( "refresh:5; url=registoTransportes.php" );
+            #header('location: registoTransportes.php');
+
 
         }
 
-    }
+    #}
 ?>

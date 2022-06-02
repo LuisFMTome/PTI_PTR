@@ -1,17 +1,6 @@
 <?php 
 session_start();
-
-$serverName = "sqldb05server1.database.windows.net"; // update me
-$connectionOptions = array(
-    "Database" => "sqldb1", // update me
-    "Uid" => "ptrptisqldb", // update me
-    "PWD" => "2SdULWb5ePk83jA" // update me
-);
-//Establishes the connection
-$conn = sqlsrv_connect($serverName, $connectionOptions);
-if($conn === false) {
-    die(print_r(sqlsrv_errors(), true));
-}
+include "openconn.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -114,17 +103,26 @@ if($conn === false) {
                         <div class="row mt-3">
                             <div class="col-md-12">
                                 <label class="labels">Categoria</label>
-                                <select id="" class="form-control" name="categoria">
-                                    <option value="Ligeiro sem reboque">Ligeiro sem reboque</option>
-                                    <option value="Ligeiro com reboque">Ligeiro com reboque</option>
-                                    <option value="Pesado">Pesado</option>
-                                </select>
+                                <input type="text" class="form-control" placeholder="Categoria" name="categoria" value="">
                             </div>
                             <div class="col-md-12">
                                 <label class="labels">Matrícula</label>
                                 <input type="text" class="form-control" placeholder="Matrícula" name="matricula" value="">
                             </div>
-                            <div class="col-md-12">
+                            <!--<div class="col-md-12">
+
+                                <label class="labels">Capacidade</label><br>
+                                <label for="10">10</label>
+                                <input type="radio" name="produto" value="10">
+                                <label for="30">30</label>
+                                <input type="radio" name="produto" value="30">
+                                <label for="50">50</label>
+                                <input type="radio" name="produto" value="50">
+                                <label for="70">70</label>
+                                <input type="radio" name="produto" value="70">
+                                <label for="100">100</label>
+                                <input type="radio" name="produto" value="100">
+                                <select id="choose2" name="tipoUtili" onchange= "getOption()">
                                 <label class="labels">Quantidade de produtos</label>
                                 <select id="choose2" name="quantidade" >
                                     <option value="10">10</option>
@@ -132,8 +130,9 @@ if($conn === false) {
                                     <option value="50">50</option>
                                     <option value="70">70</option>
                                     <option value="100">100</option>
+                                    <input type="hidden" class="form-control" name="produto" value="">
                                 </select>
-                            </div>
+                            </div>-->
                             
                     
                         </div>
@@ -149,55 +148,38 @@ if($conn === false) {
                 <div style="overflow-x:auto;">
                 <table class="table table-bordered table-lg table-light align-top">
                     <thead>
-                      <tr>
-                        <th scope="col" class="text-center">Trasportadora</th>
-                        <th scope="col" class="text-center">Matrícula</th>
-                        <th scope="col" class="text-center">Categoria</th>
-                        <th scope="col" class="text-center">Quantidade</th>
-                        <th scope="col" class="text-center">Acção</th>
-                      </tr>
+                        <tr>
+                            <th scope="col" class="text-center">Veículo</th>
+                            <th scope="col" class="text-center">Matrícula</th>
+                            <th scope="col" class="text-center">Produto</th>
+                            <th scope="col" class="text-center">Acção</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    <?php 
-                        # ir buscar nif de transportadora logged in
-
-                        $mailTran = $_SESSION['email'];
-                        $query = "SELECT * FROM [dbo].[Transportadora] WHERE email='{$mailTran}'";
-                        $result = sqlsrv_query($conn, $query);
-
-                        if( $result === false ) {
-                            die( print_r( sqlsrv_errors(), true));
+                    <?php
+                    $transportadora_query = "SELECT * FROM [dbo].[Transportadora] WHERE email= '$_SESSION[email]'";
+                    $transportadora = sqlsrv_query($conn, $transportadora_query);
+                    #$row_count1 = sqlsrv_num_rows($fornecedor);
+                    #if ($row_count1 > 0) {
+                    $row = sqlsrv_fetch_array($transportadora);
+                    $nif = $row['nif'];
+                    $query = "SELECT * FROM [dbo].[Veiculo] WHERE transportadora= $nif";
+                    $results = sqlsrv_query($conn, $query);
+                    $row = 0;
+                    $_SESSION["itemType"] = "tranporte";
+                        while($row = sqlsrv_fetch_array($results)) {
+                            echo"<tr>";
+                            echo "<form action='deleteItem.php' method='post'>";
+                            echo"<td class=text-center>" . $row['categoria'] . "</td>";
+                            echo "<td><input type='hidden' name='itemId' value=".$row['matricula'].">".$row['matricula']."</td>";
+                            echo"<td class=text-center>" . $row['transportadora'] . "</td>";
+                            echo "<td><input type='submit' value='Eliminar transporte' name='delete_transporte' class=btnL></td>";
+                            echo "</form>";
+                            //echo"<td class=text-center>" . $row['produto'] . "</td>";
+                            echo"<tr>";
                         }
-                        if( sqlsrv_fetch( $result ) === false) {
-                            die( print_r( sqlsrv_errors(), true));
-                        }
-
-                        $nif = sqlsrv_get_field( $result, 0);
-                        $nomeTrans = sqlsrv_get_field( $result, 1);
-
-                        # ir buscar veiculos associados a esta transportadora
-
-                        $user_check_query = "SELECT * FROM [dbo].[Veiculo] WHERE transportadora ='$nif'";
-                        //$stmt = sqlsrv_query( $conn, $user_check_query );
-                        $veiculos = sqlsrv_query($conn, $user_check_query);
-                        $query = sqlsrv_query($conn, $user_check_query, array(), array( "Scrollable" => 'static' ));
-                        $row_count = sqlsrv_num_rows($query);
-
-
-                        if ($row_count > 0) {
-                            while ($row = sqlsrv_fetch_array($veiculos)) {
-
-                                echo "<tr>";
-                                echo "<td>" . $nomeTrans . "</td>";
-                                echo "<td>" . $row['matricula'] . "</td>";
-                                echo "<td>" . $row['categoria'] . "</td>";
-                                echo "<td>" . $row['quantidade'] . "</td>";
-                                echo "<td class='text-center'><a href='Delete'>Delete</a></td>";
-                                echo "</tr>";
-                            }
-                        }
-                        ?>
-
+                    
+                    ?>
                     </tbody>
                   </table>
                 </div>
