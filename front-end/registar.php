@@ -54,18 +54,18 @@ if(isset($_POST["registar"])){
                 if( $var === false ) {
                     die( print_r( sqlsrv_errors(), true));
             }
-            $_SESSION['status'] = "Conta criada com sucesso";
+            $_SESSION['status'] = "Conta de consumidor criada com sucesso";
             $_SESSION['statusCode'] = "success";
-            header('location: conta.php');
+            header('location: criar_conta.php');
 
             
             
         }else{
 
             //print("email ja existe");
-            $_SESSION['status'] = "Email ja existente";
-            $_SESSION['statusCode'] = "error";
-            header('location: conta.php');
+            $_SESSION['status'] = -1;
+            $_SESSION['Code'] = "error";
+            header('location: criar_conta.php');
             
 
         }
@@ -99,15 +99,15 @@ if(isset($_POST["registar"])){
                     die( print_r( sqlsrv_errors(), true));
             }
 
-            $_SESSION['status'] = "Conta criada com sucesso";
+            $_SESSION['status'] = "Conta de transportadora criada com sucesso";
             $_SESSION['statusCode'] = "success";
-            header('location: conta.php');
+            header('location: criar_conta.php');
             
         }else{
 
-            $_SESSION['status'] = "Email ja existente";
-            $_SESSION['statusCode'] = "error";
-            header('location: conta.php');
+            $_SESSION['status'] = -1;
+            $_SESSION['Code'] = "error";
+            header('location: criar_conta.php');
             
 
         }
@@ -140,16 +140,16 @@ if(isset($_POST["registar"])){
                 if( $var === false ) {
                     die( print_r( sqlsrv_errors(), true));
             }
-            $_SESSION['status'] = "Conta criada com sucesso";
+            $_SESSION['status'] = "Conta de fornecedor criada com sucesso";
             $_SESSION['statusCode'] = "success";
-            header('location: conta.php');
+            header('location: login.php');
             
         }else{
 
             //print("email ja existe");
-            $_SESSION['status'] = "Email ja existente";
-            $_SESSION['statusCode'] = "error";
-            header('location: conta.php');
+            $_SESSION['status'] = -1;
+            $_SESSION['Code'] = "error";
+            header('location: criar_conta.php');
             
 
         }
@@ -157,4 +157,5 @@ if(isset($_POST["registar"])){
     }
 
 }
+
 ?>

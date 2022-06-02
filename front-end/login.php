@@ -37,7 +37,7 @@ if (isset($_POST["login"])) {
         } else {
             if (sqlsrv_has_rows($result) != -1) {
                 echo ("Email/password not found");
-                $_SESSION["status"] = "Conta com o email inserido não existe";
+                $_SESSION["status"] = "Não existe consumidor com este email!";
                 $_SESSION["statusCode"] = "error";
                 header("location: conta.php");
             } else {
@@ -62,7 +62,7 @@ if (isset($_POST["login"])) {
         } else {
             if (sqlsrv_has_rows($result) != -1) {
                 echo ("Email/password not found");
-                $_SESSION["status"] = "Conta com o email inserido não existe";
+                $_SESSION["status"] = "Não existe transportadora com este email!";
                 $_SESSION["statusCode"] = "error";
                 header("location: conta.php");
             } else {
@@ -87,7 +87,7 @@ if (isset($_POST["login"])) {
         } else {
             if (sqlsrv_has_rows($result) != -1) {
                 echo ("Email/password not found");
-                $_SESSION["status"] = "Conta com o email inserido não existe";
+                $_SESSION["status"] = "Não existe fornecedor com este email!";
                 $_SESSION["statusCode"] = "error";
                 header("location: conta.php");
             } else {

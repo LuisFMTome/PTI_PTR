@@ -51,6 +51,7 @@ $row_count = sqlsrv_num_rows($query);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
     <link href="registoArmazem.css" rel="stylesheet"/>
     <link href="style.css" rel="stylesheet"/>
+    <script src="sweetalert2.all.min.js"></script>
 </head>
 <body>
     <nav>
@@ -225,5 +226,38 @@ $row_count = sqlsrv_num_rows($query);
                 </div>
             </div>
         </div>
+
+        <?php
+
+if (isset($_SESSION['msg']) != "") {
+
+?>
+
+    <script>
+            
+            document.addEventListener("DOMContentLoaded", function(event) {
+                
+                Swal.fire({
+                title: "<?php echo $_SESSION['msg']; ?>",
+                icon: "success",
+            });
+            
+            });
+
+
+        
+    </script>
+
+<?php
+    
+} 
+
+
+unset($_SESSION['msg']);
+
+?>
+
+    
+
     </section>
     </body>

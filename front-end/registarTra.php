@@ -65,7 +65,7 @@
 
         }else{
 
-            $_SESSION['msg'] = "matricula registada anteriormente";
+            $_SESSION['error'] = "Matricula registada anteriormente";
             header('location: registoTransportes.php');
 
         }

@@ -27,6 +27,7 @@ if($conn === false) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
     <link href="registoArmazem.css" rel="stylesheet"/>
     <link href="style.css" rel="stylesheet"/>
+    <script src="sweetalert2.all.min.js"></script>
 </head>
 <body>
     <nav>
@@ -231,19 +232,49 @@ if($conn === false) {
 
     <?php
 
-        //echo "<p>teste</p>";
-        if (isset($_SESSION['msg']) != "") {
+    if (isset($_SESSION['msg']) == "Veículo registado") {
 
-            //echo "<p>teste2</p>";
-        ?>
+    ?>
 
-            <script>
-                alert('<?php echo $_SESSION['msg']; ?>');
-            </script>
+        <script>
+                
+                document.addEventListener("DOMContentLoaded", function(event) {
+                    
+                    swal({
+                    title: "<?php echo $_SESSION['msg']; ?>",
+                    icon: "success",
+                });
+                
+                });
 
-        <?php
-            unset($_SESSION['msg']);
-        }
 
-        ?>
+            
+        </script>
+
+    <?php
+        
+    }elseif(isset($_SESSION['error']) == "Matricula registada anteriormente"){ ?>
+
+        <script>
+                
+                document.addEventListener("DOMContentLoaded", function(event) {
+                    
+                    Swal.fire({
+                    title: "<?php echo $_SESSION['error']; ?>",
+                    text: "Utilize outra matricula ou registe outro veículo",
+                    icon: "warning",
+                });
+                
+                });
+
+
+            
+        </script>
+ <?php
+    }
+
+
+    unset($_SESSION['msg']);
+
+    ?>
     </body>
