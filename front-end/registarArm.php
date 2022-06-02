@@ -52,7 +52,7 @@
         if( $var === false ) {
             die( print_r( sqlsrv_errors(), true));
         }
-
+        $_SESSION['msg'] = "Armazém registado com sucesso";
         header('location: registoArmazem.php');
 
     }

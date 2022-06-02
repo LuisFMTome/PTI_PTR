@@ -17,6 +17,7 @@ session_start();
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
     <link href="style.css" rel="stylesheet" />
+    <script src="sweetalert2.all.min.js"></script>
     <!--<script src="js/libs/jquery.min.js" type="text/javascript"></script>-->
     <!--<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="sweetalert2.all.min.js"></script> -->
@@ -125,18 +126,54 @@ session_start();
     <?php
 
     //echo "<p>teste</p>";
-    if (isset($_SESSION['status']) != "") {
+    if (isset($_SESSION['statusCode']) == "success") {
 
         //echo "<p>teste2</p>";
     ?>
 
         <script>
-            alert('<?php echo $_SESSION['status']; ?>');
+                
+                document.addEventListener("DOMContentLoaded", function(event) {
+                    
+                    Swal.fire({
+                    title: "<?php echo $_SESSION['status']; ?>",
+                    text: "Agora é só fazer login!",
+                    icon: "success",
+                });
+                
+                });
+
+
+            
         </script>
 
-    <?php
-        unset($_SESSION['status']);
-    }
+    <?php 
+         }elseif(isset($_SESSION['Code']) == "error"){
+                ?>
+              
+        
+        <script>
+                document.addEventListener("DOMContentLoaded", function(event) {
+                    
+                    Swal.fire({
+                    title: "Email já utilizado!",
+                    text: "Tente outra vez",
+                    icon: "warning",
+                });
+                
+                });
+
+
+            
+        </script>
+        <?php 
+    
+         }
+         unset($_SESSION['status']);
+         unset($_SESSION['statusCode']);
+
+        
+    
 
     ?>
 
