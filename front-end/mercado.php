@@ -45,6 +45,7 @@ session_start();
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
     <link href="style.css" rel="stylesheet"/>
+    <script src="sweetalert2.all.min.js"></script>
 </head>
 <body>
     <nav>
@@ -53,15 +54,60 @@ session_start();
                 <a href="index.html">
                     <img src="img/logotipo.png" class="logo">
                 </a>
-                <input type="text" class="form-control">
-                <span class="input-group-text"><i class="fa fa-search"></i></span>
+                <!--<input type="text" class="form-control">
+                <span class="input-group-text"><i class="fa fa-search"></i></span>-->
             </div>
             <div class="menu-bar">
                 <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="produtos.html">Mercado</a></li>
-                    <li><a href="conta.html"><i class="fa fa-user"></i></a></li>
-                    <li><a href="carinho.html"><i class="fa fa-shopping-basket"></i></a></li>
+                    <li><a href="index.php">Home</a></li>
+                    <li><a href="mercado.php">Mercado</a></li>
+                    <?php 
+                    if (isset($_SESSION['email']) != "") {
+
+                        if($_SESSION["tipo"] == "Consumidor"){
+
+                    ?>
+                        <li><a href="perfilUtilizador.php">Perfil</a></li>
+
+                    <?php 
+                        }elseif($_SESSION["tipo"] == "Fornecedor"){
+
+                            ?>
+                            
+                            <li><a href="perfilFornecedor.php">Perfil</a></li>
+
+                            <?php
+                        }elseif($_SESSION["tipo"] == "Transportadora"){
+
+                            ?>
+                            
+                            <li><a href="perfilTransportadora.php">Perfil</a></li>
+
+                            <?php
+                        }
+
+                    }?>
+                    
+                    <li><a href="carrinho.php">Carrinho</a></li>
+
+                    <?php 
+                    if (isset($_SESSION['email']) != "") {
+
+                    ?>
+                    
+                    <li><a href="logout.php">Logout</a></li>
+
+                    <?php    
+                    }else{
+
+                    ?>
+                    
+                    <li><a href="conta.php">Login</i></a></li>
+                    
+                    <?php
+
+                    }
+                    ?>
                 </ul>
             </div>
         </div>
@@ -116,9 +162,11 @@ session_start();
     <section class="produtos">
         <div class="container">
             <div class="title-box">
+                
                 <h2>Produtos</h2>
             </div>
             <div class="row">
+            
             <?php
                 $counter = 0;
                
@@ -126,32 +174,48 @@ session_start();
 
                     while ($row2 = sqlsrv_fetch_array($queryProdutos_execute)) {
                         if($counter < $produtosPágina){
+                            $template = "my-template".$row2['pid'];
+                            $templateButton = "#".$template;
                         ?>
+                        <template id='<?=$template?>'>
+                            <swal-param name="showConfirmButton" value="false" />
+                            <swal-image src="img/categoria1.jpeg" width="auto" height="auto" alt="<?php  echo $row2['nome'];?>" />
+                            <swal-title>Detalhes do produto <?php  echo $row2['nome'];?> </swal-title>
+                            <swal-html> Preço </br> Pegada ecológica </swal-html>
+
+                            <swal-button type="close">
+                            </swal-button>
+                        </template>
+                    
+                    
                 
                     
-                    
-            
-                <div class="col-md-3">
-                    <div class="product-top">
+                        <div class="card mx-auto col-md-3 col-10 mt-5">
                         <a href="product.php?id=<?=$row2['pid']?>">
-                        <img src="img/categoria1.jpeg">
+                        <img src="img/categoria1.jpeg" class='mx-auto img-thumbnail' width="auto" height="auto"/>
                         </a>
-                        <div class="overlay-right">
-                            <button type="button" class="btn btn-secondary" title="Adicionar ao Carrinho">
-                                <i class="fa fa-shopping-cart"></i>
-                            </button>
+                            
+                            <div class="card-body text-center mx-auto">
+                                <div class='cvp'>
+                                    <h5 class="card-title font-weight-bold"><?php  echo $row2['nome'];?></h5>
+                                    <p class="card-text">299€</p>
+                                    <button class='btn btn-secondary' data-swal-template='<?=$templateButton?>'>
+                                    Ver Detalhes
+                                    </button>
+                                    <br/>
+                                    <button type="button" class="btn btn-secondary" title="Adicionar ao Carrinho">
+                                        <i class="fa fa-shopping-cart"></i>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="product-bottom text-center">
-                        <h3><?php  echo $row2['nome'];?></h3>
-                        <h5>900€</h5>
 
-                    </div>
-                </div>
+                    
+                
                 <?php ++$counter;
                 
-                
                     if($counter % 3 == 0){
+                        
                         echo "</div>";
                         echo "<div class='row'>";
                         
@@ -261,6 +325,13 @@ session_start();
     }
 
 ?>
+<script>
+    Swal.bindClickHandler()
+
+Swal.mixin({
+  toast: true,
+}).bindClickHandler('data-swal-toast-template')
+</script>
                      
                     </tbody>
                 </table>

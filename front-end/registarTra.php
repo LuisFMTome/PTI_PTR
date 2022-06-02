@@ -52,14 +52,15 @@
                 die( print_r( sqlsrv_errors(), true));
             }
 
-            $_SESSION['msg'] = "matricula registada";
+            $_SESSION['msg'] = "Veículo registado";
             header( "refresh:5; url=registoTransportes.php" );
-
+            #header('location: registoTransportes.php');
 
         }else{
-
-            $_SESSION['msg'] = "matricula ja registada";
+            $_SESSION['error'] = "Matricula registada anteriormente";
             header( "refresh:5; url=registoTransportes.php" );
+            #header('location: registoTransportes.php');
+
 
         }
 

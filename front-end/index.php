@@ -21,18 +21,21 @@ session_start();
     <link href="style.css" rel="stylesheet"/>
 </head>
 <body>
-    <nav class="navigation">
+<nav class="navigation">
         <div class="top-nav-bar">
+            
             <div class="search-box">
-                <a href="index.html">
+                <a href="index.php">
                     <img src="img/logotipo.png" class="logo">
                 </a>
-                <input type="text" class="form-control">
-                <span class="input-group-text"><i class="fa fa-search"></i></span>
+                <!--<input type="text" class="form-control">
+                <span class="input-group-text"><i class="fa fa-search"></i></span>-->
             </div>
+            
             <div class="menu-bar">
                 <ul>
-
+                    <li><a href="index.php">Home</a></li>
+                    <li><a href="mercado.php">Mercado</a></li>
 
                     <?php 
                     if (isset($_SESSION['email']) != "") {
@@ -60,29 +63,29 @@ session_start();
                         }
 
                     }?>
-                    <li><a href="index.php">Home</a></li>
-                    <li><a href="produtos.html">Mercado</a></li>
+                    
+                    <li><a href="carrinho.php">Carrinho</a></li>
 
                     <?php 
                     if (isset($_SESSION['email']) != "") {
 
                     ?>
                     
-                    <li><a href="logout.php">logout</a></li>
+                    <li><a href="logout.php">Logout</a></li>
 
                     <?php    
                     }else{
 
                     ?>
                     
-                    <li><a href="conta.php"><i class="fa fa-user"></i></a></li>
+                    <li><a href="conta.php">Login</i></a></li>
                     
                     <?php
 
                     }
                     ?>
 
-                    <li><a href="carinho.html"><i class="fa fa-shopping-basket"></i></a></li>
+                    
                 </ul>
             </div>
         </div>
@@ -101,7 +104,7 @@ session_start();
                 </h1>
                 <h1>Dê às suas compras <br> um novo impacto ambiental</h1>
                 <p>Todas as suas compras...</p>
-                <a href="produtos.html" class="btn">Compre agora<i class="fa fa-arrow-right"></i></a>
+                <a href="mercado.php" class="btn">Compre agora<i class="fa fa-arrow-right"></i></a>
             </div>
             <div class="col-2">
                 <img src="img/product2.webp">

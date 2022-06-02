@@ -16,6 +16,7 @@ include "openconn.php";
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
     <link href="registoArmazem.css" rel="stylesheet"/>
     <link href="style.css" rel="stylesheet"/>
+    <script src="sweetalert2.all.min.js"></script>
 </head>
 <body>
     <nav>
@@ -24,13 +25,13 @@ include "openconn.php";
                 <a href="index.php">
                     <img src="img/logotipo.png" class="logo">
                 </a>
-                <input type="text" class="form-control">
-                <span class="input-group-text"><i class="fa fa-search"></i></span>
+                <!--<input type="text" class="form-control">
+                <span class="input-group-text"><i class="fa fa-search"></i></span>-->
             </div>
             <div class="menu-bar">
                 <ul>
                     <li><a href="index.php">Home</a></li>
-                    <li><a href="produtos.html">Mercado</a></li>
+                    <li><a href="mercado.php">Mercado</a></li>
                     <li class="dropdown">
                         <button class="dropbtn"><i class="fa fa-plus-circle"></i>
                           <i class="fa fa-caret-down"></i>
@@ -39,8 +40,53 @@ include "openconn.php";
                           <a href="registoTransportes.php">Registar Transporte</a>
                         </div>
                     </li>
-                    <li><a href="conta.php"><i class="fa fa-user"></i></a></li>
-                    <li><a href="carinho.html"><i class="fa fa-shopping-basket"></i></a></li>
+                    <?php 
+                    if (isset($_SESSION['email']) != "") {
+
+                        if($_SESSION["tipo"] == "Consumidor"){
+
+                    ?>
+                        <li><a href="perfilUtilizador.php">Perfil</a></li>
+
+                    <?php 
+                        }elseif($_SESSION["tipo"] == "Fornecedor"){
+
+                            ?>
+                            
+                            <li><a href="perfilFornecedor.php">Perfil</a></li>
+
+                            <?php
+                        }elseif($_SESSION["tipo"] == "Transportadora"){
+
+                            ?>
+                            
+                            <li><a href="perfilTransportadora.php">Perfil</a></li>
+
+                            <?php
+                        }
+
+                    }?>
+                    
+                    <li><a href="carrinho.php">Carrinho</a></li>
+
+                    <?php 
+                    if (isset($_SESSION['email']) != "") {
+
+                    ?>
+                    
+                    <li><a href="logout.php">Logout</a></li>
+
+                    <?php    
+                    }else{
+
+                    ?>
+                    
+                    <li><a href="conta.php">Login</i></a></li>
+                    
+                    <?php
+
+                    }
+                    ?>
                 </ul>
             </div>
         </div>
@@ -63,7 +109,8 @@ include "openconn.php";
                                 <label class="labels">Matrícula</label>
                                 <input type="text" class="form-control" placeholder="Matrícula" name="matricula" value="">
                             </div>
-                            <div class="col-md-12">
+                            <!--<div class="col-md-12">
+
                                 <label class="labels">Capacidade</label><br>
                                 <label for="10">10</label>
                                 <input type="radio" name="produto" value="10">
@@ -75,15 +122,17 @@ include "openconn.php";
                                 <input type="radio" name="produto" value="70">
                                 <label for="100">100</label>
                                 <input type="radio" name="produto" value="100">
-                                <!--<select id="choose2" name="tipoUtili" onchange= "getOption()">
+                                <select id="choose2" name="tipoUtili" onchange= "getOption()">
+                                <label class="labels">Quantidade de produtos</label>
+                                <select id="choose2" name="quantidade" >
                                     <option value="10">10</option>
                                     <option value="20">30</option>
                                     <option value="50">50</option>
                                     <option value="70">70</option>
                                     <option value="100">100</option>
                                     <input type="hidden" class="form-control" name="produto" value="">
-                                </select>-->
-                            </div>
+                                </select>
+                            </div>-->
                             
                     
                         </div>
@@ -165,19 +214,49 @@ include "openconn.php";
 
     <?php
 
-        //echo "<p>teste</p>";
-        if (isset($_SESSION['msg']) != "") {
+    if (isset($_SESSION['msg']) == "Veículo registado") {
 
-            //echo "<p>teste2</p>";
-        ?>
+    ?>
 
-            <script>
-                alert('<?php echo $_SESSION['msg']; ?>');
-            </script>
+        <script>
+                
+                document.addEventListener("DOMContentLoaded", function(event) {
+                    
+                    swal({
+                    title: "<?php echo $_SESSION['msg']; ?>",
+                    icon: "success",
+                });
+                
+                });
 
-        <?php
-            unset($_SESSION['msg']);
-        }
 
-        ?>
+            
+        </script>
+
+    <?php
+        
+    }elseif(isset($_SESSION['error']) == "Matricula registada anteriormente"){ ?>
+
+        <script>
+                
+                document.addEventListener("DOMContentLoaded", function(event) {
+                    
+                    Swal.fire({
+                    title: "<?php echo $_SESSION['error']; ?>",
+                    text: "Utilize outra matricula ou registe outro veículo",
+                    icon: "warning",
+                });
+                
+                });
+
+
+            
+        </script>
+ <?php
+    }
+
+
+    unset($_SESSION['msg']);
+
+    ?>
     </body>

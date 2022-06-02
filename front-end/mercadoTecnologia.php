@@ -58,10 +58,55 @@ session_start();
             </div>
             <div class="menu-bar">
                 <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="produtos.html">Mercado</a></li>
-                    <li><a href="conta.html"><i class="fa fa-user"></i></a></li>
-                    <li><a href="carinho.html"><i class="fa fa-shopping-basket"></i></a></li>
+                    <li><a href="index.php">Home</a></li>
+                    <li><a href="mercado.php">Mercado</a></li>
+                    <?php 
+                    if (isset($_SESSION['email']) != "") {
+
+                        if($_SESSION["tipo"] == "Consumidor"){
+
+                    ?>
+                        <li><a href="perfilUtilizador.php">Perfil</a></li>
+
+                    <?php 
+                        }elseif($_SESSION["tipo"] == "Fornecedor"){
+
+                            ?>
+                            
+                            <li><a href="perfilFornecedor.php">Perfil</a></li>
+
+                            <?php
+                        }elseif($_SESSION["tipo"] == "Transportadora"){
+
+                            ?>
+                            
+                            <li><a href="perfilTransportadora.php">Perfil</a></li>
+
+                            <?php
+                        }
+
+                    }?>
+                    
+                    <li><a href="carrinho.php">Carrinho</a></li>
+
+                    <?php 
+                    if (isset($_SESSION['email']) != "") {
+
+                    ?>
+                    
+                    <li><a href="logout.php">Logout</a></li>
+
+                    <?php    
+                    }else{
+
+                    ?>
+                    
+                    <li><a href="conta.php">Login</i></a></li>
+                    
+                    <?php
+
+                    }
+                    ?>
                 </ul>
             </div>
         </div>
@@ -131,23 +176,22 @@ session_start();
                     
                     
             
-                <div class="col-md-3">
-                    <div class="product-top">
-                        <a href="product.php?id=<?=$row2['pid']?>">
-                        <img src="img/categoria1.jpeg">
-                        </a>
-                        <div class="overlay-right">
-                            <button type="button" class="btn btn-secondary" title="Adicionar ao Carrinho">
-                                <i class="fa fa-shopping-cart"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="product-bottom text-center">
-                        <h3><?php  echo $row2['nome'];?></h3>
-                        <h5>900€</h5>
-
-                    </div>
-                </div>
+                            <div class="card mx-auto col-md-3 col-10 mt-5">
+                                <a href="product.php?id=<?=$row2['pid']?>">
+                                <img src="img/categoria1.jpeg" class='mx-auto img-thumbnail' width="auto" height="auto"/>
+                                </a>
+                                    
+                                    <div class="card-body text-center mx-auto">
+                                        <div class='cvp'>
+                                            <h5 class="card-title font-weight-bold"><?php  echo $row2['nome'];?></h5>
+                                            <p class="card-text">299€</p>
+                                            <a href="#" class="btn details px-auto">Ver Detalhes</a><br />
+                                            <button type="button" class="btn btn-secondary" title="Adicionar ao Carrinho">
+                                                <i class="fa fa-shopping-cart"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                            </div>
                 <?php ++$counter;
                 
                 

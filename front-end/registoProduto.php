@@ -48,6 +48,7 @@ $row_count = sqlsrv_num_rows($query);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
     <link href="registoArmazem.css" rel="stylesheet"/>
     <link href="style.css" rel="stylesheet"/>
+    <script src="sweetalert2.all.min.js"></script>
 </head>
 <body>
     <nav>
@@ -56,13 +57,13 @@ $row_count = sqlsrv_num_rows($query);
                 <a href="index.php">
                     <img src="img/logotipo.png" class="logo">
                 </a>
-                <input type="text" class="form-control">
-                <span class="input-group-text"><i class="fa fa-search"></i></span>
+                <!--<input type="text" class="form-control">
+                <span class="input-group-text"><i class="fa fa-search"></i></span>-->
             </div>
             <div class="menu-bar">
                 <ul>
                     <li><a href="index.php">Home</a></li>
-                    <li><a href="produtos.html">Mercado</a></li>
+                    <li><a href="mercado.php">Mercado</a></li>
                     <li class="dropdown">
                         <button class="dropbtn"><i class="fa fa-plus-circle"></i>
                           <i class="fa fa-caret-down"></i>
@@ -70,11 +71,55 @@ $row_count = sqlsrv_num_rows($query);
                         <div class="dropdown-content">
                           <a href="registoProduto.php">Registar Produtos</a>
                           <a href="registoArmazem.php">Registar Armazém</a>
-                          
                         </div>
                     </li>
-                    <li><a href="conta.php"><i class="fa fa-user"></i></a></li>
-                    <li><a href="carinho.html"><i class="fa fa-shopping-basket"></i></a></li>
+                    <?php 
+                    if (isset($_SESSION['email']) != "") {
+
+                        if($_SESSION["tipo"] == "Consumidor"){
+
+                    ?>
+                        <li><a href="perfilUtilizador.php">Perfil</a></li>
+
+                    <?php 
+                        }elseif($_SESSION["tipo"] == "Fornecedor"){
+
+                            ?>
+                            
+                            <li><a href="perfilFornecedor.php">Perfil</a></li>
+
+                            <?php
+                        }elseif($_SESSION["tipo"] == "Transportadora"){
+
+                            ?>
+                            
+                            <li><a href="perfilTransportadora.php">Perfil</a></li>
+
+                            <?php
+                        }
+
+                    }?>
+                    
+                    <li><a href="carrinho.php">Carrinho</a></li>
+
+                    <?php 
+                    if (isset($_SESSION['email']) != "") {
+
+                    ?>
+                    
+                    <li><a href="logout.php">Logout</a></li>
+
+                    <?php    
+                    }else{
+
+                    ?>
+                    
+                    <li><a href="conta.php">Login</i></a></li>
+                    
+                    <?php
+
+                    }
+                    ?>
                 </ul>
             </div>
         </div>
@@ -279,21 +324,33 @@ $row_count = sqlsrv_num_rows($query);
 
 
     
-    <?php
+<?php
 
-        //echo "<p>teste</p>";
-        if (isset($_SESSION['msg']) != "") {
+if (isset($_SESSION['msg']) != "") {
 
-            //echo "<p>teste2</p>";
-        ?>
+?>
 
-            <script>
-                alert('<?php echo $_SESSION['msg']; ?>');
-            </script>
+    <script>
+            
+            document.addEventListener("DOMContentLoaded", function(event) {
+                
+                Swal.fire({
+                title: "<?php echo $_SESSION['msg']; ?>",
+                icon: "success",
+            });
+            
+            });
 
-        <?php
-            unset($_SESSION['msg']);
-        }
 
-        ?>
+        
+    </script>
+
+<?php
+    
+} 
+
+
+unset($_SESSION['msg']);
+
+?>
     </body>

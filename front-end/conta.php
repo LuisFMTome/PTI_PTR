@@ -17,6 +17,7 @@ session_start();
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
     <link href="style.css" rel="stylesheet" />
+    <script src="sweetalert2.all.min.js"></script>
     <!--<script src="js/libs/jquery.min.js" type="text/javascript"></script>-->
     <!--<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="sweetalert2.all.min.js"></script> -->
@@ -37,9 +38,9 @@ session_start();
             <div class="menu-bar">
                 <ul>
                     <li><a href="index.php">Home</a></li>
-                    <li><a href="produtos.html">Mercado</a></li>
-                    <li><a href="conta.php"><i class="fa fa-user"></i></a></li>
-                    <li><a href="carinho.html"><i class="fa fa-shopping-basket"></i></a></li>
+                    <li><a href="mercado.php">Mercado</a></li>
+                    <li><a href="conta.php">Login</a></li>
+                    <li><a href="carinho.html">Carrinho</a></li>
                 </ul>
             </div>
         </div>
@@ -61,28 +62,11 @@ session_start();
                         <input type="password" placeholder="password" name="pass" required>
                         <input type="submit" value="Login" class="btnL" name="login">
                         <a href="">Esqueci Password</a>
+                        <br>
+                        <a href="criar_conta.php">Criar Conta</a>
                     </form>
                 </div>
             </div>
-            <div class="col-2">
-                <div class="form-container">
-                    <h2>Registar</h2>
-                    <form id="RegisterForm" action="registar.php" method="post">
-                        <label for="users">Escolha o tipo de utilizador:</label>
-                        <select id="choose2" name="tipoUtili" onchange= "getOption()">
-                            <option value="comprador">Consumidor</option>
-                            <option value="transportadora">Transportadora</option>
-                            <option value="fornecedor">Fornecedor</option>
-                        </select>
-                        <input type="text" placeholder="username" name="nome" required>
-                        <input type="password" placeholder="password" name="pass" required>
-                        <input type="email" placeholder="email" name="email" required>
-                        <?php echo "<div id='nif'></div>";?>
-                        <input type="submit" value="Registar" name="registar" class="btnL">
-                    </form>
-                </div>
-            </div>
-
         </div>
     </div>
 
@@ -150,7 +134,19 @@ session_start();
     ?>
 
         <script>
-            alert('<?php echo $_SESSION['status']; ?>');
+                
+                document.addEventListener("DOMContentLoaded", function(event) {
+                    
+                    Swal.fire({
+                    title: "<?php echo $_SESSION['status']; ?>",
+                    text: "Tente outra vez",
+                    icon: "warning",
+                });
+                
+                });
+
+
+            
         </script>
 
     <?php
