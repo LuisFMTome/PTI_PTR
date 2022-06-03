@@ -27,7 +27,38 @@ session_start();
     $total_produtos = sqlsrv_num_rows($total_produtos_execute);
     $numeroPaginas = ceil($total_produtos/$produtosPágina);
 
+    
 
+if(isset($_POST["addCart"])){
+
+    if(isset($_SESSION["cart"])){
+
+        $item_array_id = array_column($_SESSION["cart"], "item_id");        
+        if(!in_array($_GET["id"], $item_array_id)){
+
+            $count = count($_SESSION["cart"]);
+            $item_array = array(
+                'item_id' => $_GET["id"]
+            );
+            $_SESSION["cart"][$count] = $item_array;
+
+        }else{
+
+            echo '<script>alert("item ja no carrinho")</script>';
+
+        }
+
+    }else{
+
+        $item_array = array(
+            'item_id' => $_GET["id"]
+        );
+        $_SESSION["cart"][0] = $item_array;
+
+    }
+    //$temp = $_SESSION["cart"][0];
+    //echo $temp;
+}
     
     
     ?>
@@ -194,20 +225,22 @@ session_start();
                         <a href="product.php?id=<?=$row2['pid']?>">
                         <img src="img/categoria1.jpeg" class='mx-auto img-thumbnail' width="auto" height="auto"/>
                         </a>
-                            
-                            <div class="card-body text-center mx-auto">
-                                <div class='cvp'>
-                                    <h5 class="card-title font-weight-bold"><?php  echo $row2['nome'];?></h5>
-                                    <p class="card-text">299€</p>
-                                    <button class='btn btn-secondary' data-swal-template='<?=$templateButton?>'>
-                                    Ver Detalhes
-                                    </button>
-                                    <br/>
-                                    <button type="button" class="btn btn-secondary" title="Adicionar ao Carrinho">
-                                        <i class="fa fa-shopping-cart"></i>
-                                    </button>
+                            <form method="post" action="mercado.php?action=add&id=<?php echo $row2['pid']; ?>">
+                                <div class="card-body text-center mx-auto">
+                                    <div class='cvp'>
+                                        <h5 class="card-title font-weight-bold"><?php  echo $row2['nome'];?></h5>
+                                        <p class="card-text">299€</p>
+                                        <button class='btn btn-secondary' data-swal-template='<?=$templateButton?>'>
+                                        Ver Detalhes
+                                        </button>
+                                        <br/>
+                                        <button type="submit" name="addCart" class="btn btn-secondary" title="Adicionar ao Carrinho">
+                                            <i class="fa fa-shopping-cart"></i>
+                                        </button>
+                                        
+                                    </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
 
                     

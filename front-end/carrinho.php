@@ -1,3 +1,8 @@
+<?php
+session_start();
+//include("login.php");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -86,76 +91,29 @@
                     <th>Quantidade</th>
                     <th>Total</th>
                 </tr>
-                <tr>
-                    <td>
-                        <div class="carrinho-info">
-                            <p>Produto 1</p>
-                            <a href="">Remover</a>
-                        </div>
-                    </td>
-                    <td><input type="number" value="1"></td>
-                    <td>10€</td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="carrinho-info">
-                            <p>Produto 2</p>
-                            <a href="">Remover</a>
-                        </div>
-                    </td>
-                    <td><input type="number" value="1"></td>
-                    <td>10€</td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="carrinho-info">
-                            <p>Produto 3</p>
-                            <a href="">Remover</a>
-                        </div>
-                    </td>
-                    <td><input type="number" value="1"></td>
-                    <td>10€</td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="carrinho-info">
-                            <p>Produto 4</p>
-                            <a href="">Remover</a>
-                        </div>
-                    </td>
-                    <td><input type="number" value="1"></td>
-                    <td>10€</td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="carrinho-info">
-                            <p>Produto 5</p>
-                            <a href="">Remover</a>
-                        </div>
-                    </td>
-                    <td><input type="number" value="1"></td>
-                    <td>10€</td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="carrinho-info">
-                            <p>Produto 6</p>
-                            <a href="">Remover</a>
-                        </div>
-                    </td>
-                    <td><input type="number" value="1"></td>
-                    <td>10€</td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="carrinho-info">
-                            <p>Produto 7</p>
-                            <a href="">Remover</a>
-                        </div>
-                    </td>
-                    <td><input type="number" value="1"></td>
-                    <td>10€</td>
-                </tr>
+
+                <?php 
+                
+                if(!empty($_SESSION["cart"])){
+
+                    $total = 0;
+                    foreach($_SESSION["cart"] as $keys => $values){
+
+                        ?>
+                        <tr>
+                            <td><?php echo $values["item_id"] ?></td>
+                            <td><input type="number" value="1"></td>
+                            <td>20€</td>
+                        </tr>
+                        
+                        <?php
+
+                    }
+
+                }
+                
+                ?>
+                
                 <tr>
                     <td>
                         <div class="carrinho-info">
