@@ -109,6 +109,17 @@ include "openconn.php";
                                 <label class="labels">Matrícula</label>
                                 <input type="text" class="form-control" placeholder="Matrícula" name="matricula" value="">
                             </div>
+                            <div class="col-md-12">
+                            <label class="labels">Quantidade de produtos</label>
+                                <select id="choose2" name="produto" >
+                                    <option value="10">10</option>
+                                    <option value="20">30</option>
+                                    <option value="50">50</option>
+                                    <option value="70">70</option>
+                                    <option value="100">100</option>
+                                    <input type="hidden" class="form-control" name="produto" value="">
+                                </select>
+                            </div>
                             <!--<div class="col-md-12">
 
                                 <label class="labels">Capacidade</label><br>
@@ -151,7 +162,7 @@ include "openconn.php";
                         <tr>
                             <th scope="col" class="text-center">Veículo</th>
                             <th scope="col" class="text-center">Matrícula</th>
-                            <th scope="col" class="text-center">Produto</th>
+                            <!--<th scope="col" class="text-center">Produto</th>-->
                             <th scope="col" class="text-center">Acção</th>
                         </tr>
                     </thead>
@@ -165,16 +176,22 @@ include "openconn.php";
                     $nif = $row['nif'];
                     $query = "SELECT * FROM [dbo].[Veiculo] WHERE transportadora= $nif";
                     $results = sqlsrv_query($conn, $query);
-                    $row = 0;
+                    #$row = 0;
                     $_SESSION["itemType"] = "tranporte";
-                        while($row = sqlsrv_fetch_array($results)) {
+                        while($row2 = sqlsrv_fetch_array($results)) {
                             echo"<tr>";
-                            echo "<form action='deleteItem.php' method='post'>";
-                            echo"<td class=text-center>" . $row['categoria'] . "</td>";
-                            echo "<td><input type='hidden' name='itemId' value=".$row['matricula'].">".$row['matricula']."</td>";
-                            echo"<td class=text-center>" . $row['transportadora'] . "</td>";
-                            echo "<td><input type='submit' value='Eliminar transporte' name='delete_transporte' class=btnL></td>";
-                            echo "</form>";
+                            #echo "<form action='deleteItem.php' method='post'>";
+                            echo"<td class=text-center>" . $row2['categoria'] . "</td>";
+                            #echo "<td><input type='hidden' name='itemId' value=".$row['matricula'].">".$row['matricula']."</td>";
+                            echo"<td class=text-center>" . $row2['matricula'] . "</td>";
+                            
+                            #echo"<td class=text-center>" . $row2['produto'] . "</td>";
+
+                            #echo "<td><input type='submit' value='Eliminar transporte' name='delete_transporte' class=btnL></td>";
+                            ?>
+                            <td> <a href='deleteVeiculo.php?id=<?php echo $row2['matricula']; ?>' >Delete</a> </td>
+                            <?php
+                            #echo "</form>";
                             //echo"<td class=text-center>" . $row['produto'] . "</td>";
                             echo"<tr>";
                         }

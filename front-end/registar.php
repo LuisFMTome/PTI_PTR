@@ -56,7 +56,7 @@ if(isset($_POST["registar"])){
             }
             $_SESSION['status'] = "Conta de consumidor criada com sucesso";
             $_SESSION['statusCode'] = "success";
-            header('location: criar_conta.php');
+            header('location: conta.php');
 
             
             
@@ -101,7 +101,7 @@ if(isset($_POST["registar"])){
 
             $_SESSION['status'] = "Conta de transportadora criada com sucesso";
             $_SESSION['statusCode'] = "success";
-            header('location: criar_conta.php');
+            header('location: conta.php');
             
         }else{
 
@@ -142,7 +142,7 @@ if(isset($_POST["registar"])){
             }
             $_SESSION['status'] = "Conta de fornecedor criada com sucesso";
             $_SESSION['statusCode'] = "success";
-            header('location: login.php');
+            header('location: conta.php');
             
         }else{
 

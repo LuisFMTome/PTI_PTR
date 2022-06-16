@@ -53,13 +53,13 @@
             }
 
             $_SESSION['msg'] = "Veículo registado";
-            header( "refresh:5; url=registoTransportes.php" );
-            #header('location: registoTransportes.php');
+            #header( "refresh:5; url=registoTransportes.php" );
+            header('location: registoTransportes.php');
 
         }else{
             $_SESSION['error'] = "Matricula registada anteriormente";
-            header( "refresh:5; url=registoTransportes.php" );
-            #header('location: registoTransportes.php');
+            #header( "refresh:5; url=registoTransportes.php" );
+            header('location: registoTransportes.php');
 
 
         }

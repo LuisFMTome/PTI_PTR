@@ -147,7 +147,9 @@ $row_count = sqlsrv_num_rows($query);
                             </div>
                             <div class="col-md-12">
                                 <label class="labels">Código Postal</label>
-                                <input type="text" class="form-control" placeholder="Código Postal" name="cPostal" value="" Required>
+                                <!--<input type="text" class="form-control" placeholder="Código Postal" name="cPostal" value="" Required>
+                -->
+                                    <input id="zip" class="form-control" name="cPostal" placeholder="Código Postal" type="text" inputmode="numeric" pattern="^(?(^00000(|-0000))|(\d{5}(|-\d{4})))$">
                             </div>
                             <div class="col-md-12">
                                 <label class="labels">Tipo</label>
@@ -201,7 +203,11 @@ $row_count = sqlsrv_num_rows($query);
                             echo "<td>" . $row['morada'] . "</td>";
                             echo "<td>" . $row['codigoPostal'] . "</td>";
                             echo "<td>" . $row['tipo'] . "</td>";
-                            echo "<td><input type='submit' value='Eliminar armazem' name='delete_armazem' class=btnL></td>";
+                            #echo "<td><input type='submit' value='Eliminar armazem' name='delete_armazem' class=btnL></td>";
+                            
+                            ?>
+                            <td> <a href='deleteArmazem.php?id=<?php echo $row['aid']; ?>' >Delete</a> </td>
+                            <?php
                             echo"</form>";
                             echo "</tr>";
                         }
