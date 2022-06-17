@@ -123,32 +123,8 @@ session_start();
         }
     </script>
 
-    <?php
-
-    //echo "<p>teste</p>";
-    if (isset($_SESSION['statusCode']) == "success") {
-
-        //echo "<p>teste2</p>";
-    ?>
-
-        <script>
-                
-                document.addEventListener("DOMContentLoaded", function(event) {
-                    
-                    Swal.fire({
-                    title: "<?php echo $_SESSION['status']; ?>",
-                    text: "Agora é só fazer login!",
-                    icon: "success",
-                });
-                
-                });
-
-
-            
-        </script>
-
     <?php 
-         }elseif(isset($_SESSION['Code']) == "error"){
+         if(isset($_SESSION['statusCode']) != ""){
                 ?>
               
         
@@ -158,7 +134,7 @@ session_start();
                     Swal.fire({
                     title: "Email já utilizado!",
                     text: "Tente outra vez",
-                    icon: "warning",
+                    icon: "error",
                 });
                 
                 });

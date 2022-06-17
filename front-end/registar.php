@@ -64,7 +64,7 @@ if(isset($_POST["registar"])){
 
             //print("email ja existe");
             $_SESSION['status'] = -1;
-            $_SESSION['Code'] = "error";
+            $_SESSION['statusCode'] = "error";
             header('location: criar_conta.php');
             
 
@@ -106,7 +106,7 @@ if(isset($_POST["registar"])){
         }else{
 
             $_SESSION['status'] = -1;
-            $_SESSION['Code'] = "error";
+            $_SESSION['statusCode'] = "error";
             header('location: criar_conta.php');
             
 
@@ -148,7 +148,7 @@ if(isset($_POST["registar"])){
 
             //print("email ja existe");
             $_SESSION['status'] = -1;
-            $_SESSION['Code'] = "error";
+            $_SESSION['statusCode'] = "error";
             header('location: criar_conta.php');
             
 

@@ -152,7 +152,8 @@
                             </div>
                             <div class="col-md-12">
                                 <label class="labels">Código Postal</label>
-                                <input type="text" class="form-control" placeholder="Código Postal" name="codPostal_novo" value="<?php echo $codigoPostal?>">
+                                <!--<input type="text" class="form-control" placeholder="Código Postal" name="codPostal_novo" value="<?php //echo $codigoPostal?>">-->
+                                <input class="form-control" placeholder="Código Postal" type="text" value="<?php echo $codigoPostal?>" required name="codPostal_novo" pattern="[0-9]{4}" title="Quatro numeros do codigo postal" />
                             </div>
                         </div>
                         <div class="mt-3 text-center">

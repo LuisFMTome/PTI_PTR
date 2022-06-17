@@ -136,6 +136,10 @@
                                     echo "<td class='text-center'>".$row['email']."</td>";
                                     echo "<td class='text-center'>".$row['morada']."</td>";
                                     echo "<td class='text-center'>".$row['codigoPostal']."</td>";
+                                    $nome = $row['nome'];
+                                    $email = $row['email'];
+                                    $morada = $row['morada'];
+                                    $codigoPostal = $row['codigoPostal'];
                                 echo "</tr>";
                             }
                             echo"</table>";
@@ -151,19 +155,20 @@
                         <div class="row mt-3">
                             <div class="col-md-12">
                                 <label class="labels">Nome</label>
-                                <input type="text" class="form-control" placeholder="Nome" name="nome_fornecedor" value="">
+                                <input type="text" class="form-control" placeholder="Nome" name="nome_fornecedor" value="<?php echo $nome?>">
                             </div>
                             <div class="col-md-12">
                                 <label class="labels">Email</label>
-                                <input type="text" class="form-control" placeholder="Email" name="email_fornecedor" value="">
+                                <input type="text" class="form-control" placeholder="Email" name="email_fornecedor" value="<?php echo $email?>">
                             </div>
                             <div class="col-md-12">
                                 <label class="labels">Morada</label>
-                                <input type="text" class="form-control" placeholder="Morada" name="morada_fornecedor" value="">
+                                <input type="text" class="form-control" placeholder="Morada" name="morada_fornecedor" value="<?php echo $morada?>">
                             </div>
                             <div class="col-md-12">
                                 <label class="labels">Código Postal</label>
-                                <input type="text" class="form-control" placeholder="Código Postal" name="codigoPostal_fornecedor" value="">
+                                <!--<input type="text" class="form-control" placeholder="Código Postal" name="codigoPostal_fornecedor" value="">-->
+                                <input class="form-control" placeholder="Código Postal" type="text" value="<?php echo $codigoPostal?>" required name="codigoPostal_fornecedor" pattern="[0-9]{4}" title="Quatro numeros do codigo postal" />
                             </div>
                         </div>
                         <div class="mt-5 text-center">
