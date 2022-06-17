@@ -65,7 +65,7 @@ $row_count = sqlsrv_num_rows($query);
             </div>
             <div class="menu-bar">
                 <ul>
-                    <li><a href="index.php">Home</a></li>
+                    <!--<li><a href="index.php">Home</a></li>-->
                     <li><a href="mercado.php">Mercado</a></li>
                     <li class="dropdown">
                         <button class="dropbtn"><i class="fa fa-plus-circle"></i>
@@ -247,33 +247,31 @@ $row_count = sqlsrv_num_rows($query);
 
         <?php
 
-if (isset($_SESSION['msg']) != "") {
+        //echo "<p>teste</p>";
+        if (isset($_SESSION['status']) != "") {
 
-?>
+            //echo "<p>teste2</p>";
+        ?>
 
-    <script>
-            
-            document.addEventListener("DOMContentLoaded", function(event) {
-                
-                Swal.fire({
-                title: "<?php echo $_SESSION['msg']; ?>",
-                icon: "success",
-            });
-            
-            });
+            <script>
+                    
+                    document.addEventListener("DOMContentLoaded", function(event) {
+                        
+                        Swal.fire({
+                        title: "Apagar Armazem",
+                        text: "<?php echo $_SESSION['status']; ?>",
+                        icon: "warning", //warning
+                    });
+                    
+                    });
+                    
+                    
 
+            </script>
 
-        
-    </script>
-
-<?php
-    
-} 
-
-
-unset($_SESSION['msg']);
-
-?>
+        <?php
+            unset($_SESSION['status']);}
+        ?>
 
     
 

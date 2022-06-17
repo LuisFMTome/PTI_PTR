@@ -20,7 +20,7 @@
     <nav>
         <div class="top-nav-bar">
             <div class="search-box">
-                <a href="index.html">
+                <a href="index.php">
                     <img src="img/logotipo.png" class="logo">
                 </a>
                 <!--<input type="text" class="form-control">
@@ -28,7 +28,7 @@
             </div>
             <div class="menu-bar">
                 <ul>
-                    <li><a href="index.php">Home</a></li>
+                    <!--<li><a href="index.php">Home</a></li>-->
                     <li><a href="mercado.php">Mercado</a></li>
                     <?php 
                     if (isset($_SESSION['email']) != "") {

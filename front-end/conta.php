@@ -140,7 +140,7 @@ session_start();
                     Swal.fire({
                     title: "<?php echo $_SESSION['status']; ?>",
                     text: "Tente outra vez",
-                    icon: "warning",
+                    icon: "success", //warning
                 });
                 
                 });

@@ -30,7 +30,7 @@ if (isset($_POST["login"])) {
         $user_check_query = "SELECT * FROM [dbo].[Consumidor] WHERE email='{$mail}' AND pwd='{$pass}'"; //Nome da coluna password provavelmente errados
 
         $result = sqlsrv_query($conn, $user_check_query); //, array(), array("Scrollable" => 'static')
-
+        $row = sqlsrv_fetch_array($result);
         if ($result === false) {
             echo ("Result = false");
             die(print_r(sqlsrv_errors(), true));
@@ -55,7 +55,7 @@ if (isset($_POST["login"])) {
         $user_check_query = "SELECT * FROM [dbo].[Transportadora] WHERE email='{$mail}' AND pwd='{$pass}'"; //Nome da coluna password provavelmente errados
 
         $result = sqlsrv_query($conn, $user_check_query); //, array(), array("Scrollable" => 'static')
-
+        $row = sqlsrv_fetch_array($result);
         if ($result === false) {
             echo ("Result = false");
             die(print_r(sqlsrv_errors(), true));
@@ -80,7 +80,7 @@ if (isset($_POST["login"])) {
         $user_check_query = "SELECT * FROM [dbo].[Fornecedor] WHERE email='{$mail}' AND pwd='{$pass}'"; //Nome da coluna password provavelmente errados
 
         $result = sqlsrv_query($conn, $user_check_query); //, array(), array("Scrollable" => 'static')
-
+        $row = sqlsrv_fetch_array($result);
         if ($result === false) {
             echo ("Result = false");
             die(print_r(sqlsrv_errors(), true));

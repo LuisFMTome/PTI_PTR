@@ -34,7 +34,7 @@ session_start();
             
             <div class="menu-bar">
                 <ul>
-                    <li><a href="index.php">Home</a></li>
+                    <!--<li><a href="index.php">Home</a></li>-->
                     <li><a href="mercado.php">Mercado</a></li>
 
                     <?php 
@@ -94,15 +94,15 @@ session_start();
         <div class="row">
             <div class="col-2"> 
                     <?php  
-                        if(isset($_SESSION['tipo'])){
-                            echo "<h1>Conta " . $_SESSION['tipo'] . " inicializada</h1>";
-                        } 
+
                         if(isset($_SESSION['nome'])){
-                            echo "<h1>Bem Vindo " . $_SESSION['nome'] . "</h1>";
-                        }
+                            //echo "<h1>Conta " . $_SESSION['tipo'] . " inicializada</h1>";
+                            
+                            echo "<h1>Bem Vindo " . $_SESSION['nome'] . " ( " . $_SESSION['tipo'] . " )</h1>";
+                        } 
                     ?>
-                </h1>
-                <h1>Dê às suas compras <br> um novo impacto ambiental</h1>
+                
+                <h2>Dê às suas compras <br> um novo impacto ambiental</h2>
                 <p>Todas as suas compras...</p>
                 <a href="mercado.php" class="btn">Compre agora<i class="fa fa-arrow-right"></i></a>
             </div>
