@@ -39,6 +39,7 @@ if(isset($_POST["addCart"])){
             $count = count($_SESSION["cart"]);
             $item_array = array(
                 'item_id' => $_GET["id"]
+                //'item_price' => 12
             );
             $_SESSION["cart"][$count] = $item_array;
 

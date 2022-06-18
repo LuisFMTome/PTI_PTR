@@ -1,6 +1,26 @@
 <?php
 session_start();
 //include("login.php");
+
+if(isset($_GET["action"])){
+
+    if($_GET["action"] == "delete"){
+
+        foreach($_SESSION["cart"] as $keys => $values){
+
+            if($values["item_id"] == $_GET["id"]){
+
+                unset($_SESSION["cart"][$keys]);
+                //echo $keys;
+                
+                //echo $_SESSION["cart"][$keys];
+                //echo '<script> alert("Item Removido") </script>';
+                //echo '<script> window.location="carrinho.php" </script>';
+            }
+        }
+    }
+    
+}
 ?>
 
 <!DOCTYPE html>
@@ -90,6 +110,7 @@ session_start();
                     <th>Produto</th>
                     <th>Quantidade</th>
                     <th>Total</th>
+                    <th>Ação</th>
                 </tr>
 
                 <?php 
@@ -104,6 +125,7 @@ session_start();
                             <td><?php echo $values["item_id"] ?></td>
                             <td><input type="number" value="1"></td>
                             <td>20€</td>
+                            <td><a href="carrinho.php?action=delete&id=<?php echo $values["item_id"]; ?>">Remover</a></td>
                         </tr>
                         
                         <?php
@@ -114,16 +136,17 @@ session_start();
                 
                 ?>
                 
-                <tr>
+                <!--<tr>
                     <td>
                         <div class="carrinho-info">
                             <p>Produto 8</p>
-                            <a href="">Remover</a>
+
                         </div>
                     </td>
                     <td><input type="number" value="1"></td>
                     <td>10€</td>
-                </tr>
+                    <td><a href="">Remover</a></td>
+                </tr>-->
             </table>
             <div class="total">
                 <table>
