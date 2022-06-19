@@ -12,6 +12,13 @@ if(isset($_GET["action"])){
             if($values["item_id"] == $_GET["id"]){
 
                 unset($_SESSION["cart"][$keys]);
+                var_dump($_SESSION["cart"]);
+                $count = count($_SESSION["cart"]);
+                if($count == 0){
+                    unset($_SESSION["cart"]);
+                }
+
+                
                 //echo $keys;
                 
                 //echo $_SESSION["cart"][$keys];
@@ -22,7 +29,15 @@ if(isset($_GET["action"])){
     }
     
 }
+/*
+if(isset($_SESSION["cart"])){
 
+    $count = count($_SESSION["cart"]);
+
+    //echo $_SESSION["cart"][0];
+    echo $count;
+    
+}*/
 
 $user_check_query = "SELECT * FROM [dbo].[Encomenda]";
 //$stmt = sqlsrv_query( $conn, $user_check_query );
@@ -30,7 +45,7 @@ $user_check_query = "SELECT * FROM [dbo].[Encomenda]";
 $query = sqlsrv_query($conn, $user_check_query, array(), array( "Scrollable" => 'static' ));
 $row_count = sqlsrv_num_rows($query);
 
-echo $row_count;
+//echo $row_count;
 ?>
 
 <!DOCTYPE html>
