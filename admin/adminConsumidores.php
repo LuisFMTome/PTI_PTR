@@ -189,6 +189,7 @@
                         <th>Pwd</th>
                         <th>Morada</th>
                         <th>Codigo Postal</th>
+                        <th>Editar</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -197,15 +198,29 @@
                         $queryTransportadoras = sqlsrv_query($conn, $transportadoras, array(), array( "Scrollable" => 'static' ));
                         while($row = sqlsrv_fetch_array( $queryTransportadoras, SQLSRV_FETCH_ASSOC)){
                           ?>
-
+                          
                           <tr>
-                              <td><?php echo $row['cid']; ?></td>
-                              <td><?php echo $row['nome']; ?></td>
-                              <td><?php echo $row['email']; ?></td>
-                              <td><?php echo $row['pwd']; ?></td>
-                              <td><?php echo $row['morada']; ?></td>
-                              <td><?php echo $row['codigoPostal']; ?></td>
+                          <form id="update_consumidor" method="post" action="updateConsumidor.php">
+                            <td><input type="submit" value="<?php echo $row['cid']; ?>" name="update" class="btnL"></td>
+                            <td><input type="text" class="form-control" placeholder="nome" name="nome" value="<?php echo $row['nome']?>" required></td>
+                            <td><input type="email" class="form-control" placeholder="email" name="email" value="<?php echo $row['email'];?>" required></td>
+                            <td><input type="text" class="form-control" placeholder="pass" name="pass" value="<?php echo $row['pwd'];?>" required></td>
+                            <td><input type="text" class="form-control" placeholder="morada" name="morada" value="<?php echo $row['morada'];?>" required></td>
+                            <td><input type="text" class="form-control" placeholder="cPostal" name="cPostal" value="<?php echo $row['codigoPostal'];?>" required pattern="[0-9]{4}" title="Quatro numeros do codigo postal"></td>
+                            <td><input type="submit" value="Update" name="update" class="btnL"></td>
+                            </form>
                           </tr>
+                          
+                          <!--
+                          <tr>
+                              <td><?php //echo $row['cid']; ?></td>
+                              <td><?php //echo $row['nome']; ?></td>
+                              <td><?php //echo $row['email']; ?></td>
+                              <td><?php //echo $row['pwd']; ?></td>
+                              <td><?php //echo $row['morada']; ?></td>
+                              <td><?php //echo $row['codigoPostal']; ?></td>
+                              <td></td>
+                          </tr>-->
                           <?php } ?>
                     </tbody>
                     <tfoot>
