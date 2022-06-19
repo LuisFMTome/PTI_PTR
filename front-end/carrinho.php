@@ -1,6 +1,7 @@
 <?php
 session_start();
 //include("login.php");
+include "openconn.php";
 
 if(isset($_GET["action"])){
 
@@ -21,6 +22,15 @@ if(isset($_GET["action"])){
     }
     
 }
+
+
+$user_check_query = "SELECT * FROM [dbo].[Encomenda]";
+//$stmt = sqlsrv_query( $conn, $user_check_query );
+
+$query = sqlsrv_query($conn, $user_check_query, array(), array( "Scrollable" => 'static' ));
+$row_count = sqlsrv_num_rows($query);
+
+echo $row_count;
 ?>
 
 <!DOCTYPE html>
@@ -36,6 +46,9 @@ if(isset($_GET["action"])){
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
     <link href="style.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <link href="style.css" rel="stylesheet" />
+    <script src="sweetalert2.all.min.js"></script>
 </head>
 <body>
     <main>
@@ -105,6 +118,19 @@ if(isset($_GET["action"])){
         </nav>
         
         <div class="container small-container carrinho-pagina">
+        
+        <form method="post" action="fazerEncomenda.php">
+
+            <button type="submit" name="limpar" class='btn btn-secondary'>
+            Limpar carrinho
+            </button>
+    
+            <button type="submit" name="encomendar" class='btn btn-secondary'>
+            Encomendar
+            </button>
+
+        </form>
+        
             <table>
                 <tr>
                     <th>Produto</th>
@@ -148,6 +174,7 @@ if(isset($_GET["action"])){
                     <td><a href="">Remover</a></td>
                 </tr>-->
             </table>
+            
             <div class="total">
                 <table>
                     <tr>
@@ -213,5 +240,35 @@ if(isset($_GET["action"])){
             }
         }).render('#paypal-button-container');
     </script>
+
+<?php
+//echo "<p>teste</p>";
+if (isset($_SESSION['statusCode']) == "error") {
+
+    //echo $_SESSION['statusCode'];
+?>
+
+    <script>
+            
+            document.addEventListener("DOMContentLoaded", function(event) {
+                
+                Swal.fire({
+                title: "<?php echo $_SESSION['status']; ?>",
+                text: "clique ok",
+                icon: "<?php echo $_SESSION['statusCode']; ?>", //warning
+            });
+            
+            });
+
+
+        
+    </script>
+
+<?php
+    unset($_SESSION['status']);
+    unset($_SESSION['statusCode']);
+}
+
+    ?>
 </body>
 </html>
