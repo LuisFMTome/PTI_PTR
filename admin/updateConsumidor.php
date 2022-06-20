@@ -18,7 +18,7 @@ $email =   $_POST["email"]; //confirmar
 $pass =   $_POST["pass"];
 $morada =   $_POST["morada"];
 $cPostal =   $_POST["cPostal"];
-$id =   $_POST["update"];
+$id =   $_GET['id'];
 
 /*
 //echo "$id";
@@ -33,7 +33,31 @@ $user_check_query = "SELECT * FROM [dbo].[Consumidor] WHERE email='$email' and c
 $query = sqlsrv_query($conn, $user_check_query, array(), array( "Scrollable" => 'static' ));
 $row_count = sqlsrv_num_rows($query);
 
-echo "$row_count";
+//echo "$row_count";
+
+if($row_count == 0){
+
+    $update_c = "UPDATE [Consumidor] SET nome = '$nome', email = '$email', morada = '$morada', codigoPostal = '$cPostal' WHERE cid = '{$id}'";
+
+    $res1 = sqlsrv_query($conn, $update_c);
+
+    $_SESSION["status"] = "conta alterada com secesso";
+    $_SESSION["statusCode"] = "success";
+
+    $_SESSION["nome"] = $nome;
+    $_SESSION["email"] = $email;
+
+    header('location: adminConsumidores.php');
+
+
+}else{
+
+    $_SESSION["status"] = "email já em uso";
+    $_SESSION["statusCode"] = "error";
+
+    header('location: adminConsumidores.php');
+
+}
 
 
 ?>

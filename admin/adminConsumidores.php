@@ -27,6 +27,10 @@
     />
     <link rel="stylesheet" href="css/dataTables.bootstrap5.min.css" />
     <link rel="stylesheet" href="css/style.css" />
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <link href="style.css" rel="stylesheet" />
+    <script src="sweetalert2.all.min.js"></script>
     <title>Admin</title>
   </head>
   <body>
@@ -200,14 +204,14 @@
                           ?>
                           
                           <tr>
-                          <form id="update_consumidor" method="post" action="updateConsumidor.php">
-                            <td><input type="submit" value="<?php echo $row['cid']; ?>" name="update" class="btnL"></td>
+                          <form id="update_consumidor" method="post" action="updateConsumidor.php?id=<?php echo $row['cid']; ?>">
+                            <td><?php echo $row['cid']; ?></td>
                             <td><input type="text" class="form-control" placeholder="nome" name="nome" value="<?php echo $row['nome']?>" required></td>
                             <td><input type="email" class="form-control" placeholder="email" name="email" value="<?php echo $row['email'];?>" required></td>
                             <td><input type="text" class="form-control" placeholder="pass" name="pass" value="<?php echo $row['pwd'];?>" required></td>
                             <td><input type="text" class="form-control" placeholder="morada" name="morada" value="<?php echo $row['morada'];?>" required></td>
                             <td><input type="text" class="form-control" placeholder="cPostal" name="cPostal" value="<?php echo $row['codigoPostal'];?>" required pattern="[0-9]{4}" title="Quatro numeros do codigo postal"></td>
-                            <td><input type="submit" value="Update" name="update" class="btnL"></td>
+                            <td><input type="submit" value="Update" name="butao" class="btnL"></td>
                             </form>
                           </tr>
                           
@@ -247,5 +251,36 @@
     <script src="./js/jquery.dataTables.min.js"></script>
     <script src="./js/dataTables.bootstrap5.min.js"></script>
     <script src="./js/script.js"></script>
+
+    <?php
+
+    //echo "<p>teste</p>";
+    if (isset($_SESSION['statusCode']) != "") {
+
+        echo $_SESSION['statusCode'];
+    ?>
+
+        <script>
+                
+                document.addEventListener("DOMContentLoaded", function(event) {
+                    
+                    Swal.fire({
+                    title: "<?php echo $_SESSION['status']; ?>",
+                    text: "clique ok",
+                    icon: "<?php echo $_SESSION['statusCode']; ?>", //warning
+                });
+                
+                });
+
+
+            
+        </script>
+
+    <?php
+        unset($_SESSION['status']);
+        unset($_SESSION['statusCode']);
+    }
+    ?>
+
   </body>
 </html>
