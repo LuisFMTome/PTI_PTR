@@ -155,6 +155,16 @@ $row_count = sqlsrv_num_rows($query);
                                 <label class="labels">Tipo</label>
                                 <input type="text" class="form-control" placeholder="Tipo" name="tipo" value="" Required>
                             </div>
+
+                            <div class="col-md-12">
+                                <label class="labels">Recursos necessários</label>
+                                <input type="text" class="form-control" placeholder="Recursos" name="recursos" value="" Required>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="labels">Poluicao gerada por hora</label>
+                                <input type="number" class="form-control" placeholder="Poluicao" name="poluicao" value="" Required>
+                            </div>
                     
                         </div>
                         <div class="mt-5 text-center">
@@ -171,11 +181,13 @@ $row_count = sqlsrv_num_rows($query);
                 <table class="table table-bordered table-lg table-light align-top">
                     <thead>
                       <tr>
-                        <th scope="col" class="text-center">#</th>
+                        <!--<th scope="col" class="text-center">#</th>-->
                         <th scope="col" class="text-center">Nome</th>
                         <th scope="col" class="text-center">Morada</th>
                         <th scope="col" class="text-center">Código Postal</th>
                         <th scope="col" class="text-center">Tipo</th>
+                        <th scope="col" class="text-center">Recursos</th>
+                        <th scope="col" class="text-center">Poluicao por hora</th>
                         <th scope="col" class="text-center">Ação</th>
                       </tr>
                     </thead>
@@ -198,11 +210,13 @@ $row_count = sqlsrv_num_rows($query);
                         while ($row = sqlsrv_fetch_array($armazens)) {
                             echo "<tr>";
                             echo "<form action='deleteItem.php' method='post'>";
-                            echo "<td><input type='hidden' name='itemId' value=".$row['aid'].">".$row['aid']."</td>";
+                            //echo "<td><input type='hidden' name='itemId' value=".$row['aid'].">".$row['aid']."</td>";
                             echo "<td>" . $row['nome'] . "</td>";
                             echo "<td>" . $row['morada'] . "</td>";
                             echo "<td>" . $row['codigoPostal'] . "</td>";
                             echo "<td>" . $row['tipo'] . "</td>";
+                            echo "<td>" . $row['recursos'] . "</td>";
+                            echo "<td>" . $row['poluicao'] . "</td>";
                             #echo "<td><input type='submit' value='Eliminar armazem' name='delete_armazem' class=btnL></td>";
                             
                             ?>

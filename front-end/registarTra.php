@@ -1,33 +1,25 @@
 <?php
     session_start();
+    include "openconn.php";
 
-    $serverName = "sqldb05server1.database.windows.net"; // update me
-    $connectionOptions = array(
-        "Database" => "sqldb1", // update me
-        "Uid" => "ptrptisqldb", // update me
-        "PWD" => "2SdULWb5ePk83jA" // update me
-    );
-    //Establishes the connection
-    $conn = sqlsrv_connect($serverName, $connectionOptions);
-    if($conn === false) {
-        die(print_r(sqlsrv_errors(), true));
-    }
+    if(isset($_POST["addTra"])){
 
-    #if(isset($_POST["addTra"])){
-
-        $categoria =   $_POST["categoria"];
-        $matricula =   $_POST["matricula"];
-        $produto =   $_POST["produto"];
-        $mailTran = $_SESSION['email'];
-        echo $matricula;
+        $categoria =    $_POST["categoria"];
+        $matricula =    $_POST["matricula"];
+        $recursos  =    $_POST["recursos"];
+        $poluicao  =    $_POST["poluicao"];
+        //$produto =   $_POST["produto"];
+        $mailTran  =    $_SESSION['email'];
+        //echo $matricula;
 
         //verificar se a matricula esta em uso ou nao
 
-        $stmt = "SELECT * FROM [dbo].[Veiculo] WHERE matricula='{$matricula}'";
-        $queryy = sqlsrv_query($conn, $stmt); #array(), array( "Scrollable" => 'static' ));
+        $user_check_query = "SELECT * FROM [dbo].[Veiculo] WHERE matricula='$matricula'";
+        $query = sqlsrv_query($conn, $user_check_query, array(), array( "Scrollable" => 'static' ));
+        $row_count = sqlsrv_num_rows($query);
         
-        echo $queryy;
-        if ($queryy){
+        //echo $queryy;
+        if ($row_count == 0){
 
             $query = "SELECT * FROM [dbo].[Transportadora] WHERE email='{$mailTran}'";
             $result = sqlsrv_query($conn, $query);
@@ -43,7 +35,7 @@
 
             echo "<p>$nif</p>";
 
-            $to_insert = "INSERT INTO [dbo].[Veiculo] ([matricula], [transportadora], [categoria], [quantidade]) VALUES ('$matricula', '$nif', '$categoria', '$produto')"; 
+            $to_insert = "INSERT INTO [dbo].[Veiculo] ([matricula], [transportadora], [categoria], [recursos], [poluicao]) VALUES ('$matricula', '$nif', '$categoria', '$recursos', '$poluicao')"; 
 
             $params = array(1, "inserir armazem");
             $var = sqlsrv_query( $conn, $to_insert, $params);
@@ -52,17 +44,19 @@
                 die( print_r( sqlsrv_errors(), true));
             }
 
-            $_SESSION['msg'] = "Veículo registado";
+            $_SESSION['statusCode'] = "success";
+            $_SESSION['status'] = "Veiculo registado com sucesso";
             #header( "refresh:5; url=registoTransportes.php" );
             header('location: registoTransportes.php');
 
         }else{
-            $_SESSION['error'] = "Matricula registada anteriormente";
+            $_SESSION['statusCode'] = "error";
+            $_SESSION['status'] = "Matricula registada anteriormente";
             #header( "refresh:5; url=registoTransportes.php" );
             header('location: registoTransportes.php');
 
 
         }
 
-    #}
+    }
 ?>

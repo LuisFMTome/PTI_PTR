@@ -103,13 +103,25 @@ include "openconn.php";
                         <div class="row mt-3">
                             <div class="col-md-12">
                                 <label class="labels">Categoria</label>
-                                <input type="text" class="form-control" placeholder="Categoria" name="categoria" value="">
+                                <input type="text" class="form-control" placeholder="Categoria" name="categoria" value="" required>
                             </div>
                             <div class="col-md-12">
                                 <label class="labels">Matrícula</label>
-                                <input type="text" class="form-control" placeholder="Matrícula" name="matricula" value="">
+                                <input type="number" class="form-control" placeholder="Matrícula" name="matricula" value="" required>
                             </div>
+
                             <div class="col-md-12">
+                                <label class="labels">Recursos necessários</label>
+                                <input type="text" class="form-control" placeholder="Recursos" name="recursos" value="" required>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="labels">Poluicao gerada a cada Km</label>
+                                <input type="number" class="form-control" placeholder="Poluicao" name="poluicao" value="" required>
+                            </div>
+
+
+                            <!--<div class="col-md-12">
                             <label class="labels">Quantidade de produtos</label>
                                 <select id="choose2" name="produto" >
                                     <option value="10">10</option>
@@ -119,7 +131,9 @@ include "openconn.php";
                                     <option value="100">100</option>
                                     <input type="hidden" class="form-control" name="produto" value="">
                                 </select>
-                            </div>
+                            </div>-->
+
+
                             <!--<div class="col-md-12">
 
                                 <label class="labels">Capacidade</label><br>
@@ -162,6 +176,8 @@ include "openconn.php";
                         <tr>
                             <th scope="col" class="text-center">Veículo</th>
                             <th scope="col" class="text-center">Matrícula</th>
+                            <th scope="col" class="text-center">Poluicao</th>
+                            <th scope="col" class="text-center">Recursos</th>
                             <!--<th scope="col" class="text-center">Produto</th>-->
                             <th scope="col" class="text-center">Acção</th>
                         </tr>
@@ -184,6 +200,8 @@ include "openconn.php";
                             echo"<td class=text-center>" . $row2['categoria'] . "</td>";
                             #echo "<td><input type='hidden' name='itemId' value=".$row['matricula'].">".$row['matricula']."</td>";
                             echo"<td class=text-center>" . $row2['matricula'] . "</td>";
+                            echo"<td class=text-center>" . $row2['poluicao'] . "</td>";
+                            echo"<td class=text-center>" . $row2['recursos'] . "</td>";
                             
                             #echo"<td class=text-center>" . $row2['produto'] . "</td>";
 
@@ -231,49 +249,36 @@ include "openconn.php";
 
     <?php
 
-    if (isset($_SESSION['msg']) == "Veículo registado") {
+    //echo "<p>teste</p>";
+    if (isset($_SESSION['statusCode']) != "") {
 
+        echo $_SESSION['statusCode'];
     ?>
-
-        <script>
-                
-                document.addEventListener("DOMContentLoaded", function(event) {
-                    
-                    swal({
-                    title: "<?php echo $_SESSION['msg']; ?>",
-                    icon: "success",
-                });
-                
-                });
-
-
-            
-        </script>
-
-    <?php
-        
-    }elseif(isset($_SESSION['error']) == "Matricula registada anteriormente"){ ?>
 
         <script>
                 
                 document.addEventListener("DOMContentLoaded", function(event) {
                     
                     Swal.fire({
-                    title: "<?php echo $_SESSION['error']; ?>",
-                    text: "Utilize outra matricula ou registe outro veículo",
-                    icon: "warning",
+                    title: "<?php echo $_SESSION['status']; ?>",
+                    text: "clique ok",
+                    icon: "<?php echo $_SESSION['statusCode']; ?>", //warning
                 });
                 
                 });
+                
+                
 
-
-            
         </script>
- <?php
+
+    <?php
+        unset($_SESSION['status']);
+        unset($_SESSION['statusCode']);
     }
 
 
-    unset($_SESSION['msg']);
+
 
     ?>
+
     </body>

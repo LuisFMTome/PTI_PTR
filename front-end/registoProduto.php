@@ -49,6 +49,7 @@ $row_count = sqlsrv_num_rows($query);
     <link href="registoArmazem.css" rel="stylesheet"/>
     <link href="style.css" rel="stylesheet"/>
     <script src="sweetalert2.all.min.js"></script>
+    
 </head>
 <body>
     <nav>
@@ -178,9 +179,19 @@ $row_count = sqlsrv_num_rows($query);
                             <div class="col-md-12">
                                 <label class="labels">Sub Tipo</label>
 
-                                <select id="tipo2" class="form-control" name="tipo" onchange="getTipo();">
+                                <select id="tipo2" class="form-control" name="subtipo" onchange="">
                                     
                                 </select>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="labels">Preço</label>
+                                <input type="number" class="form-control" placeholder="Preco" name="preco" value="" required>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="labels">Poluição</label>
+                                <input type="number" class="form-control" placeholder="Poluicao" name="poluicao" value="" required>
                             </div>
                     
                         </div>
@@ -199,6 +210,9 @@ $row_count = sqlsrv_num_rows($query);
                       <tr>
                         <th scope="col" class="text-center">Armazém</th>
                         <th scope="col" class="text-center">Produto</th>
+                        <th scope="col" class="text-center">Tipo</th>
+                        <th scope="col" class="text-center">Poluição</th>
+                        <th scope="col" class="text-center">Preço</th>
                         <th scope="col" class="text-center">Ação</th>
                       </tr>
                     </thead>
@@ -221,13 +235,31 @@ $row_count = sqlsrv_num_rows($query);
                                 if($row_count2 > 0){
 
                                     while ($row2 = sqlsrv_fetch_array($produtos)) {
+
+                                        $queryyy = "SELECT * FROM [dbo].[Subtipo] WHERE sid='{$row2['subtipo']}' ";
+                                        $resulttt = sqlsrv_query($conn, $queryyy);
+                                        if( $resulttt === false ) {
+                                            die( print_r( sqlsrv_errors(), true));
+                                        }
+                                        if( sqlsrv_fetch( $resulttt ) === false) {
+                                            die( print_r( sqlsrv_errors(), true));
+                                        }
+                                        $SubtipoDoProduto = sqlsrv_get_field( $resulttt, 1);
+
                                         echo "<tr>";
-                                        echo "<form action='deleteItem.php' method='post'>";
+                                        //echo "<form action='deleteItem.php' method='post'>";
                                         echo "<td>" . $row['nome'] . "</td>";
                                         echo "<td><input type='hidden' name='itemId' value=".$row2['pid'].">".$row2['nome']."</td>";
-                                        echo "<td><input type='submit' value='Eliminar produto' name='delete_produto' class=btnL></td>";
+                                        echo "<td>" . $SubtipoDoProduto . "</td>";
+                                        //echo "<td>" . $row2['subtipo'] . "</td>";
+                                        echo "<td>" . $row2['poluicao'] . "</td>";
+                                        echo "<td>" . $row2['preco'] . "</td>";
+                                        //echo "<td><input type='submit' value='Eliminar produto' name='delete_produto' class=btnL></td>";
+                                        ?>
+                                        <td> <a href='deleteProduto.php?id=<?php echo $row2['pid']; ?>' >Delete</a> </td>
+                                        <?php
                                         echo "</tr>";
-                                        echo "</form>";
+                                        //echo "</form>";
                                 }
 
                             }
@@ -296,7 +328,7 @@ $row_count = sqlsrv_num_rows($query);
                 
             }else if (tipo == "Vestuário"){
 
-                lista = ["Homem", "Mulher", "Criança"];
+                lista = ["Homem", "Mulher", "Criança", "chapeus"];
             }
 
             var myDiv = document.getElementById("tipo2");
@@ -323,34 +355,33 @@ $row_count = sqlsrv_num_rows($query);
     </script>
 
 
-    
+
 <?php
+    //echo "<p>teste</p>";
+    if (isset($_SESSION['statusCode']) != "") {
 
-if (isset($_SESSION['msg']) != "") {
+        echo $_SESSION['statusCode'];
+    ?>
 
-?>
+        <script>
 
-    <script>
-            
-            document.addEventListener("DOMContentLoaded", function(event) {
+                document.addEventListener("DOMContentLoaded", function(event) {
+
+                    Swal.fire({
+                    title: "<?php echo $_SESSION['status']; ?>",
+                    text: "clique ok",
+                    icon: "<?php echo $_SESSION['statusCode']; ?>", //warning
+                });
+
+                });
                 
-                Swal.fire({
-                title: "<?php echo $_SESSION['msg']; ?>",
-                icon: "success",
-            });
-            
-            });
+                
 
+        </script>
 
-        
-    </script>
-
-<?php
-    
-} 
-
-
-unset($_SESSION['msg']);
-
+    <?php
+        unset($_SESSION['status']);
+        unset($_SESSION['statusCode']);
+    }
 ?>
     </body>

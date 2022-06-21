@@ -1,17 +1,6 @@
 <?php 
     session_start();
-
-    $serverName = "sqldb05server1.database.windows.net"; // update me
-    $connectionOptions = array(
-        "Database" => "sqldb1", // update me
-        "Uid" => "ptrptisqldb", // update me
-        "PWD" => "2SdULWb5ePk83jA" // update me
-    );
-    //Establishes the connection
-    $conn = sqlsrv_connect($serverName, $connectionOptions);
-    if($conn === false) {
-        die(print_r(sqlsrv_errors(), true));
-    }
+    include "openconn.php";
     
     if(isset($_POST["addArm"])){
 
@@ -21,6 +10,8 @@
         $tipo =   $_POST["tipo"];
         $idArm = random_int(0, 9000);
         $mailForn = $_SESSION['email'];
+        $recursos =   $_POST["recursos"];
+        $poluicao =   $_POST["poluicao"];
 
         //echo "<p>$nome</p>";
         //echo "<p>$morada</p>";
@@ -44,7 +35,7 @@
         $idF = sqlsrv_get_field( $result, 0);
         //echo "<p>$idF</p>";
 
-        $to_insert = "INSERT INTO [dbo].[Armazem] ([aid], [fornecedor], [nome], [morada], [codigoPostal], [tipo]) VALUES ('$idArm', '$idF', '$nome', '$morada', '$cPostal', '$tipo')"; 
+        $to_insert = "INSERT INTO [dbo].[Armazem] ([aid], [fornecedor], [nome], [morada], [codigoPostal], [tipo], [recursos], [poluicao]) VALUES ('$idArm', '$idF', '$nome', '$morada', '$cPostal', '$tipo', '$recursos', '$poluicao')"; 
 
         $params = array(1, "inserir armazem");
         $var = sqlsrv_query( $conn, $to_insert, $params);
