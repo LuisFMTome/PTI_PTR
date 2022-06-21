@@ -20,24 +20,20 @@ $morada =   $_POST["morada"];
 $cPostal =   $_POST["cPostal"];
 $id =   $_GET['id'];
 
-/*
-//echo "$id";
-echo "$nome";
-echo "$email";
-echo "$pass";
-echo "$morada";
-echo "$cPostal";
-*/
+//echo $id;
+//echo $nome;
+//echo $email;
+//echo "pass: " . $pass . "     ";
+//echo $morada;
+//echo $cPostal;
 
-$user_check_query = "SELECT * FROM [dbo].[Consumidor] WHERE email='$email' and cid!='$id'";
+$user_check_query = "SELECT * FROM [dbo].[Fornecedor] WHERE email='$email' and fid!='$id'";
 $query = sqlsrv_query($conn, $user_check_query, array(), array( "Scrollable" => 'static' ));
 $row_count = sqlsrv_num_rows($query);
 
-//echo "$row_count";
-
 if($row_count == 0){
 
-    $user_check_query2 = "SELECT * FROM [dbo].[Consumidor] WHERE cid='{$id}'"; //Nome da coluna password provavelmente errados
+    $user_check_query2 = "SELECT * FROM [dbo].[Fornecedor] WHERE fid='{$id}'"; //Nome da coluna password provavelmente errados
     $result2 = sqlsrv_query($conn, $user_check_query2);
     if( $result2 === false ) {
         die( print_r( sqlsrv_errors(), true));
@@ -47,35 +43,34 @@ if($row_count == 0){
     }
     $passNaBD = sqlsrv_get_field( $result2, 3);
 
+    //echo $passNaBD;
+
     if($passNaBD == $pass){
 
-        $update_c = "UPDATE [Consumidor] SET nome = '$nome', email = '$email', morada = '$morada', codigoPostal = '$cPostal' WHERE cid = '{$id}'";
-
-        $res1 = sqlsrv_query($conn, $update_c);
+        $update_v = "UPDATE [Fornecedor] SET nome = '$nome', email = '$email', morada = '$morada', codigoPostal = '$cPostal' WHERE fid = '{$id}'";
+        $res1 = sqlsrv_query($conn, $update_v);
 
         $_SESSION["status"] = "conta alterada com secesso";
         $_SESSION["statusCode"] = "success";
 
         $_SESSION["nome"] = $nome;
         $_SESSION["email"] = $email;
-
-        header('location: adminConsumidores.php');
-
+        //echo "tou ca no sitio";
+        header('location: adminFornecedores.php');
     }else{
 
         $passEnc = md5($pass);
 
-        $update_c = "UPDATE [Consumidor] SET nome = '$nome', email = '$email', pwd = '$passEnc', morada = '$morada', codigoPostal = '$cPostal' WHERE cid = '{$id}'";
-
-        $res1 = sqlsrv_query($conn, $update_c);
+        $update_v = "UPDATE [Fornecedor] SET nome = '$nome', email = '$email', pwd = '$passEnc', morada = '$morada', codigoPostal = '$cPostal' WHERE fid = '{$id}'";
+        $res1 = sqlsrv_query($conn, $update_v);
 
         $_SESSION["status"] = "conta alterada com secesso";
         $_SESSION["statusCode"] = "success";
 
         $_SESSION["nome"] = $nome;
         $_SESSION["email"] = $email;
-
-        header('location: adminConsumidores.php');
+        //echo "tou mal"; 
+        header('location: adminFornecedores.php');
 
     }
 
@@ -85,9 +80,7 @@ if($row_count == 0){
     $_SESSION["status"] = "email já em uso";
     $_SESSION["statusCode"] = "error";
 
-    header('location: adminConsumidores.php');
+    header('location: adminFornecedores.php');
 
 }
-
-
 ?>

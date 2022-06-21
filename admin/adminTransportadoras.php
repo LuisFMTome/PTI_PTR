@@ -27,6 +27,7 @@
     />
     <link rel="stylesheet" href="css/dataTables.bootstrap5.min.css" />
     <link rel="stylesheet" href="css/style.css" />
+    <script src="sweetalert2.all.min.js"></script>
     <title>Admin</title>
   </head>
   <body>
@@ -189,6 +190,7 @@
                         <th>Pwd</th>
                         <th>Morada</th>
                         <th>Codigo Postal</th>
+                        <th>Ação</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -199,12 +201,23 @@
                           ?>
 
                           <tr>
+                            <form id="update_consumidor" method="post" action="updateTransportadora.php?id=<?php echo $row['nif']; ?>">
+                              
                               <td><?php echo $row['nif']; ?></td>
-                              <td><?php echo $row['nome']; ?></td>
-                              <td><?php echo $row['email']; ?></td>
-                              <td><?php echo $row['pwd']; ?></td>
-                              <td><?php echo $row['morada']; ?></td>
-                              <td><?php echo $row['codigoPostal']; ?></td>
+                              <td><input type="text" class="form-control" placeholder="nome" name="nome" value="<?php echo $row['nome']?>" required></td>
+                              <td><input type="email" class="form-control" placeholder="email" name="email" value="<?php echo $row['email'];?>" required></td>
+                              <td><input type="text" class="form-control" placeholder="pass" name="pass" value="<?php echo $row['pwd'];?>" required></td>
+                              <td><input type="text" class="form-control" placeholder="morada" name="morada" value="<?php echo $row['morada'];?>" required></td>
+                              <td><input type="text" class="form-control" placeholder="cPostal" name="cPostal" value="<?php echo $row['codigoPostal'];?>" required pattern="[0-9]{4}" title="Quatro numeros do codigo postal"></td>
+                              <td><input type="submit" value="Update" name="butao" class="btnL"></td>
+                            </form>
+
+                              <!--<td><?php //echo $row['nif']; ?></td>
+                              <td><?php //echo $row['nome']; ?></td>
+                              <td><?php //echo $row['email']; ?></td>
+                              <td><?php //echo $row['pwd']; ?></td>
+                              <td><?php //echo $row['morada']; ?></td>
+                              <td><?php //echo $row['codigoPostal']; ?></td>-->
                           </tr>
                           <?php } ?>
                     </tbody>
@@ -216,6 +229,7 @@
                         <th>Pwd</th>
                         <th>Morada</th>
                         <th>Codigo Postal</th>
+                        <th>Ação</th>
                       </tr>
                     </tfoot>
                   </table>
@@ -232,5 +246,36 @@
     <script src="./js/jquery.dataTables.min.js"></script>
     <script src="./js/dataTables.bootstrap5.min.js"></script>
     <script src="./js/script.js"></script>
+
+    <?php
+
+    //echo "<p>teste</p>";
+    if (isset($_SESSION['statusCode']) != "") {
+
+        echo $_SESSION['statusCode'];
+    ?>
+
+        <script>
+                
+                document.addEventListener("DOMContentLoaded", function(event) {
+                    
+                    Swal.fire({
+                    title: "<?php echo $_SESSION['status']; ?>",
+                    text: "clique ok",
+                    icon: "<?php echo $_SESSION['statusCode']; ?>", //warning
+                });
+                
+                });
+
+
+            
+        </script>
+
+    <?php
+        unset($_SESSION['status']);
+        unset($_SESSION['statusCode']);
+    }
+    ?>
+    
   </body>
 </html>
