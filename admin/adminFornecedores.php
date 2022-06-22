@@ -208,7 +208,7 @@
                               <td><input type="email" class="form-control" placeholder="email" name="email" value="<?php echo $row['email'];?>" required></td>
                               <td><input type="text" class="form-control" placeholder="pass" name="pass" value="<?php echo $row['pwd'];?>" required></td>
                               <td><input type="text" class="form-control" placeholder="morada" name="morada" value="<?php echo $row['morada'];?>" required></td>
-                              <td><input type="text" class="form-control" placeholder="cPostal" name="cPostal" value="<?php echo $row['codigoPostal'];?>" required pattern="[0-9]{4}" title="Quatro numeros do codigo postal"></td>
+                              <td><input type="text" class="form-control" placeholder="cPostal" name="cPostal" value="<?php echo $row['codigoPostal'];?>" required pattern="[0-9]{7}" title="7 numeros do codigo postal"></td>
                               <td><input type="submit" value="Update" name="butao" class="btnL"></td>
                             </form>
                             <!--<td><?php //echo $row['fid']; ?></td>

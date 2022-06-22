@@ -31,6 +31,18 @@ session_start();
 
 if(isset($_POST["addCart"])){
 
+    $idTemp = $_GET["id"];
+
+    $query = "SELECT * FROM [dbo].[Produto] WHERE pid='{$idTemp}'";
+    $result = sqlsrv_query($conn, $query);
+    if( $result === false ) {
+        die( print_r( sqlsrv_errors(), true));
+    }
+    if( sqlsrv_fetch( $result ) === false) {
+        die( print_r( sqlsrv_errors(), true));
+    }
+    $preco = sqlsrv_get_field( $result, 5);
+
     if(isset($_SESSION["cart"])){
 
         $item_array_id = array_column($_SESSION["cart"], "item_id");        
@@ -38,7 +50,8 @@ if(isset($_POST["addCart"])){
 
             $count = count($_SESSION["cart"]);
             $item_array = array(
-                'item_id' => $_GET["id"]
+                'item_id' => $_GET["id"],
+                'item_price' => $preco
                 //'item_price' => 12
             );
             $_SESSION["cart"][$count] = $item_array;
@@ -52,7 +65,8 @@ if(isset($_POST["addCart"])){
     }else{
 
         $item_array = array(
-            'item_id' => $_GET["id"]
+            'item_id' => $_GET["id"],
+            'item_price' => $preco
         );
         $_SESSION["cart"][0] = $item_array;
 
@@ -230,7 +244,7 @@ if(isset($_POST["addCart"])){
                                 <div class="card-body text-center mx-auto">
                                     <div class='cvp'>
                                         <h5 class="card-title font-weight-bold"><?php  echo $row2['nome'];?></h5>
-                                        <p class="card-text">299€</p>
+                                        <p class="card-text"><?php  echo $row2['preco'] . "€";?></p>
                                         <button class='btn btn-secondary' data-swal-template='<?=$templateButton?>'>
                                         Ver Detalhes
                                         </button>

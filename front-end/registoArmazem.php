@@ -148,7 +148,7 @@ $row_count = sqlsrv_num_rows($query);
                             <div class="col-md-12">
                                 <label class="labels">Código Postal</label>
                                 <!--<input type="text" class="form-control" placeholder="Código Postal" name="cPostal" value="" Required>
-                -->                <input class="form-control" placeholder="Código Postal" type="text" required name="cPostal" pattern="[0-9]{4}" title="Quatro numeros do codigo postal" />
+                -->                <input class="form-control" placeholder="Código Postal" type="text" required name="cPostal" pattern="[0-9]{7}" title="7 numeros do codigo postal" />
                     
                             </div>
                             <div class="col-md-12">

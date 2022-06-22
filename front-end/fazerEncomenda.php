@@ -83,4 +83,18 @@ if(isset($_POST["encomendar"])){
         }
         
 }
+/*
+CREATE TABLE Encomenda (
+    pedido int,
+    origem varchar(255), NOT NULL
+    destino varchar(255), NOT NULL
+    produto int, NOT NULL
+    Veiculo int,
+    cancelamento DATETIME
+    estado int, NOT NULL
+    idConsumidor int
+
+    PRIMARY KEY (pedido),
+    FOREIGN KEY (produto) REFERENCES Produto(pid) ON DELETE CASCADE
+     */
 ?>

@@ -149,23 +149,41 @@ $row_count = sqlsrv_num_rows($query);
             <table>
                 <tr>
                     <th>Produto</th>
-                    <th>Quantidade</th>
-                    <th>Total</th>
+                    <th>Preço</th>
+                    <!--<th>Total</th>-->
                     <th>Ação</th>
                 </tr>
 
                 <?php 
                 
+                $total = 0;
                 if(!empty($_SESSION["cart"])){
 
-                    $total = 0;
+
                     foreach($_SESSION["cart"] as $keys => $values){
+
+                        $precoDoProduto = $values["item_price"];
+                        $total = $total + $precoDoProduto;
+
+                        $idT = $values["item_id"];
+
+                        $query = "SELECT * FROM [dbo].[Produto] WHERE pid='{$idT}'";
+                        $result = sqlsrv_query($conn, $query);
+
+                        if( $result === false ) {
+                            die( print_r( sqlsrv_errors(), true));
+                        }
+                        if( sqlsrv_fetch( $result ) === false) {
+                            die( print_r( sqlsrv_errors(), true));
+                        }
+
+                        $nomeP = sqlsrv_get_field( $result, 1);
 
                         ?>
                         <tr>
-                            <td><?php echo $values["item_id"] ?></td>
-                            <td><input type="number" value="1"></td>
-                            <td>20€</td>
+                            <td><?php echo $nomeP?></td>
+                            <!--<td><input type="number" value="1"></td>-->
+                            <td><?php echo $values["item_price"] . "€" ?></td>
                             <td><a href="carrinho.php?action=delete&id=<?php echo $values["item_id"]; ?>">Remover</a></td>
                         </tr>
                         
@@ -194,8 +212,8 @@ $row_count = sqlsrv_num_rows($query);
                 <table>
                     <tr>
                         <td>Total</td>
-                        <td id = "total">80</td>
-                        <td>€</td>
+                        <td id = "total"><?php echo $total . "€"; ?></td>
+                        
                     </tr>
                     <tr>
                         <td> <div id="paypal-button-container"></div> </td>

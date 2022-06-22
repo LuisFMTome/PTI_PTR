@@ -21,6 +21,7 @@ include "openconn.php";
 <body>
     <nav>
         <div class="top-nav-bar">
+
             <div class="search-box">
                 <a href="index.php">
                     <img src="img/logotipo.png" class="logo">
@@ -28,9 +29,10 @@ include "openconn.php";
                 <!--<input type="text" class="form-control">
                 <span class="input-group-text"><i class="fa fa-search"></i></span>-->
             </div>
+
             <div class="menu-bar">
                 <ul>
-                    <li><a href="index.php">Home</a></li>
+                    <!--<li><a href="index.php">Home</a></li>-->
                     <li><a href="mercado.php">Mercado</a></li>
                     <li class="dropdown">
                         <button class="dropbtn"><i class="fa fa-plus-circle"></i>
@@ -107,7 +109,7 @@ include "openconn.php";
                             </div>
                             <div class="col-md-12">
                                 <label class="labels">Matrícula</label>
-                                <input type="number" class="form-control" placeholder="Matrícula" name="matricula" value="" required>
+                                <input type="text" class="form-control" placeholder="Matrícula" name="matricula" value="" required>
                             </div>
 
                             <div class="col-md-12">
