@@ -1,17 +1,7 @@
 <?php 
 session_start();
 
-$serverName = "sqldb05server1.database.windows.net"; // update me
-$connectionOptions = array(
-    "Database" => "sqldb1", // update me
-    "Uid" => "ptrptisqldb", // update me
-    "PWD" => "2SdULWb5ePk83jA" // update me
-);
-//Establishes the connection
-$conn = sqlsrv_connect($serverName, $connectionOptions);
-if($conn === false) {
-    die(print_r(sqlsrv_errors(), true));
-}
+include "openconn.php";
 
 $mailForn = $_SESSION['email'];
 //arranjar id do fornecedor
@@ -167,12 +157,31 @@ $row_count = sqlsrv_num_rows($query);
                                 <label class="labels">Tipo</label>
 
                                 <select id="tipo1" class="form-control" name="tipo" onchange="getTipo();">
+
                                     <option value="">Escolha um</option>
+
+                                    <?php
+                                        $aux = 0;
+                                        $receber_tipos = "SELECT * FROM [dbo].[Tipo] WHERE tid>'$aux'";
+                                        $tipos = sqlsrv_query($conn, $receber_tipos);
+                                        
+                                        while ($rowP = sqlsrv_fetch_array($tipos)) {
+
+                                            ?>
+                                            
+                                            <option value='<?php echo $rowP['nome']; ?>'><?php echo $rowP['nome']; ?></option>
+
+                                            <?php
+
+                                        }
+                                        
+                                    ?>
+                                    <!--<option value="">Escolha um</option>
                                     <option value="Alimentação">Alimentação</option>
                                     <option value="Casa">Casa</option>
                                     <option value="Desporto">Desporto</option>
                                     <option value="Tecnologia">Tecnologia</option>
-                                    <option value="Vestuário">Vestuário</option>
+                                    <option value="Vestuário">Vestuário</option>-->
                                 </select>
                             </div>
 
@@ -310,25 +319,119 @@ $row_count = sqlsrv_num_rows($query);
             console.log(tipo);
 
             console.log(tipo);
-            if(tipo == "Alimentação"){
+            if(tipo == "Alimentacao"){
 
-                lista = ["talheres", "fruta", "outros"];
-                console.log("tou ca");
+                lista = []
+                
+                <?php
+                    $aux = 1;
+                    $receber_subtipos = "SELECT * FROM [dbo].[Subtipo] WHERE tipo='$aux'";
+                    $subtipos = sqlsrv_query($conn, $receber_subtipos);
+                    
+                    while ($rowP = sqlsrv_fetch_array($subtipos)) {
+
+                        ?>
+                        
+                        //<option value='<?php //echo $rowP['nome']; ?>'><?php //echo $rowP['nome']; ?></option>
+                        lista.push("<?php echo $rowP['nome']; ?>");
+                        <?php
+
+                    }
+                    
+                ?>
+                //lista = ["talheres", "fruta", "outros"];
+                //console.log("tou ca");
             }else if (tipo == "Desporto"){
 
-                lista = ["calçado", "equipamento", "acessórios"];
+                lista = []
+
+                <?php
+                    $aux = 3;
+                    $receber_subtipos = "SELECT * FROM [dbo].[Subtipo] WHERE tipo='$aux'";
+                    $subtipos = sqlsrv_query($conn, $receber_subtipos);
+                    
+                    while ($rowP = sqlsrv_fetch_array($subtipos)) {
+
+                        ?>
+                        
+                        //<option value='<?php //echo $rowP['nome']; ?>'><?php //echo $rowP['nome']; ?></option>
+                        lista.push("<?php echo $rowP['nome']; ?>");
+                        <?php
+
+                    }
+                    
+                ?>
+
+                //lista = ["calçado", "equipamento", "acessórios"];
 
             }else if (tipo == "Tecnologia"){
 
-                lista = ["PCs", "Playstation", "Nitendo"];
+                lista = []
+
+                <?php
+                    $aux = 4;
+                    $receber_subtipos = "SELECT * FROM [dbo].[Subtipo] WHERE tipo='$aux'";
+                    $subtipos = sqlsrv_query($conn, $receber_subtipos);
+                    
+                    while ($rowP = sqlsrv_fetch_array($subtipos)) {
+
+                        ?>
+                        
+                        //<option value='<?php //echo $rowP['nome']; ?>'><?php //echo $rowP['nome']; ?></option>
+                        lista.push("<?php echo $rowP['nome']; ?>");
+                        <?php
+
+                    }
+                    
+                ?>
+
+                //lista = ["PCs", "Playstation", "Nitendo"];
 
             }else if (tipo == "Casa"){
 
-                lista = ["Armários", "Cadeiras", "Sofas"];
-                
-            }else if (tipo == "Vestuário"){
+                lista = []
 
-                lista = ["Homem", "Mulher", "Criança", "chapeus"];
+                <?php
+                    $aux = 2;
+                    $receber_subtipos = "SELECT * FROM [dbo].[Subtipo] WHERE tipo='$aux'";
+                    $subtipos = sqlsrv_query($conn, $receber_subtipos);
+                    
+                    while ($rowP = sqlsrv_fetch_array($subtipos)) {
+
+                        ?>
+                        
+                        //<option value='<?php //echo $rowP['nome']; ?>'><?php //echo $rowP['nome']; ?></option>
+                        lista.push("<?php echo $rowP['nome']; ?>");
+                        <?php
+
+                    }
+                    
+                ?>
+
+                //lista = ["Armarios", "Cadeiras", "Sofas"];
+                
+            }else if (tipo == "Vestuario"){
+
+                lista = []
+
+                <?php
+                    $aux = 5;
+                    $receber_subtipos = "SELECT * FROM [dbo].[Subtipo] WHERE tipo='$aux'";
+                    $subtipos = sqlsrv_query($conn, $receber_subtipos);
+                    
+                    while ($rowP = sqlsrv_fetch_array($subtipos)) {
+
+                        ?>
+                        
+                        //<option value='<?php //echo $rowP['nome']; ?>'><?php //echo $rowP['nome']; ?></option>
+                        lista.push("<?php echo $rowP['nome']; ?>");
+                        <?php
+
+                    }
+                    
+                ?>
+
+                //lista = ["Homem", "Mulher", "Criança", "chapeus"];
             }
 
             var myDiv = document.getElementById("tipo2");
@@ -360,7 +463,7 @@ $row_count = sqlsrv_num_rows($query);
     //echo "<p>teste</p>";
     if (isset($_SESSION['statusCode']) != "") {
 
-        echo $_SESSION['statusCode'];
+        //echo $_SESSION['statusCode'];
     ?>
 
         <script>

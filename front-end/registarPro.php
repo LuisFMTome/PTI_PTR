@@ -115,7 +115,7 @@
                 }
                 $idSub = sqlsrv_get_field( $result, 0);
                 
-            }elseif($tipo == "Vestuário"){
+            }elseif($tipo == "Vestuario"){
 
                 $valor = 5;
 
