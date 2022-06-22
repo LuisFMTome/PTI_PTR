@@ -303,5 +303,20 @@ if (isset($_SESSION['statusCode']) == "error") {
 }
 
     ?>
+
+    <?php
+    /*
+    $encomendas_query = "SELECT * FROM [dbo].[Encomenda]";
+    $enco = sqlsrv_query($conn, $encomendas_query);
+    
+    while ($row = sqlsrv_fetch_array($enco)) {
+        echo "<tr>";
+        
+        echo "<td>" . $row['produto'] . "</td>";
+        
+        echo "</tr>";
+    }
+    */
+    ?>
 </body>
 </html>

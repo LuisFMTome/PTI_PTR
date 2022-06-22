@@ -21,14 +21,18 @@ if(isset($_POST["encomendar"])){
         //ir confirmar se o consumidor tem a morada definida
         $morada_consumidor_query = "SELECT * FROM [dbo].[Consumidor] WHERE email='{$emailConsumidor}'";
         $result = sqlsrv_query($conn, $morada_consumidor_query);
-
-        //morada do consumidor
+        if( $result === false ) {
+            die( print_r( sqlsrv_errors(), true));
+        }
+        if( sqlsrv_fetch( $result ) === false) {
+            die( print_r( sqlsrv_errors(), true));
+        }
+        //morada e id do consumidor
         $cPostal_consumidor = sqlsrv_get_field( $result, 5);
         $id_consumidor = sqlsrv_get_field( $result, 0);
-        echo $cPostal_consumidor;
+        //echo $cPostal_consumidor;
 
-        //no futuro retirar isto (teria que ser o id do veiculo)
-        $veiculo = 0;
+
 
         if(!(is_null($cPostal_consumidor))){
 
@@ -40,13 +44,31 @@ if(isset($_POST["encomendar"])){
                 //echo $values["item_id"];
                 $idProduto = $values["item_id"];
 
-                //cPostal do produto
+                //cPostal e poluicao do produto
                 $morada_produto_query = "SELECT * FROM [dbo].[Produto] WHERE pid='{$idProduto}'";
                 $result2 = sqlsrv_query($conn, $morada_produto_query);
-                $cPostal_produto = sqlsrv_get_field( $result, 3);
+                if( $result2 === false ) {
+                    die( print_r( sqlsrv_errors(), true));
+                }
+                if( sqlsrv_fetch( $result2 ) === false) {
+                    die( print_r( sqlsrv_errors(), true));
+                }
+                $cPostal_produto = sqlsrv_get_field( $result2, 3);
+                $poluicao = sqlsrv_get_field( $result2, 5);
+                //echo "polui " . $poluicao;           
+
+                //estado da encomenda (encomendado)
+                $estado = 0;
+
+                //echo "<p>'produto' . $cPostal_produto</p>";
+                //echo "<p>'consumidor' . $cPostal_consumidor</p>";
+                //echo "<p>$idProduto</p>";
+                $data =  date("Y-m-d H:i:s"); 
+                $dataFinal = date('Y-m-d H:i:s', strtotime($data. ' + 7 days'));
+                //echo $dataFinal;
 
                 //inserir na bd
-                $to_insert = "INSERT INTO [dbo].[Encomenda] ([pedido], [origem], [destino], [produto], [quantidade]) VALUES ('$pedido', '$cPostal_produto', '$cPostal_consumidor', '$idProduto', '$veiculo')"; 
+                $to_insert = "INSERT INTO [dbo].[Encomenda] ([pedido], [consumidor], [origem], [destino], [produto], [poluicao], [cancelamento], [estado]) VALUES ('$pedido', '$id_consumidor', '$cPostal_produto', '$cPostal_consumidor', '$idProduto', '$poluicao', '$dataFinal', '$estado')"; 
 
                 $params = array(1, "some data");
                 $var = sqlsrv_query( $conn, $to_insert, $params);
@@ -54,11 +76,8 @@ if(isset($_POST["encomendar"])){
                     die( print_r( sqlsrv_errors(), true));
                 }
 
-                echo "<p>$cPostal_produto</p>";
-                echo "<p>$cPostal_consumidor</p>";
-                echo "<p>$idProduto</p>";
-                echo "sucesso";
-                    
+
+                
                 }
 
                 unset($_SESSION["cart"]);

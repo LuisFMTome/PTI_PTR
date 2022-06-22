@@ -58,7 +58,24 @@ if(isset($_POST["addCart"])){
 
         }else{
 
-            echo '<script>alert("item ja no carrinho")</script>';
+            //echo '<script>alert("item ja no carrinho")</script>';
+            ?>
+            <script>
+            
+                document.addEventListener("DOMContentLoaded", function(event) {
+                    
+                    Swal.fire({
+                    title: "item ja no carrinho",
+                    text: "clique ok",
+                    icon: "error", //warning
+                });
+                
+                });
+        
+            </script>
+
+            <?php
+
 
         }
 
