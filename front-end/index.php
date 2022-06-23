@@ -36,56 +36,30 @@ session_start();
                 <ul>
                     <!--<li><a href="index.php">Home</a></li>-->
                     <li><a href="mercado.php">Mercado</a></li>
-
-                    <?php 
-                    if (isset($_SESSION['email']) != "") {
-
-                        if($_SESSION["tipo"] == "Consumidor"){
-
-                    ?>
-                        <li><a href="perfilUtilizador.php">Perfil</a></li>
-
-                    <?php 
-                        }elseif($_SESSION["tipo"] == "Fornecedor"){
-
-                            ?>
-                            
-                            <li><a href="perfilFornecedor.php">Perfil</a></li>
-
-                            <?php
-                        }elseif($_SESSION["tipo"] == "Transportadora"){
-
-                            ?>
-                            
-                            <li><a href="perfilTransportadora.php">Perfil</a></li>
-
-                            <?php
-                        }
-
-                    }?>
-                    
                     <li><a href="carrinho.php">Carrinho</a></li>
-
                     <?php 
-                    if (isset($_SESSION['email']) != "") {
-
-                    ?>
-                    
-                    <li><a href="logout.php">Logout</a></li>
-
-                    <?php    
-                    }else{
-
-                    ?>
-                    
-                    <li><a href="conta.php">Login</i></a></li>
-                    
-                    <?php
-
-                    }
-                    ?>
-
-                    
+                    if (isset($_SESSION['email']) != "") {?>
+                        <li class="dropdown">
+                        <button class="dropbtn">
+                            <?php echo $_SESSION["nome"] ?>
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-content">
+                            <?php
+                            if($_SESSION["tipo"] == "Consumidor"){
+                                echo "<a href=perfilUtilizador.php>Perfil</a>";
+                                echo "<a href=histEncomendas.php>Encomendas</a>";
+                            }elseif($_SESSION["tipo"] == "Fornecedor"){
+                                echo "<a href=perfilFornecedor.php>Perfil</a>";
+                            }elseif($_SESSION["tipo"] == "Transportadora"){
+                                echo "<a href=perfilTransportadora.php>Perfil</a>";
+                            }
+                            ?>
+                            <a href="logout.php">Logout</a>
+                        </div>
+                    <?php }else{ ?>
+                        <li><a href="conta.php">Login</i></a></li>
+                    <?php } ?>
                 </ul>
             </div>
         </div>
