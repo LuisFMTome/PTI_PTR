@@ -126,15 +126,13 @@ if($conn === false) {
                                     echo "<tr>";
                                     echo "<form action='deleteEncomenda.php' method='post'>";
                                     echo "<input type='hidden' name='idEncomenda' value=".$row['pedido'].">";
-                                    echo "<td>" . $row['origem'] . "</td>";
-                                    echo "<td>" . $row['destino'] . "</td>";
-                                    echo "<td>" . ProductName($conn, $row['produto']) . "</td>";
-                                    echo "<td>" . $row['poluicao'] . "</td>";
-                                    echo "<td>" . $row['cancelamento']->format('Y-m-d H:i:sP') . "</td>";
-                                    echo "<td>" . EstadoName($conn, $row['estado']) . "</td>";
-                                    ?>
-                                    <td> <a href='deleteEncomenda.php?id=<?php echo $row['aid']; ?>' >Delete</a> </td>
-                                    <?php
+                                    echo "<td class=text-left>" . $row['origem'] . "</td>";
+                                    echo "<td class=text-left>" . $row['destino'] . "</td>";
+                                    echo "<td class=text-left>" . ProductName($conn, $row['produto']) . "</td>";
+                                    echo "<td class=text-left>" . $row['poluicao'] . "</td>";
+                                    echo "<td class=text-left>" . $row['cancelamento']->format('Y-m-d H:i:sP') . "</td>";
+                                    echo "<td class=text-left>" . EstadoName($conn, $row['estado']) . "</td>";
+                                    echo "<td><input type='submit' value='Delete' name='delete_encomenda' class=btn-sm></td>";
                                     echo"</form>";
                                     echo "</tr>";
                                 }
