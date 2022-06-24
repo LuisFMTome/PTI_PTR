@@ -124,7 +124,7 @@ if($conn === false) {
                             #if ($row_count > 0) {
                                 while ($row = sqlsrv_fetch_array($encomendas)) {
                                     echo "<tr>";
-                                    echo "<form action='deleteEncomenda.php' method='post'>";
+                                    echo "<form action='cancelEncomenda.php' method='post'>";
                                     echo "<input type='hidden' name='idEncomenda' value=".$row['pedido'].">";
                                     echo "<td class=text-left>" . $row['origem'] . "</td>";
                                     echo "<td class=text-left>" . $row['destino'] . "</td>";
@@ -132,7 +132,7 @@ if($conn === false) {
                                     echo "<td class=text-left>" . $row['poluicao'] . "</td>";
                                     echo "<td class=text-left>" . $row['cancelamento']->format('Y-m-d H:i:sP') . "</td>";
                                     echo "<td class=text-left>" . EstadoName($conn, $row['estado']) . "</td>";
-                                    echo "<td><input type='submit' value='Delete' name='delete_encomenda' class=btn-sm></td>";
+                                    echo "<td><input type='submit' value='Cancel' name='delete_encomenda' class=btn-sm></td>";
                                     echo"</form>";
                                     echo "</tr>";
                                 }
