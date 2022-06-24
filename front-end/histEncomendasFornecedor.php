@@ -21,51 +21,45 @@ include "openconn.php";
     <script src="sweetalert2.all.min.js"></script>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: green;">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="index.php">
-            <img src="img/logotipo.png" class="logo">
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="font-weight: bold;">
-            <li class="nav-item">
-            <a class="nav-link active" href="mercado.php">Mercado</a>
-            </li>
-            <li class="nav-item">
-            <a class="nav-link active" href="carrinho.php" >Carrinho</a>
-            </li>
-                <?php 
+    <nav>
+        <div class="top-nav-bar">
+            <div class="search-box">
+                <a href="index.php">
+                    <img src="img/logotipo.png" class="logo">
+                </a>
+                <!--<input type="text" class="form-control">
+                <span class="input-group-text"><i class="fa fa-search"></i></span>-->
+            </div>
+            <div class="menu-bar">
+                <ul>
+                    <!--<li><a href="index.php">Home</a></li>-->
+                    <li><a href="mercado.php">Mercado</a></li>
+                    <li><a href="carrinho.php">Carrinho</a></li>
+                    <?php 
                     if (isset($_SESSION['email']) != "") {?>
-                        <li class="nav-item dropdown">
-                        <a class="nav-link active dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" >
+                        <li class="dropdown">
+                        <button class="dropbtn">
                             <?php echo $_SESSION["nome"] ?>
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="background-color: green;">
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-content">
                             <?php
                             if($_SESSION["tipo"] == "Consumidor"){
-                                echo "<li><a class=dropdown-item href=perfilUtilizador.php>Perfil</a></li>";
-                                echo "<li><a class=dropdown-item href=histEncomendas.php>Encomendas</a></li>";
+                                echo "<a href=perfilUtilizador.php>Perfil</a>";
                             }elseif($_SESSION["tipo"] == "Fornecedor"){
-                                echo "<li><a class=dropdown-item href=perfilFornecedor.php>Perfil</a></li>";
+                                echo "<a href=perfilFornecedor.php>Perfil</a>";
                             }elseif($_SESSION["tipo"] == "Transportadora"){
-                                echo "<li><a class=dropdown-item href=perfilTransportadora.php>Perfil</a></li>";
+                                echo "<a href=perfilTransportadora.php>Perfil</a>";
                             }
                             ?>
-                        </ul>
-                        </li>
-                        <li class="nav-item">
-                        <a class="nav-link active" href="logout.php">Logout</a>
-                        </li>
-                        
-                <?php }else{ ?>
-                    <li class="nav-item"><a class="nav-link active" href="conta.php">Login</i></a></li>
-                <?php } ?>
-        </ul>
+                            <a href="logout.php">Logout</a>
+                        </div>
+                    <?php }else{ ?>
+                        <li><a href="conta.php">Login</i></a></li>
+                    <?php } ?>
+                </ul>
+            </div>
         </div>
-    </div>
     </nav>
     <div class="container rounded bg-white mt-5 mb-5">
         <div class="row">
@@ -81,8 +75,9 @@ include "openconn.php";
                         <th scope="col" class="text-center">Produto</th>
                         <th scope="col" class="text-center">Poluição</th>
                         <th scope="col" class="text-center">Data limite de cancelamento</th>
+                        <th scope="col" class="text-center">Veiculo</th>
                         <th scope="col" class="text-center">Estado</th>
-                        <th scope="col" class="text-center">Cancelar</th>
+                        <th scope="col" class="text-center">Escolher Veiculo</th>
 
                       </tr>
                     </thead>
@@ -107,11 +102,69 @@ include "openconn.php";
                             //}
                             //$cid = 0;
                             $codigoPostal = '';
-                            $consumidor_query = "SELECT * FROM [dbo].[Consumidor] WHERE email = '$_SESSION[email]'";
-                            $consumidor = sqlsrv_query($conn, $consumidor_query);
-                            $row_count1 = sqlsrv_num_rows($consumidor);
-                            $row = sqlsrv_fetch_array($consumidor);
-                            $cid = $row['cid'];
+                            $fornecedor_query = "SELECT * FROM [dbo].[Fornecedor] WHERE email = '$_SESSION[email]'";
+                            $fornecedor = sqlsrv_query($conn, $fornecedor_query);
+                            $row_count1 = sqlsrv_num_rows($fornecedor);
+                            $row = sqlsrv_fetch_array($fornecedor);
+                            $fid = $row['fid'];
+                            //echo $fid;
+
+                            $estadoTemp = 3;
+                            $encomendas_query = "SELECT * FROM [dbo].[Encomenda] where estado !='$estadoTemp'";
+                            $encomendas = sqlsrv_query($conn, $encomendas_query, array(), array( "Scrollable" => 'static' ));
+
+                            while ($row = sqlsrv_fetch_array($encomendas)) {
+
+                                $idProd = $row['produto'];
+
+                                $produto_query = "SELECT * FROM [dbo].[Produto] WHERE pid='$idProd'";
+                                $produto = sqlsrv_query($conn, $produto_query);
+                                if( $produto === false ) {
+                                    die( print_r( sqlsrv_errors(), true));
+                                }
+                                if( sqlsrv_fetch( $produto ) === false) {
+                                    die( print_r( sqlsrv_errors(), true));
+                                }
+                                $cPostalArm = sqlsrv_get_field( $produto, 3);
+
+                                //$cPostalArm = $row2['codigoPostal'];
+
+                                $armazem_query = "SELECT * FROM [dbo].[Armazem] WHERE codigoPostal ='$cPostalArm'";
+                                $armazem = sqlsrv_query($conn, $armazem_query);
+                                $row2 = sqlsrv_fetch_array($armazem);
+
+                                $ifForn = $row2['fornecedor'];
+
+                                if($ifForn == $fid){
+
+                                    echo "<tr>";
+                                    echo "<form action='escolherVeiculo.php' method='post'>";
+                                    echo "<input type='hidden' name='idEncomenda' value=".$row['pedido'].">";
+                                    echo "<td class=text-left>" . $row['origem'] . "</td>";
+                                    echo "<td class=text-left>" . $row['destino'] . "</td>";
+                                    echo "<td class=text-left>" . ProductName($conn, $row['produto']) . "</td>";
+                                    echo "<td class=text-left>" . $row['poluicao'] . "</td>";
+                                    echo "<td class=text-left>" . $row['cancelamento']->format('Y-m-d H:i:sP') . "</td>";
+                                    echo "<td class=text-left>" . $row['veiculo'] . "</td>";
+                                    echo "<td class=text-left>" . EstadoName($conn, $row['estado']) . "</td>";
+                                    if($row['veiculo'] == null){
+
+                                    ?>
+                                    
+                                    <td><button type="submit" name="delete_encomenda" class=btn-sm>Escolher</button></td>
+                                    <?php
+                                    }
+                                    //echo "<td class=text-left><input type='submit' value='Cancelar' name='delete_encomenda' class=btn-sm></td>";
+                                    echo"</form>";
+                                    echo "</tr>";
+
+                                }
+
+                                
+
+
+                            }
+                            /*
                             //echo $cid;
                             $codigoPostal = $row['codigoPostal'];
                             $encomenda_query = "SELECT * FROM [dbo].[Encomenda] WHERE consumidor= $cid";
@@ -143,6 +196,7 @@ include "openconn.php";
                                 echo "</tr>";
                             }
                             #}
+                            */
                         ?>
         
                     </tbody>

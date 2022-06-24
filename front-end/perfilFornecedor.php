@@ -17,6 +17,7 @@
         session_start();
         include "openconn.php";
     ?>
+<<<<<<< HEAD
     <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: green;">
     <div class="container-fluid">
         <a class="navbar-brand" href="index.php">

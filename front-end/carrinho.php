@@ -258,7 +258,7 @@ $row_count = sqlsrv_num_rows($query);
 
 <?php
 //echo "<p>teste</p>";
-if (isset($_SESSION['statusCode']) == "error") {
+if (isset($_SESSION['statusCode']) != "") {
 
     //echo $_SESSION['statusCode'];
 ?>
