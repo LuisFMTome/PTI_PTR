@@ -377,6 +377,13 @@ form a{
   float: right;
 }
 
+#menu-btn{
+  font-size: 30px;
+  margin: 10px;
+  color: white;
+  display: none;
+}
+
 @media only screen and (max-width: 980px){
   .side-menu{
     width: 30%;
@@ -384,12 +391,17 @@ form a{
     top: 133px;
     position: fixed;
     font-size: 12px;
+    display: none;
   }
   .side-menu ul li ul{
     top: 133px;
   }
   .side-menu ul li:hover ul{
     margin-left: 31%;
+  }
+
+  #menu-btn{
+    display: block;
   }
 }
 
