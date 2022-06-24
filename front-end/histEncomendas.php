@@ -132,7 +132,7 @@ if($conn === false) {
                                     echo "<td class=text-left>" . $row['poluicao'] . "</td>";
                                     echo "<td class=text-left>" . $row['cancelamento']->format('Y-m-d H:i:sP') . "</td>";
                                     echo "<td class=text-left>" . EstadoName($conn, $row['estado']) . "</td>";
-                                    echo "<td><input type='submit' value='Delete' name='delete_encomenda' class=btn-sm></td>";
+                                    echo "<td><input type='submit' value='Cancel' name='delete_encomenda' class=btn-sm></td>";
                                     echo"</form>";
                                     echo "</tr>";
                                 }
