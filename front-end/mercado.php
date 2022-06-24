@@ -266,10 +266,21 @@ if(isset($_POST["addCart"])){
                                         Ver Detalhes
                                         </button>
                                         <br/>
-                                        <button type="submit" name="addCart" class="btn btn-secondary" title="Adicionar ao Carrinho">
-                                            <i class="fa fa-shopping-cart"></i>
-                                        </button>
+                                        <?php 
+                                        if(isset($_SESSION['tipo'])){
+                                            $temp = $_SESSION["tipo"];
+
+                                            if ($temp == "Consumidor") {
+
+                                                ?>
+                                                <button type="submit" name="addCart" class="btn btn-secondary" title="Adicionar ao Carrinho">
+                                                    <i class="fa fa-shopping-cart"></i>
+                                                </button>
+                                                <?php
+                                            }
+                                        }
                                         
+                                        ?>
                                     </div>
                                 </div>
                             </form>

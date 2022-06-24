@@ -47,9 +47,9 @@ include "openconn.php";
                             if($_SESSION["tipo"] == "Consumidor"){
                                 echo "<a href=perfilUtilizador.php>Perfil</a>";
                             }elseif($_SESSION["tipo"] == "Fornecedor"){
-                                echo "<li><a href=perfilFornecedor.php>Perfil</a></li>";
+                                echo "<a href=perfilFornecedor.php>Perfil</a>";
                             }elseif($_SESSION["tipo"] == "Transportadora"){
-                                echo "<li><a href=perfilTransportadora.php>Perfil</a></li>";
+                                echo "<a href=perfilTransportadora.php>Perfil</a>";
                             }
                             ?>
                             <a href="logout.php">Logout</a>
@@ -75,8 +75,9 @@ include "openconn.php";
                         <th scope="col" class="text-center">Produto</th>
                         <th scope="col" class="text-center">Poluição</th>
                         <th scope="col" class="text-center">Data limite de cancelamento</th>
+                        <th scope="col" class="text-center">Veiculo</th>
                         <th scope="col" class="text-center">Estado</th>
-                        <th scope="col" class="text-center">Cancelar</th>
+                        <th scope="col" class="text-center">Escolher Veiculo</th>
 
                       </tr>
                     </thead>
@@ -101,11 +102,69 @@ include "openconn.php";
                             //}
                             //$cid = 0;
                             $codigoPostal = '';
-                            $consumidor_query = "SELECT * FROM [dbo].[Consumidor] WHERE email = '$_SESSION[email]'";
-                            $consumidor = sqlsrv_query($conn, $consumidor_query);
-                            $row_count1 = sqlsrv_num_rows($consumidor);
-                            $row = sqlsrv_fetch_array($consumidor);
-                            $cid = $row['cid'];
+                            $fornecedor_query = "SELECT * FROM [dbo].[Fornecedor] WHERE email = '$_SESSION[email]'";
+                            $fornecedor = sqlsrv_query($conn, $fornecedor_query);
+                            $row_count1 = sqlsrv_num_rows($fornecedor);
+                            $row = sqlsrv_fetch_array($fornecedor);
+                            $fid = $row['fid'];
+                            //echo $fid;
+
+                            $estadoTemp = 3;
+                            $encomendas_query = "SELECT * FROM [dbo].[Encomenda] where estado !='$estadoTemp'";
+                            $encomendas = sqlsrv_query($conn, $encomendas_query, array(), array( "Scrollable" => 'static' ));
+
+                            while ($row = sqlsrv_fetch_array($encomendas)) {
+
+                                $idProd = $row['produto'];
+
+                                $produto_query = "SELECT * FROM [dbo].[Produto] WHERE pid='$idProd'";
+                                $produto = sqlsrv_query($conn, $produto_query);
+                                if( $produto === false ) {
+                                    die( print_r( sqlsrv_errors(), true));
+                                }
+                                if( sqlsrv_fetch( $produto ) === false) {
+                                    die( print_r( sqlsrv_errors(), true));
+                                }
+                                $cPostalArm = sqlsrv_get_field( $produto, 3);
+
+                                //$cPostalArm = $row2['codigoPostal'];
+
+                                $armazem_query = "SELECT * FROM [dbo].[Armazem] WHERE codigoPostal ='$cPostalArm'";
+                                $armazem = sqlsrv_query($conn, $armazem_query);
+                                $row2 = sqlsrv_fetch_array($armazem);
+
+                                $ifForn = $row2['fornecedor'];
+
+                                if($ifForn == $fid){
+
+                                    echo "<tr>";
+                                    echo "<form action='escolherVeiculo.php' method='post'>";
+                                    echo "<input type='hidden' name='idEncomenda' value=".$row['pedido'].">";
+                                    echo "<td class=text-left>" . $row['origem'] . "</td>";
+                                    echo "<td class=text-left>" . $row['destino'] . "</td>";
+                                    echo "<td class=text-left>" . ProductName($conn, $row['produto']) . "</td>";
+                                    echo "<td class=text-left>" . $row['poluicao'] . "</td>";
+                                    echo "<td class=text-left>" . $row['cancelamento']->format('Y-m-d H:i:sP') . "</td>";
+                                    echo "<td class=text-left>" . $row['veiculo'] . "</td>";
+                                    echo "<td class=text-left>" . EstadoName($conn, $row['estado']) . "</td>";
+                                    if($row['veiculo'] == null){
+
+                                    ?>
+                                    
+                                    <td><button type="submit" name="delete_encomenda" class=btn-sm>Escolher</button></td>
+                                    <?php
+                                    }
+                                    //echo "<td class=text-left><input type='submit' value='Cancelar' name='delete_encomenda' class=btn-sm></td>";
+                                    echo"</form>";
+                                    echo "</tr>";
+
+                                }
+
+                                
+
+
+                            }
+                            /*
                             //echo $cid;
                             $codigoPostal = $row['codigoPostal'];
                             $encomenda_query = "SELECT * FROM [dbo].[Encomenda] WHERE consumidor= $cid";
@@ -137,6 +196,7 @@ include "openconn.php";
                                 echo "</tr>";
                             }
                             #}
+                            */
                         ?>
         
                     </tbody>

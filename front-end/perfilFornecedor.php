@@ -39,6 +39,7 @@
                         <div class="dropdown-content">
                             <a href="registoProduto.php">Registar Produtos</a>
                             <a href="registoArmazem.php">Registar Armazém</a>
+                            <a href="histEncomendasFornecedor.php">Encomendas</a>
                         </div>
                     </li>
 
