@@ -377,7 +377,7 @@ form a{
   float: right;
 }
 
-#menu-btn{
+#menu-btn, #close-btn{
   font-size: 30px;
   margin: 10px;
   color: white;
