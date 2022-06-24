@@ -124,7 +124,7 @@ if($conn === false) {
                             #if ($row_count > 0) {
                                 while ($row = sqlsrv_fetch_array($encomendas)) {
                                     echo "<tr>";
-                                    echo "<form action='deleteEncomenda.php' method='post'>";
+                                    echo "<form action='cancelEncomenda.php' method='post'>";
                                     echo "<input type='hidden' name='idEncomenda' value=".$row['pedido'].">";
                                     echo "<td class=text-left>" . $row['origem'] . "</td>";
                                     echo "<td class=text-left>" . $row['destino'] . "</td>";
