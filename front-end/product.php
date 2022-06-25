@@ -138,20 +138,27 @@ session_start();
         </div>
         
     </section>
+
     <div class="product-top row align-items-center">
-        <img src="img/categoria1.jpeg">
-        <div class="overlay-right">
+    <div class="d-flex justify-content-center container mt-5">
+        <div class="card p-3 bg-white">
+            <div class="about-product text-center mt-2"><img src="img/categoria1.jpeg">
+                <div>
+                    <h1><?php echo $produto['nome']?></h1>
+                </div>
+            </div>
+            <div class="stats mt-2">
+                <div class="d-flex justify-content-between p-price"><span>Poluição</span><span><?php echo $produto['poluicao']?>€</span></div>
+                
+            </div>
+            <div class="d-flex justify-content-between total font-weight-bold mt-4"><span>Total</span><span><?php echo $produto['preco']?>€</span></div>
             <button type="button" class="btn btn-secondary" title="Adicionar ao Carrinho">
                 <i class="fa fa-shopping-cart"></i>
-             </button>
+            </button>
         </div>
+            
     </div>
-    <div class="product-bottom text-center">
-        <h3><?php echo $produto['nome']?></h3>
-        <h5>900€</h5>
-
-    </div>
-
+        
 
 
 

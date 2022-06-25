@@ -18,78 +18,16 @@ session_start();
     $produtosPágina = 9;
     $produtoInicial = ($pagina-1)*$produtosPágina;
     
-    $Queryprodutos = "SELECT * FROM [dbo].[Produto] p, [dbo].[Subtipo] s WHERE p.subtipo = s.sid AND s.tipo = '5' ORDER BY nome OFFSET " . $produtoInicial . " ROWS FETCH NEXT " . $produtosPágina . " ROWS ONLY";
-    $QueryTotalProdutos = "SELECT * FROM [dbo].[Produto] p, [dbo].[Subtipo] s WHERE p.subtipo = s.sid AND s.tipo = '5'";
+    $Queryprodutos = "SELECT * FROM [dbo].[Produto] WHERE subtipo = '55' ORDER BY nome OFFSET " . $produtoInicial . " ROWS FETCH NEXT " . $produtosPágina . " ROWS ONLY";
+    //"SELECT * FROM [dbo].[Produto] ORDER BY nome OFFSET " . $produtoInicial . "ROWS FETCH NEXT" . $produtosPágina . "ROWS ONLY";
+    //"SELECT * FROM [dbo].[Produto] ORDER BY nome OFFSET 0 ROWS FETCH NEXT 8 ROWS ONlY";
+    $QueryTotalProdutos = "SELECT * FROM [dbo].[Produto] WHERE subtipo = '55'";
     $queryProdutos_execute = sqlsrv_query($conn, $Queryprodutos, array(), array( "Scrollable" => 'static' ));
     $total_produtos_execute = sqlsrv_query($conn,$QueryTotalProdutos,array(),array( "Scrollable" => 'static' ));
     $total_produtos = sqlsrv_num_rows($total_produtos_execute);
-    
     $numeroPaginas = ceil($total_produtos/$produtosPágina);
 
-    
 
-if(isset($_POST["addCart"])){
-
-    $idTemp = $_GET["id"];
-
-    $query = "SELECT * FROM [dbo].[Produto] WHERE pid='{$idTemp}'";
-    $result = sqlsrv_query($conn, $query);
-    if( $result === false ) {
-        die( print_r( sqlsrv_errors(), true));
-    }
-    if( sqlsrv_fetch( $result ) === false) {
-        die( print_r( sqlsrv_errors(), true));
-    }
-    $preco = sqlsrv_get_field( $result, 5);
-
-    if(isset($_SESSION["cart"])){
-
-        $item_array_id = array_column($_SESSION["cart"], "item_id");        
-        if(!in_array($_GET["id"], $item_array_id)){
-
-            $count = count($_SESSION["cart"]);
-            $item_array = array(
-                'item_id' => $_GET["id"],
-                'item_price' => $preco
-                //'item_price' => 12
-            );
-            $_SESSION["cart"][$count] = $item_array;
-
-        }else{
-
-            //echo '<script>alert("item ja no carrinho")</script>';
-            ?>
-            <script>
-            
-                document.addEventListener("DOMContentLoaded", function(event) {
-                    
-                    Swal.fire({
-                    title: "item ja no carrinho",
-                    text: "clique ok",
-                    icon: "error", //warning
-                });
-                
-                });
-        
-            </script>
-
-            <?php
-
-
-        }
-
-    }else{
-
-        $item_array = array(
-            'item_id' => $_GET["id"],
-            'item_price' => $preco
-        );
-        $_SESSION["cart"][0] = $item_array;
-
-    }
-    //$temp = $_SESSION["cart"][0];
-    //echo $temp;
-}
     
     
     ?>
@@ -107,61 +45,71 @@ if(isset($_POST["addCart"])){
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
     <link href="style.css" rel="stylesheet"/>
-    <script src="sweetalert2.all.min.js"></script>
 </head>
 <body>
+    <nav>
+        <div class="top-nav-bar">
+            <div class="search-box">
+                <a href="index.html">
+                    <img src="img/logotipo.png" class="logo">
+                </a>
+                <input type="text" class="form-control">
+                <span class="input-group-text"><i class="fa fa-search"></i></span>
+            </div>
+            <div class="menu-bar">
+                <ul>
+                    <li><a href="index.php">Home</a></li>
+                    <li><a href="mercado.php">Mercado</a></li>
+                    <?php 
+                    if (isset($_SESSION['email']) != "") {
 
-    
+                        if($_SESSION["tipo"] == "Consumidor"){
 
+                    ?>
+                        <li><a href="perfilUtilizador.php">Perfil</a></li>
 
-    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: green;">
-    <div class="container-fluid">
-        <i class="fa fa-bars" id="menu-btn" onclick="openmenu()"></i>
-        <i class="fa fa-times" id="close-btn" onclick="closemenu()"></i>
-        <a class="navbar-brand" href="index.php">
-            <img src="img/logotipo.png" class="logo">
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="font-weight: bold;">
-            <li class="nav-item">
-            <a class="nav-link active" href="mercado.php">Mercado</a>
-            </li>
-            <li class="nav-item">
-            <a class="nav-link active" href="carrinho.php" >Carrinho</a>
-            </li>
-                <?php 
-                    if (isset($_SESSION['email']) != "") {?>
-                        <li class="nav-item dropdown">
-                        <a class="nav-link active dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" >
-                            <?php echo $_SESSION["nome"] ?>
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="background-color: green;">
+                    <?php 
+                        }elseif($_SESSION["tipo"] == "Fornecedor"){
+
+                            ?>
+                            
+                            <li><a href="perfilFornecedor.php">Perfil</a></li>
 
                             <?php
-                            if($_SESSION["tipo"] == "Consumidor"){
-                                echo "<li><a class=dropdown-item href=perfilUtilizador.php>Perfil</a></li>";
-                                echo "<li><a class=dropdown-item href=histEncomendas.php>Encomendas</a></li>";
-                            }elseif($_SESSION["tipo"] == "Fornecedor"){
-                                echo "<li><a class=dropdown-item href=perfilFornecedor.php>Perfil</a></li>";
-                            }elseif($_SESSION["tipo"] == "Transportadora"){
-                                echo "<li><a class=dropdown-item href=perfilTransportadora.php>Perfil</a></li>";
-                            }
+                        }elseif($_SESSION["tipo"] == "Transportadora"){
+
                             ?>
-                        </ul>
-                        </li>
-                        <li class="nav-item">
-                        <a class="nav-link active" href="logout.php">Logout</a>
-                        </li>
-                        
-                <?php }else{ ?>
-                    <li class="nav-item"><a class="nav-link active" href="conta.php">Login</i></a></li>
-                <?php } ?>
-        </ul>
+                            
+                            <li><a href="perfilTransportadora.php">Perfil</a></li>
+
+                            <?php
+                        }
+
+                    }?>
+                    
+                    <li><a href="carrinho.php">Carrinho</a></li>
+
+                    <?php 
+                    if (isset($_SESSION['email']) != "") {
+
+                    ?>
+                    
+                    <li><a href="logout.php">Logout</a></li>
+
+                    <?php    
+                    }else{
+
+                    ?>
+                    
+                    <li><a href="conta.php">Login</i></a></li>
+                    
+                    <?php
+
+                    }
+                    ?>
+                </ul>
+            </div>
         </div>
-    </div>
     </nav>
     <section class="header">
         <div class="side-menu">
@@ -218,11 +166,9 @@ if(isset($_POST["addCart"])){
     <section class="produtos">
         <div class="container">
             <div class="title-box">
-                
-                <h2>Vestuario</h2>
+                <h2>Sapatos</h2>
             </div>
             <div class="row">
-            
             <?php
                 $counter = 0;
                
@@ -231,36 +177,30 @@ if(isset($_POST["addCart"])){
                     while ($row2 = sqlsrv_fetch_array($queryProdutos_execute)) {
                         if($counter < $produtosPágina){
                         ?>
-                        
-                    
-                    
                 
                     
+                    
+            
                         <div class="card mx-auto col-md-3 col-10 mt-5">
-                        <a href="product.php?id=<?=$row2['pid']?>">
-                        <img src="img/categoria1.jpeg" class='mx-auto img-thumbnail' width="auto" height="auto"/>
-                        </a>
-                            <form method="post" action="mercado.php?action=add&id=<?php echo $row2['pid']; ?>">
-                                <div class="card-body text-center mx-auto">
-                                    <div class='cvp'>
-                                        <h5 class="card-title font-weight-bold"><?php  echo $row2['nome'];?></h5>
-                                        <p class="card-text"><?php  echo $row2['preco'] . "€";?></p>
-                                        <br/>
-                                        <button type="submit" name="addCart" class="btn btn-secondary" title="Adicionar ao Carrinho">
-                                            <i class="fa fa-shopping-cart"></i>
-                                        </button>
-                                        
+                                <a href="product.php?id=<?=$row2['pid']?>">
+                                <img src="img/categoria1.jpeg" class='mx-auto img-thumbnail' width="auto" height="auto"/>
+                                </a>
+                                    
+                                    <div class="card-body text-center mx-auto">
+                                        <div class='cvp'>
+                                            <h5 class="card-title font-weight-bold"><?php  echo $row2['nome'];?></h5>
+                                            <p class="card-text">299€</p>
+                                            <a href="#" class="btn details px-auto">Ver Detalhes</a><br />
+                                            <button type="button" class="btn btn-secondary" title="Adicionar ao Carrinho">
+                                                <i class="fa fa-shopping-cart"></i>
+                                            </button>
+                                        </div>
                                     </div>
-                                </div>
-                            </form>
                         </div>
-
-                    
-                
                 <?php ++$counter;
                 
+                
                     if($counter % 3 == 0){
-                        
                         echo "</div>";
                         echo "<div class='row'>";
                         
@@ -302,50 +242,31 @@ if(isset($_POST["addCart"])){
         </div>
 
     </section>
-    <div>
-        <footer class="bg-dark text-center text-lg-start text-white">
-            <div class="container p-4">
-            <div class="row mt-4">
-                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                <img src="img/logofcul.jpg">
+    <section class="footer">
+        <div class="container text-center">
+            <div class="row">
+                <div class="col-md-3">
+                    <h1>Links Úteis</h1>
+                    <p>Política de Privacidade</p>
+                    <p>Termos de Uso</p>
+                    <p>Política de Returno</p>
+                    <p>Cupões de Desconto</p>
                 </div>
-                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                <h5 class="text-uppercase">Links Úteis</h5>
+                <div class="col-md-3">
+                    <h1>Grupo 10</h1>
+                    <p>Sobre Nós</p>
+                    <p>Contacta-nos</p>
+                    <p>Faculdade de Ciências</p>
+                    <p>Cupões de Desconto</p>
+                </div>
+                <div class="col-md-3 footer-image">
+                    <img src="img/logofcul.jpg">
+                    <p>Faculdade de Ciências da Universidade de Lisboa</p>
+                </div>
 
-                <ul class="list-unstyled">
-                    <li>
-                    <a href="#!" class="text-white"><i class="fas fa-shipping-fast fa-fw fa-sm me-2"></i>Política de Privacidade</a>
-                    </li>
-                    <li>
-                    <a href="#!" class="text-white"><i class="fas fa-backspace fa-fw fa-sm me-2"></i>Termos de Uso</a>
-                    </li>
-                    <li>
-                    <a href="#!" class="text-white"><i class="far fa-file-alt fa-fw fa-sm me-2"></i>Política de Returnos</a>
-                    </li>
-                    <li>
-                    <a href="#!" class="text-white"><i class="far fa-file-alt fa-fw fa-sm me-2"></i>Cupões de Desconto</a>
-                    </li>
-                </ul>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-3 mb-md-0">
-                <h5 class="text-uppercase">Grupo 10</h5>
-                <ul class="list-unstyled">
-                    <li>
-                    <a href="#!" class="text-white">Sobre Nós</a>
-                    </li>
-                    <li>
-                    <a href="#!" class="text-white">Contacta-nos</a>
-                    </li>
-                    <li>
-                    <a href="#!" class="text-white">Faculdade de Ciências</a>
-                    </li>
-                </ul>
-                </div>
-            <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
-            © 2022 Copyright
             </div>
-        </footer>
-    </div>
+        </div>
+    </section>
     <table class="table table-bordered table-lg table-light align-top">
                     <thead>
                       <tr>
@@ -389,30 +310,8 @@ if(isset($_POST["addCart"])){
     }
 
 ?>
-<script>
-    Swal.bindClickHandler()
-
-Swal.mixin({
-  toast: true,
-}).bindClickHandler('data-swal-toast-template')
-</script>
                      
                     </tbody>
                 </table>
-
-    <script>
-        function openmenu()
-            {
-                document.getElementById("side-menu").style.display="block";
-                document.getElementById("menu-btn").style.display="none";
-                document.getElementById("close-btn").style.display="block";
-            }
-        function closemenu()
-            {
-                document.getElementById("side-menu").style.display="none";
-                document.getElementById("menu-btn").style.display="block";
-                document.getElementById("close-btn").style.display="none";
-            }
-    </script>
 </body>
 </html>
