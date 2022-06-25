@@ -17,58 +17,56 @@
         session_start();
         include "openconn.php";
     ?>
-    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: green;">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="index.php">
-            <img src="img/logotipo.png" class="logo">
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="font-weight: bold;">
-            <li class="nav-item">
-            <a class="nav-link active" href="mercado.php">Mercado</a>
-            </li>
-            <li class="nav-item">
-            <a class="nav-link active" href="carrinho.php" >Carrinho</a>
-            </li>
-                <?php 
+    <nav>
+        <div class="top-nav-bar">
+            <div class="search-box">
+                <a href="index.php">
+                    <img src="img/logotipo.png" class="logo">
+                </a>
+                <!--<input type="text" class="form-control">
+                <span class="input-group-text"><i class="fa fa-search"></i></span>-->
+            </div>
+            <div class="menu-bar">
+                <ul>
+                    <!--<li><a href="index.php">Home</a></li>-->
+                    <li><a href="mercado.php">Mercado</a></li>
+                    <li><a href="carrinho.php">Carrinho</a></li>
+                    <li class="dropdown">
+                        <button class="dropbtn"><i class="fa fa-plus-circle"></i>
+                          <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-content">
+                          <a href="registoTransportes.php">Registar Transporte</a>
+                        </div>
+                    </li>
+                    <?php 
                     if (isset($_SESSION['email']) != "") {?>
-                        <li class="nav-item dropdown">
-                        <a class="nav-link active dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" >
+                        <li class="dropdown">
+                        <button class="dropbtn">
                             <?php echo $_SESSION["nome"] ?>
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="background-color: green;">
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-content">
                             <?php
-                            if($_SESSION["tipo"] == "Consumidor"){
-                                echo "<li><a class=dropdown-item href=perfilUtilizador.php>Perfil</a></li>";
-                                echo "<li><a class=dropdown-item href=histEncomendas.php>Encomendas</a></li>";
-                            }elseif($_SESSION["tipo"] == "Fornecedor"){
-                                echo "<li><a class=dropdown-item href=perfilFornecedor.php>Perfil</a></li>";
-                            }elseif($_SESSION["tipo"] == "Transportadora"){
-                                echo "<li><a class=dropdown-item href=perfilTransportadora.php>Perfil</a></li>";
-                            }
+                                if($_SESSION["tipo"] == "Transportadora"){
+                                    echo "<a href=gerirVeiculos.php>Ver encomendas</a>";
+                                }
                             ?>
-                        </ul>
-                        </li>
-                        <li class="nav-item">
-                        <a class="nav-link active" href="logout.php">Logout</a>
-                        </li>
-                        
-                <?php }else{ ?>
-                    <li class="nav-item"><a class="nav-link active" href="conta.php">Login</i></a></li>
-                <?php } ?>
-        </ul>
+                            <a href="logout.php">Logout</a>
+                        </div>
+                    <?php }else{ ?>
+                        <li><a href="conta.php">Login</i></a></li>
+                    <?php } ?>
+                </ul>
+            </div>
         </div>
-    </div>
     </nav>
     <div class="container rounded bg-white mt-5 mb-5">
         <div class="row">
             <div class="col-md-3 border-right">
                 <div class="d-flex flex-column align-items-center text-center p-3 py-5">
                     <img class="rounded-circle mt-5" width="200px" src="img/empty.jpeg">
-                    <span class="font-weight-bold">Nome da Transportadora</span>
+                    <span class="font-weight-bold"><?php echo $_SESSION['nome'] ?></span>
                     <span class="text-black-50">
                         <button type="button" class="btn btn-success">Selecione uma foto</button>
                     </span>
