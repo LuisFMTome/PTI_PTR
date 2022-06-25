@@ -87,7 +87,9 @@
                         if (sqlsrv_has_rows($result) != -1) {
                             echo ("nenhum dado encontrado");
                         } else {
-                            echo"<table>";
+                            echo"<div class=table-responsive>";
+                            echo"<table class=table>";
+                            echo"<thead class=table-dark>";
                             echo "<tr>";
                                 echo"<th>nif</th>";
                                 echo"<th>nome</th>";
@@ -95,6 +97,7 @@
                                 echo"<th>morada</th>";
                                 echo"<th>codigoPostal</th>";
                             echo "</tr>";
+                            echo"</thead>";
                             while($row = sqlsrv_fetch_array($result)) {
                                 echo "<tr>";
                                     echo "<td class='text-center'>".$row['nif']."</td>";
@@ -109,6 +112,7 @@
                                 echo "</tr>";
                             }
                             echo"</table>";
+                            echo"</div>";
                         }
                         echo "<br>";
                         echo "<br>";
