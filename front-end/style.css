@@ -555,3 +555,9 @@ form a{
   box-shadow: none !important;
 
 }
+
+.sticky-top{
+  position: relative;
+  
+  
+}
