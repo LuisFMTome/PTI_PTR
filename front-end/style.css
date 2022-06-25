@@ -400,7 +400,7 @@ form a{
     margin-left: 31%;
   }
 
-  #menu-btn{
+  #menu-btn, #close-btn{
     display: block;
   }
 }
