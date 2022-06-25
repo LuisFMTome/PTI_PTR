@@ -4,7 +4,8 @@ session_start();
 
     $nEncomenda = htmlspecialchars($_POST["idEncomenda"]);
     echo $nEncomenda. "<br>";
-    $aceitar_e = "UPDATE [dbo].[Encomenda] SET estado = 1 WHERE pedido = '{$nEncomenda}'";
+    $data =  date("Y-m-d H:i:s"); 
+    $aceitar_e = "UPDATE [dbo].[Encomenda] SET estado = 1, cancelamento = '$data' WHERE pedido = '{$nEncomenda}'";
 
     $res = sqlsrv_query($conn, $aceitar_e);
         if($res){
