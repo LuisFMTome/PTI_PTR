@@ -18,78 +18,16 @@ session_start();
     $produtosPágina = 9;
     $produtoInicial = ($pagina-1)*$produtosPágina;
     
-    $Queryprodutos = "SELECT * FROM [dbo].[Produto] p, [dbo].[Subtipo] s WHERE p.subtipo = s.sid AND s.tipo = '2' ORDER BY nome OFFSET " . $produtoInicial . " ROWS FETCH NEXT " . $produtosPágina . " ROWS ONLY";
-    $QueryTotalProdutos = "SELECT * FROM [dbo].[Produto] p, [dbo].[Subtipo] s WHERE p.subtipo = s.sid AND s.tipo = '2'";
+    $Queryprodutos = "SELECT * FROM [dbo].[Produto] WHERE subtipo = '51' ORDER BY nome OFFSET " . $produtoInicial . " ROWS FETCH NEXT " . $produtosPágina . " ROWS ONLY";
+    //"SELECT * FROM [dbo].[Produto] ORDER BY nome OFFSET " . $produtoInicial . "ROWS FETCH NEXT" . $produtosPágina . "ROWS ONLY";
+    //"SELECT * FROM [dbo].[Produto] ORDER BY nome OFFSET 0 ROWS FETCH NEXT 8 ROWS ONlY";
+    $QueryTotalProdutos = "SELECT * FROM [dbo].[Produto] WHERE subtipo = '51'";
     $queryProdutos_execute = sqlsrv_query($conn, $Queryprodutos, array(), array( "Scrollable" => 'static' ));
     $total_produtos_execute = sqlsrv_query($conn,$QueryTotalProdutos,array(),array( "Scrollable" => 'static' ));
     $total_produtos = sqlsrv_num_rows($total_produtos_execute);
-    
     $numeroPaginas = ceil($total_produtos/$produtosPágina);
 
-    
 
-if(isset($_POST["addCart"])){
-
-    $idTemp = $_GET["id"];
-
-    $query = "SELECT * FROM [dbo].[Produto] WHERE pid='{$idTemp}'";
-    $result = sqlsrv_query($conn, $query);
-    if( $result === false ) {
-        die( print_r( sqlsrv_errors(), true));
-    }
-    if( sqlsrv_fetch( $result ) === false) {
-        die( print_r( sqlsrv_errors(), true));
-    }
-    $preco = sqlsrv_get_field( $result, 5);
-
-    if(isset($_SESSION["cart"])){
-
-        $item_array_id = array_column($_SESSION["cart"], "item_id");        
-        if(!in_array($_GET["id"], $item_array_id)){
-
-            $count = count($_SESSION["cart"]);
-            $item_array = array(
-                'item_id' => $_GET["id"],
-                'item_price' => $preco
-                //'item_price' => 12
-            );
-            $_SESSION["cart"][$count] = $item_array;
-
-        }else{
-
-            //echo '<script>alert("item ja no carrinho")</script>';
-            ?>
-            <script>
-            
-                document.addEventListener("DOMContentLoaded", function(event) {
-                    
-                    Swal.fire({
-                    title: "item ja no carrinho",
-                    text: "clique ok",
-                    icon: "error", //warning
-                });
-                
-                });
-        
-            </script>
-
-            <?php
-
-
-        }
-
-    }else{
-
-        $item_array = array(
-            'item_id' => $_GET["id"],
-            'item_price' => $preco
-        );
-        $_SESSION["cart"][0] = $item_array;
-
-    }
-    //$temp = $_SESSION["cart"][0];
-    //echo $temp;
-}
     
     
     ?>
@@ -107,21 +45,20 @@ if(isset($_POST["addCart"])){
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
     <link href="style.css" rel="stylesheet"/>
-    <script src="sweetalert2.all.min.js"></script>
 </head>
 <body>
     <nav>
         <div class="top-nav-bar">
             <div class="search-box">
-                <a href="index.php">
+                <a href="index.html">
                     <img src="img/logotipo.png" class="logo">
                 </a>
-                <!--<input type="text" class="form-control">
-                <span class="input-group-text"><i class="fa fa-search"></i></span>-->
+                <input type="text" class="form-control">
+                <span class="input-group-text"><i class="fa fa-search"></i></span>
             </div>
             <div class="menu-bar">
                 <ul>
-                    <!--<li><a href="index.php">Home</a></li>-->
+                    <li><a href="index.php">Home</a></li>
                     <li><a href="mercado.php">Mercado</a></li>
                     <?php 
                     if (isset($_SESSION['email']) != "") {
@@ -229,11 +166,9 @@ if(isset($_POST["addCart"])){
     <section class="produtos">
         <div class="container">
             <div class="title-box">
-                
-                <h2>Casa</h2>
+                <h2>Chapéus</h2>
             </div>
             <div class="row">
-            
             <?php
                 $counter = 0;
                
@@ -242,36 +177,30 @@ if(isset($_POST["addCart"])){
                     while ($row2 = sqlsrv_fetch_array($queryProdutos_execute)) {
                         if($counter < $produtosPágina){
                         ?>
-                        
-                    
-                    
                 
                     
+                    
+            
                         <div class="card mx-auto col-md-3 col-10 mt-5">
-                        <a href="product.php?id=<?=$row2['pid']?>">
-                        <img src="img/categoria1.jpeg" class='mx-auto img-thumbnail' width="auto" height="auto"/>
-                        </a>
-                            <form method="post" action="mercado.php?action=add&id=<?php echo $row2['pid']; ?>">
-                                <div class="card-body text-center mx-auto">
-                                    <div class='cvp'>
-                                        <h5 class="card-title font-weight-bold"><?php  echo $row2['nome'];?></h5>
-                                        <p class="card-text"><?php  echo $row2['preco'] . "€";?></p>
-                                        <br/>
-                                        <button type="submit" name="addCart" class="btn btn-secondary" title="Adicionar ao Carrinho">
-                                            <i class="fa fa-shopping-cart"></i>
-                                        </button>
-                                        
+                                <a href="product.php?id=<?=$row2['pid']?>">
+                                <img src="img/categoria1.jpeg" class='mx-auto img-thumbnail' width="auto" height="auto"/>
+                                </a>
+                                    
+                                    <div class="card-body text-center mx-auto">
+                                        <div class='cvp'>
+                                            <h5 class="card-title font-weight-bold"><?php  echo $row2['nome'];?></h5>
+                                            <p class="card-text">299€</p>
+                                            <a href="#" class="btn details px-auto">Ver Detalhes</a><br />
+                                            <button type="button" class="btn btn-secondary" title="Adicionar ao Carrinho">
+                                                <i class="fa fa-shopping-cart"></i>
+                                            </button>
+                                        </div>
                                     </div>
-                                </div>
-                            </form>
                         </div>
-
-                    
-                
                 <?php ++$counter;
                 
+                
                     if($counter % 3 == 0){
-                        
                         echo "</div>";
                         echo "<div class='row'>";
                         
@@ -381,13 +310,6 @@ if(isset($_POST["addCart"])){
     }
 
 ?>
-<script>
-    Swal.bindClickHandler()
-
-Swal.mixin({
-  toast: true,
-}).bindClickHandler('data-swal-toast-template')
-</script>
                      
                     </tbody>
                 </table>

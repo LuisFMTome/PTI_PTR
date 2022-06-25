@@ -73,6 +73,7 @@ if(isset($_POST["addCart"])){
                 });
         
             </script>
+            
 
             <?php
 
@@ -95,6 +96,7 @@ if(isset($_POST["addCart"])){
     
     ?>
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -111,6 +113,36 @@ if(isset($_POST["addCart"])){
     <script src="sweetalert2.all.min.js"></script>
 </head>
 <body>
+<script type="text/javascript">
+    function oi(nome,morada,preco,poluicao){
+        console.log("ola")
+        var produto1IsEmpty = document.getElementById('produto1').innerHTML === "";
+        var produto2IsEmpty = document.getElementById('produto2').innerHTML === "";
+        console.log(isEmpty)
+      if( produto1IsEmpty === true){
+        console.log("oi")
+            document.getElementById('produto1').innerHTML += "<h3>"nome"</h3>";
+            document.getElementById('produto1').innerHTML += "<h3>"morada"</h3>";
+            document.getElementById('produto1').innerHTML += "<h3>"preco"</h3>";
+            document.getElementById('produto1').innerHTML += "<h3>"preco"</h3>";
+
+       }else{
+            if(produto2IsEmpty === true){
+                document.getElementById('produto2').innerHTML += "<h3>"nome"</h3>";
+                document.getElementById('produto2').innerHTML += "<h3>"morada"</h3>";
+                document.getElementById('produto2').innerHTML += "<h3>"preco"</h3>";
+                document.getElementById('produto2').innerHTML += "<h3>"preco"</h3>";
+
+            }
+            
+
+        }
+        
+
+    }
+
+    
+</script>
     <nav>
         <div class="top-nav-bar">
             <div class="search-box">
@@ -177,45 +209,50 @@ if(isset($_POST["addCart"])){
     </nav>
     <section class="header">
         <div class="side-menu">
-            <ul class="list-group">
-            <a href="mercadoAlimentacao.php"><li>Alimentação<i class="fa fa-angle-right"></i></a>
+        <ul>
+            <a href="mercadoVestuario.php"><li>Vestuario<i class="fa fa-angle-right"></i></a>
                     <ul>
-                        <li>Sub Menu 1</li>
-                        <li>Sub Menu 1</li>
-                        <li>Sub Menu 1</li>
-                        <li>Sub Menu 1</li>
+                        <a href="mercadoVestuario51.php"><li>Chapéus<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoVestuario52.php"><li>Camisas<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoVestuario53.php"><li>Casacos<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoVestuario54.php"><li>Calças<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoVestuario55.php"><li>Sapatos<i class="fa fa-angle-right"></i></a>
                     </ul>
                 </li>
                 <a href="mercadoCasa.php"><li>Casa<i class="fa fa-angle-right"></i></a>
                     <ul>
-                        <li>Sub Menu 2</li>
-                        <li>Sub Menu 2</li>
-                        <li>Sub Menu 2</li>
-                        <li>Sub Menu 2</li>
+                        <a href="mercadoCasa21.php"><li>Sala de Estar<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoCasa22.php"><li>Cozinha<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoCasa23.php"><li>Casa de Banho<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoCasa24.php"><li>Quarto<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoCasa25.php"><li>Quintal<i class="fa fa-angle-right"></i></a>
                     </ul>
                 </li>
                 <a href="mercadoDesporto.php"><li>Desporto<i class="fa fa-angle-right"></i></a>
                     <ul>
-                        <li>Sub Menu 3</li>
-                        <li>Sub Menu 3</li>
-                        <li>Sub Menu 3</li>
-                        <li>Sub Menu 3</li>
+                        <a href="mercadoDesporto31.php"><li>Ginasio<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoDesporto32.php"><li>Futebol<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoDesporto33.php"><li>Basket<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoDesporto34.php"><li>Outdoor<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoDesporto35.php"><li>Indoor<i class="fa fa-angle-right"></i></a>
                     </ul>
                 </li>
                 <a href="mercadoTecnologia.php"><li>Tecnologia<i class="fa fa-angle-right"></i></a>
                     <ul>
-                        <li>Sub Menu 4</li>
-                        <li>Sub Menu 4</li>
-                        <li>Sub Menu 4</li>
-                        <li>Sub Menu 4</li>
+                        <a href="mercadoTecnologia41.php"><li>Portatéis<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoTecnologia42.php"><li>Computadores<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoTecnologia43.php"><li>Telemóveis<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoTecnologia44.php"><li>Periféricos<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoTecnologia45.php"><li>Televisões<i class="fa fa-angle-right"></i></a>
                     </ul>
                 </li>
-                <a href="mercadoCasa.php"><li>Vestuário<i class="fa fa-angle-right"></i></a>
+                <a href="mercadoAlimentacao.php"><li>Alimentação<i class="fa fa-angle-right"></i></a>
                     <ul>
-                        <li>Sub Menu 5</li>
-                        <li>Sub Menu 5</li>
-                        <li>Sub Menu 5</li>
-                        <li>Sub Menu 5</li>
+                        <a href="mercadoAlimentacao11.php"><li>Vegetais<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoAlimentacao12.php"><li>Fruta<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoAlimentacao13.php"><li>Carne<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoAlimentacao14.php"><li>Peixe<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoAlimentacao15.php"><li>Outros<i class="fa fa-angle-right"></i></a>
                     </ul>
                 </li>
             </ul>
@@ -229,75 +266,101 @@ if(isset($_POST["addCart"])){
                 <h2>Produtos</h2>
             </div>
             <div class="row">
-            
-            <?php
-                $counter = 0;
-               
-                if($total_produtos > 0){
-
-                    while ($row2 = sqlsrv_fetch_array($queryProdutos_execute)) {
-                        if($counter < $produtosPágina){
-                            $template = "my-template".$row2['pid'];
-                            $templateButton = "#".$template;
-                        ?>
-                        <template id='<?=$template?>'>
-                            <swal-param name="showConfirmButton" value="false" />
-                            <swal-image src="img/categoria1.jpeg" width="auto" height="auto" alt="<?php  echo $row2['nome'];?>" />
-                            <swal-title>Detalhes do produto <?php  echo $row2['nome'];?> </swal-title>
-                            <swal-html> Preço </br> Pegada ecológica </swal-html>
-
-                            <swal-button type="close">
-                            </swal-button>
-                        </template>
-                    
-                    
+            <div class="col-8">
+                <div class="row">
                 
-                    
-                        <div class="card mx-auto col-md-3 col-10 mt-5">
-                        <a href="product.php?id=<?=$row2['pid']?>">
-                        <img src="img/categoria1.jpeg" class='mx-auto img-thumbnail' width="auto" height="auto"/>
-                        </a>
-                            <form method="post" action="mercado.php?action=add&id=<?php echo $row2['pid']; ?>">
-                                <div class="card-body text-center mx-auto">
-                                    <div class='cvp'>
-                                        <h5 class="card-title font-weight-bold"><?php  echo $row2['nome'];?></h5>
-                                        <p class="card-text"><?php  echo $row2['preco'] . "€";?></p>
-                                        <button class='btn btn-secondary' data-swal-template='<?=$templateButton?>'>
-                                        Ver Detalhes
-                                        </button>
-                                        <br/>
-                                        <button type="submit" name="addCart" class="btn btn-secondary" title="Adicionar ao Carrinho">
-                                            <i class="fa fa-shopping-cart"></i>
-                                        </button>
-                                        
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
+                <?php
+                    $counter = 0;
+                
+                    if($total_produtos > 0){
 
-                    
-                
-                <?php ++$counter;
-                
-                    if($counter % 3 == 0){
+                        while ($row2 = sqlsrv_fetch_array($queryProdutos_execute)) {
+                            if($counter < $produtosPágina){
+                            ?>
+                            
                         
-                        echo "</div>";
-                        echo "<div class='row'>";
+                        
+                    
+                        
+                            <div class="card mx-auto col-md-3 col-10 mt-5">
+                            <a href="product.php?id=<?=$row2['pid']?>">
+                            <img src="img/categoria1.jpeg" class='mx-auto img-thumbnail' width="auto" height="auto"/>
+                            </a>
+                                <form method="post" action="mercado.php?action=add&id=<?php echo $row2['pid']; ?>">
+                                    <div class="card-body text-center mx-auto">
+                                        <div class='cvp'>
+                                            <h5 class="card-title font-weight-bold"><?php  echo $row2['nome'];?></h5>
+                                            <p class="card-text"><?php  echo $row2['preco'] . "€";?></p>
+                                            <br/>
+                                            
+                                            <button type="submit" name="addCart" class="btn btn-secondary" title="Adicionar ao Carrinho">
+                                                <i class="fa fa-shopping-cart"></i>
+                                            </button>
+                                            
+                                        </div>
+                                    </div>
+                                </form>
+                                <button onclick="oi('ola','ola','ola','ola')" class="btn btn-secondary" title="Comparar produto">
+                                                Comparar produto
+                                            </button>
+                            </div>
+                            <?php  //echo $row2['nome']?>,<?php  //echo $row2['morada']?>,<?php  //echo $row2['preco']?>,<?php  //echo $row2['poluicao']?>
+                        
+                    
+                    <?php ++$counter;
+                    
+                        if($counter % 3 == 0){
+                            
+                            echo "</div>";
+                            echo "<div class='row'>";
+                            
+                        }
+                    }
                         
                     }
+                    if($counter % 3 != 0){
+                        echo "</div>";
+                        
+                    } 
                 }
-                    
-                }
-                if($counter % 3 != 0){
-                    echo "</div>";
-                    
-                } 
-            }
 
-                
-                               
-                    ?>
-                <nav aria-label="Page navigation example">
+                    
+                                
+                        ?>
+
+            </div>
+            </div>
+            
+            <div class="col-4 p-5 t-5">
+                <div class="row">
+                    <div class="d-table-cell align-middle">
+                            <h2>Comparar produtos:</h2>
+                        </div>
+                </div>
+                <div class="row">
+                    <div class="d-table-cell align-middle">
+                        <h5>Primeiro produto</h5>
+                        <div id="produto1">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="d-table-cell align-middle">
+                        <h5>Segundo produto</h5>
+                        <div id="produto2">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="d-table-cell align-middle">
+                        <h5>Diferença entre ambos:</h5>
+                    </div>   
+                </div>   
+            </div>
+            
+            
+            <nav aria-label="Page navigation example">
                 <ul class="pagination">
                     <?php for($pagina=1;$pagina<=$numeroPaginas;$pagina++): 
                         if($pagina = $pagina){?>
@@ -317,10 +380,7 @@ if(isset($_POST["addCart"])){
                     <?php endfor;?>
                 </ul>
                 </nav>
-            </div>
-            
-        </div>
-
+                
     </section>
     <section class="footer">
         <div class="container text-center">
@@ -397,8 +457,12 @@ Swal.mixin({
   toast: true,
 }).bindClickHandler('data-swal-toast-template')
 </script>
+
+
+
                      
                     </tbody>
                 </table>
+                
 </body>
 </html>

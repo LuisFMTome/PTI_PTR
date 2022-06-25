@@ -18,16 +18,78 @@ session_start();
     $produtosPágina = 9;
     $produtoInicial = ($pagina-1)*$produtosPágina;
     
-    $Queryprodutos = "SELECT * FROM [dbo].[Produto] WHERE tipo = 'Alimentacao' ORDER BY nome OFFSET " . $produtoInicial . " ROWS FETCH NEXT " . $produtosPágina . " ROWS ONLY";
-    //"SELECT * FROM [dbo].[Produto] ORDER BY nome OFFSET " . $produtoInicial . "ROWS FETCH NEXT" . $produtosPágina . "ROWS ONLY";
-    //"SELECT * FROM [dbo].[Produto] ORDER BY nome OFFSET 0 ROWS FETCH NEXT 8 ROWS ONlY";
-    $QueryTotalProdutos = "SELECT * FROM [dbo].[Produto] WHERE tipo = 'Alimentacao'";
+    $Queryprodutos = "SELECT * FROM [dbo].[Produto] p, [dbo].[Subtipo] s WHERE p.subtipo = s.sid AND s.tipo = '1' ORDER BY nome OFFSET " . $produtoInicial . " ROWS FETCH NEXT " . $produtosPágina . " ROWS ONLY";
+    $QueryTotalProdutos = "SELECT * FROM [dbo].[Produto] p, [dbo].[Subtipo] s WHERE p.subtipo = s.sid AND s.tipo = '1'";
     $queryProdutos_execute = sqlsrv_query($conn, $Queryprodutos, array(), array( "Scrollable" => 'static' ));
     $total_produtos_execute = sqlsrv_query($conn,$QueryTotalProdutos,array(),array( "Scrollable" => 'static' ));
     $total_produtos = sqlsrv_num_rows($total_produtos_execute);
+    
     $numeroPaginas = ceil($total_produtos/$produtosPágina);
 
+    
 
+if(isset($_POST["addCart"])){
+
+    $idTemp = $_GET["id"];
+
+    $query = "SELECT * FROM [dbo].[Produto] WHERE pid='{$idTemp}'";
+    $result = sqlsrv_query($conn, $query);
+    if( $result === false ) {
+        die( print_r( sqlsrv_errors(), true));
+    }
+    if( sqlsrv_fetch( $result ) === false) {
+        die( print_r( sqlsrv_errors(), true));
+    }
+    $preco = sqlsrv_get_field( $result, 5);
+
+    if(isset($_SESSION["cart"])){
+
+        $item_array_id = array_column($_SESSION["cart"], "item_id");        
+        if(!in_array($_GET["id"], $item_array_id)){
+
+            $count = count($_SESSION["cart"]);
+            $item_array = array(
+                'item_id' => $_GET["id"],
+                'item_price' => $preco
+                //'item_price' => 12
+            );
+            $_SESSION["cart"][$count] = $item_array;
+
+        }else{
+
+            //echo '<script>alert("item ja no carrinho")</script>';
+            ?>
+            <script>
+            
+                document.addEventListener("DOMContentLoaded", function(event) {
+                    
+                    Swal.fire({
+                    title: "item ja no carrinho",
+                    text: "clique ok",
+                    icon: "error", //warning
+                });
+                
+                });
+        
+            </script>
+
+            <?php
+
+
+        }
+
+    }else{
+
+        $item_array = array(
+            'item_id' => $_GET["id"],
+            'item_price' => $preco
+        );
+        $_SESSION["cart"][0] = $item_array;
+
+    }
+    //$temp = $_SESSION["cart"][0];
+    //echo $temp;
+}
     
     
     ?>
@@ -45,20 +107,21 @@ session_start();
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
     <link href="style.css" rel="stylesheet"/>
+    <script src="sweetalert2.all.min.js"></script>
 </head>
 <body>
     <nav>
         <div class="top-nav-bar">
             <div class="search-box">
-                <a href="index.html">
+                <a href="index.php">
                     <img src="img/logotipo.png" class="logo">
                 </a>
-                <input type="text" class="form-control">
-                <span class="input-group-text"><i class="fa fa-search"></i></span>
+                <!--<input type="text" class="form-control">
+                <span class="input-group-text"><i class="fa fa-search"></i></span>-->
             </div>
             <div class="menu-bar">
                 <ul>
-                    <li><a href="index.php">Home</a></li>
+                    <!--<li><a href="index.php">Home</a></li>-->
                     <li><a href="mercado.php">Mercado</a></li>
                     <?php 
                     if (isset($_SESSION['email']) != "") {
@@ -114,44 +177,49 @@ session_start();
     <section class="header">
         <div class="side-menu">
         <ul>
-            <a href="mercadoAlimentacao.php"><li>Alimentação<i class="fa fa-angle-right"></i></a>
+            <a href="mercadoVestuario.php"><li>Vestuario<i class="fa fa-angle-right"></i></a>
                     <ul>
-                        <li>Sub Menu 1</li>
-                        <li>Sub Menu 1</li>
-                        <li>Sub Menu 1</li>
-                        <li>Sub Menu 1</li>
+                        <a href="mercadoVestuario51.php"><li>Chapéus<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoVestuario52.php"><li>Camisas<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoVestuario53.php"><li>Casacos<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoVestuario54.php"><li>Calças<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoVestuario55.php"><li>Sapatos<i class="fa fa-angle-right"></i></a>
                     </ul>
                 </li>
                 <a href="mercadoCasa.php"><li>Casa<i class="fa fa-angle-right"></i></a>
                     <ul>
-                        <li>Sub Menu 2</li>
-                        <li>Sub Menu 2</li>
-                        <li>Sub Menu 2</li>
-                        <li>Sub Menu 2</li>
+                        <a href="mercadoCasa21.php"><li>Sala de Estar<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoCasa22.php"><li>Cozinha<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoCasa23.php"><li>Casa de Banho<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoCasa24.php"><li>Quarto<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoCasa25.php"><li>Quintal<i class="fa fa-angle-right"></i></a>
                     </ul>
                 </li>
                 <a href="mercadoDesporto.php"><li>Desporto<i class="fa fa-angle-right"></i></a>
                     <ul>
-                        <li>Sub Menu 3</li>
-                        <li>Sub Menu 3</li>
-                        <li>Sub Menu 3</li>
-                        <li>Sub Menu 3</li>
+                        <a href="mercadoDesporto31.php"><li>Ginasio<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoDesporto32.php"><li>Futebol<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoDesporto33.php"><li>Basket<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoDesporto34.php"><li>Outdoor<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoDesporto35.php"><li>Indoor<i class="fa fa-angle-right"></i></a>
                     </ul>
                 </li>
                 <a href="mercadoTecnologia.php"><li>Tecnologia<i class="fa fa-angle-right"></i></a>
                     <ul>
-                        <li>Sub Menu 4</li>
-                        <li>Sub Menu 4</li>
-                        <li>Sub Menu 4</li>
-                        <li>Sub Menu 4</li>
+                        <a href="mercadoTecnologia41.php"><li>Portatéis<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoTecnologia42.php"><li>Computadores<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoTecnologia43.php"><li>Telemóveis<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoTecnologia44.php"><li>Periféricos<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoTecnologia45.php"><li>Televisões<i class="fa fa-angle-right"></i></a>
                     </ul>
                 </li>
-                <a href="mercadoVestuario.php"><li>Vestuário<i class="fa fa-angle-right"></i></a>
+                <a href="mercadoAlimentacao.php"><li>Alimentação<i class="fa fa-angle-right"></i></a>
                     <ul>
-                        <li>Sub Menu 5</li>
-                        <li>Sub Menu 5</li>
-                        <li>Sub Menu 5</li>
-                        <li>Sub Menu 5</li>
+                        <a href="mercadoAlimentacao11.php"><li>Vegetais<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoAlimentacao12.php"><li>Fruta<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoAlimentacao13.php"><li>Carne<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoAlimentacao14.php"><li>Peixe<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoAlimentacao15.php"><li>Outros<i class="fa fa-angle-right"></i></a>
                     </ul>
                 </li>
             </ul>
@@ -161,9 +229,11 @@ session_start();
     <section class="produtos">
         <div class="container">
             <div class="title-box">
-                <h2>Produtos Alimentação </h2>
+                
+                <h2>Alimentação</h2>
             </div>
             <div class="row">
+            
             <?php
                 $counter = 0;
                
@@ -172,30 +242,36 @@ session_start();
                     while ($row2 = sqlsrv_fetch_array($queryProdutos_execute)) {
                         if($counter < $produtosPágina){
                         ?>
+                        
+                    
+                    
                 
                     
-                    
-            
                         <div class="card mx-auto col-md-3 col-10 mt-5">
-                                <a href="product.php?id=<?=$row2['pid']?>">
-                                <img src="img/categoria1.jpeg" class='mx-auto img-thumbnail' width="auto" height="auto"/>
-                                </a>
-                                    
-                                    <div class="card-body text-center mx-auto">
-                                        <div class='cvp'>
-                                            <h5 class="card-title font-weight-bold"><?php  echo $row2['nome'];?></h5>
-                                            <p class="card-text">299€</p>
-                                            <a href="#" class="btn details px-auto">Ver Detalhes</a><br />
-                                            <button type="button" class="btn btn-secondary" title="Adicionar ao Carrinho">
-                                                <i class="fa fa-shopping-cart"></i>
-                                            </button>
-                                        </div>
+                        <a href="product.php?id=<?=$row2['pid']?>">
+                        <img src="img/categoria1.jpeg" class='mx-auto img-thumbnail' width="auto" height="auto"/>
+                        </a>
+                            <form method="post" action="mercado.php?action=add&id=<?php echo $row2['pid']; ?>">
+                                <div class="card-body text-center mx-auto">
+                                    <div class='cvp'>
+                                        <h5 class="card-title font-weight-bold"><?php  echo $row2['nome'];?></h5>
+                                        <p class="card-text"><?php  echo $row2['preco'] . "€";?></p>
+                                        <br/>
+                                        <button type="submit" name="addCart" class="btn btn-secondary" title="Adicionar ao Carrinho">
+                                            <i class="fa fa-shopping-cart"></i>
+                                        </button>
+                                        
                                     </div>
+                                </div>
+                            </form>
                         </div>
+
+                    
+                
                 <?php ++$counter;
                 
-                
                     if($counter % 3 == 0){
+                        
                         echo "</div>";
                         echo "<div class='row'>";
                         
@@ -305,6 +381,13 @@ session_start();
     }
 
 ?>
+<script>
+    Swal.bindClickHandler()
+
+Swal.mixin({
+  toast: true,
+}).bindClickHandler('data-swal-toast-template')
+</script>
                      
                     </tbody>
                 </table>
