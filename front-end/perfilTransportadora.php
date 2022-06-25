@@ -33,42 +33,35 @@
             <li class="nav-item">
             <a class="nav-link active" href="carrinho.php" >Carrinho</a>
             </li>
-                <?php 
-                    if (isset($_SESSION['email']) != "") {?>
-                        <li class="nav-item dropdown">
-                        <a class="nav-link active dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" >
-                            <?php echo $_SESSION["nome"] ?>
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="background-color: green;">
-                            <?php
-                            if($_SESSION["tipo"] == "Consumidor"){
-                                echo "<li><a class=dropdown-item href=perfilUtilizador.php>Perfil</a></li>";
-                                echo "<li><a class=dropdown-item href=histEncomendas.php>Encomendas</a></li>";
-                            }elseif($_SESSION["tipo"] == "Fornecedor"){
-                                echo "<li><a class=dropdown-item href=perfilFornecedor.php>Perfil</a></li>";
-                            }elseif($_SESSION["tipo"] == "Transportadora"){
-                                echo "<li><a class=dropdown-item href=perfilTransportadora.php>Perfil</a></li>";
+            <?php 
+                if (isset($_SESSION['email']) != "") {?>
+                    <li class="dropdown">
+                    <button class="dropbtn">
+                        <?php echo $_SESSION["nome"] ?>
+                        <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div class="dropdown-content">
+                        <?php
+                            if($_SESSION["tipo"] == "Transportadora"){
+                                echo"<a href=registoTransportes.php>Registar veiculos</a>";
+                                echo "<a href=gerirVeiculos.php>Ver encomendas</a>";
                             }
-                            ?>
-                        </ul>
-                        </li>
-                        <li class="nav-item">
-                        <a class="nav-link active" href="logout.php">Logout</a>
-                        </li>
-                        
+                        ?>
+                        <a href="logout.php">Logout</a>
+                    </div>
                 <?php }else{ ?>
-                    <li class="nav-item"><a class="nav-link active" href="conta.php">Login</i></a></li>
-                <?php } ?>
-        </ul>
+                    <li><a href="conta.php">Login</i></a></li>
+            <?php } ?>
+                </ul>
+            </div>
         </div>
-    </div>
     </nav>
     <div class="container rounded bg-white mt-5 mb-5">
         <div class="row">
             <div class="col-md-3 border-right">
                 <div class="d-flex flex-column align-items-center text-center p-3 py-5">
                     <img class="rounded-circle mt-5" width="200px" src="img/empty.jpeg">
-                    <span class="font-weight-bold">Nome da Transportadora</span>
+                    <span class="font-weight-bold"><?php echo $_SESSION['nome'] ?></span>
                     <span class="text-black-50">
                         <button type="button" class="btn btn-success">Selecione uma foto</button>
                     </span>
