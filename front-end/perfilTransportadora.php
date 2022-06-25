@@ -17,74 +17,41 @@
         session_start();
         include "openconn.php";
     ?>
-    <nav>
-        <div class="top-nav-bar">
-            <div class="search-box">
-                <a href="index.php">
-                    <img src="img/logotipo.png" class="logo">
-                </a>
-                <!--<input type="text" class="form-control">
-                <span class="input-group-text"><i class="fa fa-search"></i></span>-->
-            </div>
-            <div class="menu-bar">
-                <ul>
-                    <!--<li><a href="index.php">Home</a></li>-->
-                    <li><a href="mercado.php">Mercado</a></li>
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: green;">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="index.php">
+            <img src="img/logotipo.png" class="logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="font-weight: bold;">
+            <li class="nav-item">
+            <a class="nav-link active" href="mercado.php">Mercado</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link active" href="carrinho.php" >Carrinho</a>
+            </li>
+            <?php 
+                if (isset($_SESSION['email']) != "") {?>
                     <li class="dropdown">
-                        <button class="dropbtn"><i class="fa fa-plus-circle"></i>
-                          <i class="fa fa-caret-down"></i>
-                        </button>
-                        <div class="dropdown-content">
-                          <a href="registoTransportes.php">Registar Transporte</a>
-                        </div>
-                    </li>
-                    <?php 
-                    if (isset($_SESSION['email']) != "") {
-
-                        if($_SESSION["tipo"] == "Consumidor"){
-
-                    ?>
-                        <li><a href="perfilUtilizador.php">Perfil</a></li>
-
-                    <?php 
-                        }elseif($_SESSION["tipo"] == "Fornecedor"){
-
-                            ?>
-                            
-                            <li><a href="perfilFornecedor.php">Perfil</a></li>
-
-                            <?php
-                        }elseif($_SESSION["tipo"] == "Transportadora"){
-
-                            ?>
-                            
-                            <li><a href="perfilTransportadora.php">Perfil</a></li>
-
-                            <?php
-                        }
-
-                    }?>
-                    
-                    <li><a href="carrinho.php">Carrinho</a></li>
-
-                    <?php 
-                    if (isset($_SESSION['email']) != "") {
-
-                    ?>
-                    
-                    <li><a href="logout.php">Logout</a></li>
-
-                    <?php    
-                    }else{
-
-                    ?>
-                    
+                    <button class="dropbtn">
+                        <?php echo $_SESSION["nome"] ?>
+                        <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div class="dropdown-content">
+                        <?php
+                            if($_SESSION["tipo"] == "Transportadora"){
+                                echo"<a href=registoTransportes.php>Registar veiculos</a>";
+                                echo "<a href=gerirVeiculos.php>Ver encomendas</a>";
+                            }
+                        ?>
+                        <a href="logout.php">Logout</a>
+                    </div>
+                <?php }else{ ?>
                     <li><a href="conta.php">Login</i></a></li>
-                    
-                    <?php
-
-                    }
-                    ?>
+            <?php } ?>
                 </ul>
             </div>
         </div>
@@ -94,7 +61,7 @@
             <div class="col-md-3 border-right">
                 <div class="d-flex flex-column align-items-center text-center p-3 py-5">
                     <img class="rounded-circle mt-5" width="200px" src="img/empty.jpeg">
-                    <span class="font-weight-bold">Nome da Transportadora</span>
+                    <span class="font-weight-bold"><?php echo $_SESSION['nome'] ?></span>
                     <span class="text-black-50">
                         <button type="button" class="btn btn-success">Selecione uma foto</button>
                     </span>
@@ -113,7 +80,9 @@
                         if (sqlsrv_has_rows($result) != -1) {
                             echo ("nenhum dado encontrado");
                         } else {
-                            echo"<table>";
+                            echo"<div class=table-responsive>";
+                            echo"<table class=table>";
+                            echo"<thead class=table-dark>";
                             echo "<tr>";
                                 echo"<th>nif</th>";
                                 echo"<th>nome</th>";
@@ -121,6 +90,7 @@
                                 echo"<th>morada</th>";
                                 echo"<th>codigoPostal</th>";
                             echo "</tr>";
+                            echo"</thead>";
                             while($row = sqlsrv_fetch_array($result)) {
                                 echo "<tr>";
                                     echo "<td class='text-center'>".$row['nif']."</td>";
@@ -135,6 +105,7 @@
                                 echo "</tr>";
                             }
                             echo"</table>";
+                            echo"</div>";
                         }
                         echo "<br>";
                         echo "<br>";
@@ -189,28 +160,48 @@
             </div>
         </div>
     </div>
-    <section class="footer">
-        <div class="container text-center">
-            <div class="row">
-                <div class="col-md-3">
-                    <h1>Links Úteis</h1>
-                    <p>Política de Privacidade</p>
-                    <p>Termos de Uso</p>
-                    <p>Política de Returno</p>
-                    <p>Cupões de Desconto</p>
+    <div>
+        <footer class="bg-dark text-center text-lg-start text-white">
+            <div class="container p-4">
+            <div class="row mt-4">
+                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                <img src="img/logofcul.jpg">
                 </div>
-                <div class="col-md-3">
-                    <h1>Grupo 10</h1>
-                    <p>Sobre Nós</p>
-                    <p>Contacta-nos</p>
-                    <p>Faculdade de Ciências</p>
-                    <p>Cupões de Desconto</p>
+                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                <h5 class="text-uppercase">Links Úteis</h5>
+
+                <ul class="list-unstyled">
+                    <li>
+                    <a href="#!" class="text-white"><i class="fas fa-shipping-fast fa-fw fa-sm me-2"></i>Política de Privacidade</a>
+                    </li>
+                    <li>
+                    <a href="#!" class="text-white"><i class="fas fa-backspace fa-fw fa-sm me-2"></i>Termos de Uso</a>
+                    </li>
+                    <li>
+                    <a href="#!" class="text-white"><i class="far fa-file-alt fa-fw fa-sm me-2"></i>Política de Returnos</a>
+                    </li>
+                    <li>
+                    <a href="#!" class="text-white"><i class="far fa-file-alt fa-fw fa-sm me-2"></i>Cupões de Desconto</a>
+                    </li>
+                </ul>
                 </div>
-                <div class="col-md-3 footer-image">
-                    <img src="img/logofcul.jpg">
-                    <p>Faculdade de Ciências da Universidade de Lisboa</p>
+                <div class="col-lg-3 col-md-6 mb-3 mb-md-0">
+                <h5 class="text-uppercase">Grupo 10</h5>
+                <ul class="list-unstyled">
+                    <li>
+                    <a href="#!" class="text-white">Sobre Nós</a>
+                    </li>
+                    <li>
+                    <a href="#!" class="text-white">Contacta-nos</a>
+                    </li>
+                    <li>
+                    <a href="#!" class="text-white">Faculdade de Ciências</a>
+                    </li>
+                </ul>
                 </div>
+            <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+            © 2022 Copyright
             </div>
-        </div>
-    </section>
+        </footer>
+    </div>
 </body>

@@ -26,24 +26,51 @@ session_start();
 </head>
 
 <body>
-    <nav class="navigation">
-        <div class="top-nav-bar">
-            <div class="search-box">
-                <a href="index.php">
-                    <img src="img/logotipo.png" class="logo">
-                </a>
-                <input type="text" class="form-control">
-                <span class="input-group-text"><i class="fa fa-search"></i></span>
-            </div>
-            <div class="menu-bar">
-                <ul>
-                    <li><a href="index.php">Home</a></li>
-                    <li><a href="mercado.php">Mercado</a></li>
-                    <li><a href="conta.php">Login</a></li>
-                    <li><a href="carinho.html">Carrinho</a></li>
-                </ul>
-            </div>
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: green;">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="index.php">
+            <img src="img/logotipo.png" class="logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="font-weight: bold;">
+            <li class="nav-item">
+            <a class="nav-link active" href="mercado.php">Mercado</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link active" href="carrinho.php" >Carrinho</a>
+            </li>
+                <?php 
+                    if (isset($_SESSION['email']) != "") {?>
+                        <li class="nav-item dropdown">
+                        <a class="nav-link active dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" >
+                            <?php echo $_SESSION["nome"] ?>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="background-color: green;">
+                            <?php
+                            if($_SESSION["tipo"] == "Consumidor"){
+                                echo "<li><a class=dropdown-item href=perfilUtilizador.php>Perfil</a></li>";
+                                echo "<li><a class=dropdown-item href=histEncomendas.php>Encomendas</a></li>";
+                            }elseif($_SESSION["tipo"] == "Fornecedor"){
+                                echo "<li><a class=dropdown-item href=perfilFornecedor.php>Perfil</a></li>";
+                            }elseif($_SESSION["tipo"] == "Transportadora"){
+                                echo "<li><a class=dropdown-item href=perfilTransportadora.php>Perfil</a></li>";
+                            }
+                            ?>
+                        </ul>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link active" href="logout.php">Logout</a>
+                        </li>
+                        
+                <?php }else{ ?>
+                    <li class="nav-item"><a class="nav-link active" href="conta.php">Login</i></a></li>
+                <?php } ?>
+        </ul>
         </div>
+    </div>
     </nav>
 
     <div class="account-page">
@@ -70,30 +97,50 @@ session_start();
         </div>
     </div>
 
-    <section class="footer">
-        <div class="container text-center">
-            <div class="row">
-                <div class="col-md-3">
-                    <h1>Links Úteis</h1>
-                    <p>Política de Privacidade</p>
-                    <p>Termos de Uso</p>
-                    <p>Política de Returno</p>
-                    <p>Cupões de Desconto</p>
+    <div>
+        <footer class="bg-dark text-center text-lg-start text-white">
+            <div class="container p-4">
+            <div class="row mt-4">
+                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                <img src="img/logofcul.jpg">
                 </div>
-                <div class="col-md-3">
-                    <h1>Grupo 10</h1>
-                    <p>Sobre Nós</p>
-                    <p>Contacta-nos</p>
-                    <p>Faculdade de Ciências</p>
-                    <p>Cupões de Desconto</p>
+                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                <h5 class="text-uppercase">Links Úteis</h5>
+
+                <ul class="list-unstyled">
+                    <li>
+                    <a href="#!" class="text-white"><i class="fas fa-shipping-fast fa-fw fa-sm me-2"></i>Política de Privacidade</a>
+                    </li>
+                    <li>
+                    <a href="#!" class="text-white"><i class="fas fa-backspace fa-fw fa-sm me-2"></i>Termos de Uso</a>
+                    </li>
+                    <li>
+                    <a href="#!" class="text-white"><i class="far fa-file-alt fa-fw fa-sm me-2"></i>Política de Returnos</a>
+                    </li>
+                    <li>
+                    <a href="#!" class="text-white"><i class="far fa-file-alt fa-fw fa-sm me-2"></i>Cupões de Desconto</a>
+                    </li>
+                </ul>
                 </div>
-                <div class="col-md-3 footer-image">
-                    <img src="img/logofcul.jpg">
-                    <p>Faculdade de Ciências da Universidade de Lisboa</p>
+                <div class="col-lg-3 col-md-6 mb-3 mb-md-0">
+                <h5 class="text-uppercase">Grupo 10</h5>
+                <ul class="list-unstyled">
+                    <li>
+                    <a href="#!" class="text-white">Sobre Nós</a>
+                    </li>
+                    <li>
+                    <a href="#!" class="text-white">Contacta-nos</a>
+                    </li>
+                    <li>
+                    <a href="#!" class="text-white">Faculdade de Ciências</a>
+                    </li>
+                </ul>
                 </div>
+            <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+            © 2022 Copyright
             </div>
-        </div>
-    </section>
+        </footer>
+    </div>
 
 
     <script>

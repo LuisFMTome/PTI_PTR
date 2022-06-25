@@ -29,9 +29,18 @@ if(isset($_POST["encomendar"])){
         }
         //morada e id do consumidor
         $cPostal_consumidor = sqlsrv_get_field( $result, 5);
+
+        $morada_consumidor_query = "SELECT * FROM [dbo].[Consumidor] WHERE email='{$emailConsumidor}'";
+        $result = sqlsrv_query($conn, $morada_consumidor_query);
+        if( $result === false ) {
+            die( print_r( sqlsrv_errors(), true));
+        }
+        if( sqlsrv_fetch( $result ) === false) {
+            die( print_r( sqlsrv_errors(), true));
+        }
         $id_consumidor = sqlsrv_get_field( $result, 0);
         //echo $cPostal_consumidor;
-
+        //echo $id_consumidor;
 
 
         if(!(is_null($cPostal_consumidor))){
@@ -54,7 +63,16 @@ if(isset($_POST["encomendar"])){
                     die( print_r( sqlsrv_errors(), true));
                 }
                 $cPostal_produto = sqlsrv_get_field( $result2, 3);
-                $poluicao = sqlsrv_get_field( $result2, 5);
+
+                $morada_produto_query = "SELECT * FROM [dbo].[Produto] WHERE pid='{$idProduto}'";
+                $result2 = sqlsrv_query($conn, $morada_produto_query);
+                if( $result2 === false ) {
+                    die( print_r( sqlsrv_errors(), true));
+                }
+                if( sqlsrv_fetch( $result2 ) === false) {
+                    die( print_r( sqlsrv_errors(), true));
+                }
+                $poluicao = sqlsrv_get_field( $result2, 6);
                 //echo "polui " . $poluicao;           
 
                 //estado da encomenda (encomendado)
@@ -83,7 +101,7 @@ if(isset($_POST["encomendar"])){
                 unset($_SESSION["cart"]);
                 $_SESSION['status'] = "Produtos encomendados com sucesso";
                 $_SESSION['statusCode'] = "success";
-                //header("Location: carrinho.php");
+                header("Location: carrinho.php");
 
             }else{
 
