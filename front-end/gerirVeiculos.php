@@ -15,13 +15,14 @@ if($conn === false) {
     die(print_r(sqlsrv_errors(), true));
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Historico de encomendas</title>
+    <title>Gerir veiculos e encomendas</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -106,8 +107,8 @@ if($conn === false) {
                                 $nome_prod = $rowP['nome'];
                                 return $nome_prod;
                             }
-                            function encomendaProduto($conn, $idProd) {
-                                $encomenda_query = "SELECT * FROM [dbo].[Encomenda] WHERE produto = $idProd";
+                            function encomendaProduto($conn, $idProd, $veiculo) {
+                                $encomenda_query = "SELECT * FROM [dbo].[Encomenda] WHERE produto = '$idProd' AND veiculo = '$veiculo'";
                                 $encomenda = sqlsrv_query($conn, $encomenda_query);
                                 $rowE = sqlsrv_fetch_array($encomenda);
                                 $pedido = $rowE['pedido'];
@@ -136,10 +137,10 @@ if($conn === false) {
                             $row_count = sqlsrv_num_rows($veiculos);
                             #if ($row_count >= 0) {
                                 while ($row = sqlsrv_fetch_array($veiculos)) {
-                                    $encomenda = encomendaProduto($conn, $row['produto']);
-                                    $estado = encomendaFase($conn, $encomenda);
                                     echo "<tr>";
                                     echo "<form action='aceitarEncomenda.php' method='post'>";
+                                    $encomenda = encomendaProduto($conn, $row['produto'], $row['matricula']);
+                                    $estado = encomendaFase($conn, $encomenda);
                                     echo "<td class=text-center>" . $row['matricula'] . "</td>";
                                     echo "<td class=text-center>" . $row['categoria'] . "</td>";
                                     echo "<td class=text-left>" . ProductName($conn, $row['produto']) . "</td>";
@@ -190,5 +191,34 @@ if($conn === false) {
                     <p>Faculdade de Ciências da Universidade de Lisboa</p>
                 </div>
             </div>
-        </div>         
+        </div>
+        <?php
+    //echo "<p>teste</p>";
+    if (isset($_SESSION['statusCode']) == "error") {
+
+        //echo $_SESSION['statusCode'];
+    ?>
+
+        <script>
+                
+                document.addEventListener("DOMContentLoaded", function(event) {
+                    
+                    Swal.fire({
+                    title: "<?php echo $_SESSION['status']; ?>",
+                    text: "clique ok",
+                    icon: "<?php echo $_SESSION['statusCode']; ?>", //warning
+                });
+                
+                });
+
+
+            
+        </script>
+
+    <?php
+        unset($_SESSION['status']);
+        unset($_SESSION['statusCode']);
+    }
+
+    ?>         
 </body>
