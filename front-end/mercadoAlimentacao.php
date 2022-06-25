@@ -49,6 +49,8 @@ session_start();
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: green;">
     <div class="container-fluid">
+        <i class="fa fa-bars" id="menu-btn" onclick="openmenu()"></i>
+        <i class="fa fa-times" id="close-btn" onclick="closemenu()"></i>
         <a class="navbar-brand" href="index.php">
             <img src="img/logotipo.png" class="logo">
         </a>
@@ -290,5 +292,20 @@ session_start();
                      
                     </tbody>
                 </table>
+                
+    <script>
+        function openmenu()
+            {
+                document.getElementById("side-menu").style.display="block";
+                document.getElementById("menu-btn").style.display="none";
+                document.getElementById("close-btn").style.display="block";
+            }
+        function closemenu()
+            {
+                document.getElementById("side-menu").style.display="none";
+                document.getElementById("menu-btn").style.display="block";
+                document.getElementById("close-btn").style.display="none";
+            }
+    </script>  
 </body>
 </html>
