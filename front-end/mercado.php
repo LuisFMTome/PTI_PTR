@@ -111,28 +111,29 @@ if(isset($_POST["addCart"])){
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
     <link href="style.css" rel="stylesheet"/>
     <script src="sweetalert2.all.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
 
 <script type="text/javascript">
-    function oi(nome,morada,preco,poluicao){
-        console.log("ola")
-        var produto1IsEmpty = document.getElementById('produto1').innerHTML === "";
-        var produto2IsEmpty = document.getElementById('produto2').innerHTML === "";
-        console.log(isEmpty)
-      if( produto1IsEmpty === true){
-        console.log("oi")
-            document.getElementById('produto1').innerHTML += "<h3>"nome"</h3>";
-            document.getElementById('produto1').innerHTML += "<h3>"morada"</h3>";
-            document.getElementById('produto1').innerHTML += "<h3>"preco"</h3>";
-            document.getElementById('produto1').innerHTML += "<h3>"preco"</h3>";
+    function produto(nome,morada,preco,poluicao){
+        console.log("ola");
+        //var produto1IsEmpty = document.getElementById('produto1').innerHTML == "";
+        //var produto2IsEmpty = document.getElementById('produto2').innerHTML == "";
+        //console.log(produto1IsEmpty)
+        if( $('#produto1').is(':empty') ) {
+        
+            document.getElementById('produto1').innerHTML += "<h4>"+nome+"</h4>";
+            document.getElementById('produto1').innerHTML += "<h3>Morada:</h3>"+"<h4>"+morada+"</h4>";
+            document.getElementById('produto1').innerHTML += "<h3>Preço:</h3>"+"<h4>"+preco+ "€" +"</h4>";
+            document.getElementById('produto1').innerHTML += "<h3>Poluição:</h3>"+"<h4>"+poluicao+"</h4>";
 
        }else{
-            if(produto2IsEmpty === true){
-                document.getElementById('produto2').innerHTML += "<h3>"nome"</h3>";
-                document.getElementById('produto2').innerHTML += "<h3>"morada"</h3>";
-                document.getElementById('produto2').innerHTML += "<h3>"preco"</h3>";
-                document.getElementById('produto2').innerHTML += "<h3>"preco"</h3>";
+        if( $('#produto2').is(':empty') ) {
+                document.getElementById('produto2').innerHTML += "<h4>"+nome+"</h4>";
+                document.getElementById('produto2').innerHTML += "<h3>Morada:</h3>" + "<h4>"+morada+"</h4>";
+                document.getElementById('produto2').innerHTML += "<h3>Preço:</h3>" + "<h4>"+preco+"€"+"</h4>";
+                document.getElementById('produto2').innerHTML += "<h3>Poluição:</h3>"+"<h4>"+poluicao+"</h4>";
 
             }
             
@@ -252,13 +253,13 @@ if(isset($_POST["addCart"])){
         
     </section>
     <section class="produtos">
-        <div class="container">
+        <div class="flex-container">
             <div class="title-box">
                 
                 <h2>Produtos</h2>
             </div>
             <div class="row">
-            <div class="col-8">
+            <div class="col-8 card">
                 <div class="row">
                 
                 <?php
@@ -296,11 +297,11 @@ if(isset($_POST["addCart"])){
 
                                     </div>
                                 </form>
-                                <button onclick="oi('ola','ola','ola','ola')" class="btn btn-secondary" title="Comparar produto">
+                                <button onclick="produto('<?php echo $row2['nome']?>','<?php  echo $row2['morada']?>','<?php  echo $row2['preco']?>','<?php  echo $row2['poluicao']?>')" class="btn btn-secondary" title="Comparar produto">
                                                 Comparar produto
                                             </button>
                             </div>
-                            <?php  //echo $row2['nome']?>,<?php  //echo $row2['morada']?>,<?php  //echo $row2['preco']?>,<?php  //echo $row2['poluicao']?>
+                            
                         
                     
                     <?php ++$counter;
@@ -327,7 +328,8 @@ if(isset($_POST["addCart"])){
             </div>
             </div>
             
-            <div class="col-4 p-5 t-5">
+            <div class="col-4 p-5 t-1 card sticky-top">
+                
                 <div class="row">
                     <div class="d-table-cell align-middle">
                             <h2>Comparar produtos:</h2>
@@ -336,23 +338,21 @@ if(isset($_POST["addCart"])){
                 <div class="row">
                     <div class="d-table-cell align-middle">
                         <h5>Primeiro produto</h5>
-                        <div id="produto1">
-                            
-                        </div>
+                        <div id="produto1"></div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="d-table-cell align-middle">
                         <h5>Segundo produto</h5>
-                        <div id="produto2">
-                        </div>
+                        <div id="produto2"></div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="d-table-cell align-middle">
                         <h5>Diferença entre ambos:</h5>
                     </div>   
-                </div>   
+                </div> 
+                 
             </div>
             
             
