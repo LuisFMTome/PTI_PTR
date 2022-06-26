@@ -162,29 +162,50 @@ if($conn === false) {
             </div>
         </div>
     </div>
-    <section class="footer">
-        <div class="container text-center">
-            <div class="row">
-                <div class="col-md-3">
-                    <h1>Links Úteis</h1>
-                    <p>Política de Privacidade</p>
-                    <p>Termos de Uso</p>
-                    <p>Política de Returno</p>
-                    <p>Cupões de Desconto</p>
+    <div>
+        <footer class="bg-dark text-center text-lg-start text-white">
+            <div class="container p-4">
+            <div class="row mt-4">
+                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                <img src="img/logofcul.jpg">
                 </div>
-                <div class="col-md-3">
-                    <h1>Grupo 10</h1>
-                    <p>Sobre Nós</p>
-                    <p>Contacta-nos</p>
-                    <p>Faculdade de Ciências</p>
-                    <p>Cupões de Desconto</p>
+                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                <h5 class="text-uppercase">Links Úteis</h5>
+
+                <ul class="list-unstyled">
+                    <li>
+                    <a href="#!" class="text-white"><i class="fas fa-shipping-fast fa-fw fa-sm me-2"></i>Política de Privacidade</a>
+                    </li>
+                    <li>
+                    <a href="#!" class="text-white"><i class="fas fa-backspace fa-fw fa-sm me-2"></i>Termos de Uso</a>
+                    </li>
+                    <li>
+                    <a href="#!" class="text-white"><i class="far fa-file-alt fa-fw fa-sm me-2"></i>Política de Returnos</a>
+                    </li>
+                    <li>
+                    <a href="#!" class="text-white"><i class="far fa-file-alt fa-fw fa-sm me-2"></i>Cupões de Desconto</a>
+                    </li>
+                </ul>
                 </div>
-                <div class="col-md-3 footer-image">
-                    <img src="img/logofcul.jpg">
-                    <p>Faculdade de Ciências da Universidade de Lisboa</p>
+                <div class="col-lg-3 col-md-6 mb-3 mb-md-0">
+                <h5 class="text-uppercase">Grupo 10</h5>
+                <ul class="list-unstyled">
+                    <li>
+                    <a href="#!" class="text-white">Sobre Nós</a>
+                    </li>
+                    <li>
+                    <a href="#!" class="text-white">Contacta-nos</a>
+                    </li>
+                    <li>
+                    <a href="#!" class="text-white">Faculdade de Ciências</a>
+                    </li>
+                </ul>
                 </div>
+            <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+            © 2022 Copyright
             </div>
-        </div>
+        </footer>
+    </div>
         <?php
     //echo "<p>teste</p>";
     if (isset($_SESSION['statusCode']) == "error") {
