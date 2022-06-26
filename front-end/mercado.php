@@ -116,24 +116,38 @@ if(isset($_POST["addCart"])){
 <body>
 
 <script type="text/javascript">
+    var preco1 = null
+    var preco2 = null
+    var poluicao1 = null
+    var poluicao2 = null
+    var nome1 = null
+    var nome2 = null
     function produto(nome,morada,preco,poluicao){
         console.log("ola");
         //var produto1IsEmpty = document.getElementById('produto1').innerHTML == "";
         //var produto2IsEmpty = document.getElementById('produto2').innerHTML == "";
         //console.log(produto1IsEmpty)
         if( $('#produto1').is(':empty') ) {
-        
-            document.getElementById('produto1').innerHTML += "<h4>"+nome+"</h4>";
-            document.getElementById('produto1').innerHTML += "<h3>Morada:</h3>"+"<h4>"+morada+"</h4>";
-            document.getElementById('produto1').innerHTML += "<h3>Preço:</h3>"+"<h4>"+preco+ "€" +"</h4>";
-            document.getElementById('produto1').innerHTML += "<h3>Poluição:</h3>"+"<h4>"+poluicao+"</h4>";
+            
+            var linkMaps1 = "http://maps.google.com/?q=" + morada;
+            preco1 = parseInt(preco)
+            poluicao1 = parseInt(poluicao)
+            nome1 = nome
+            document.getElementById('produto1').innerHTML += "<h5>"+nome+"</h5>";
+            document.getElementById('produto1').innerHTML += "<h5>Morada:</h5>" + "<a href="+linkMaps1+" class='text-decoration-none'>" + morada + "</a>";
+            document.getElementById('produto1').innerHTML += "<h5>Preço:</h5>"+"<p>"+preco+ "€" +"</p>";
+            document.getElementById('produto1').innerHTML += "<h5>Poluição:</h5>"+"<p>"+poluicao+"</p>";
 
        }else{
         if( $('#produto2').is(':empty') ) {
-                document.getElementById('produto2').innerHTML += "<h4>"+nome+"</h4>";
-                document.getElementById('produto2').innerHTML += "<h3>Morada:</h3>" + "<h4>"+morada+"</h4>";
-                document.getElementById('produto2').innerHTML += "<h3>Preço:</h3>" + "<h4>"+preco+"€"+"</h4>";
-                document.getElementById('produto2').innerHTML += "<h3>Poluição:</h3>"+"<h4>"+poluicao+"</h4>";
+            preco2 = parseInt(preco)
+            poluicao2 = parseInt(poluicao)
+            nome2 = nome
+                var linkMaps1 = "http://maps.google.com/?q=" + morada
+                document.getElementById('produto2').innerHTML += "<h5>"+nome+"</h5>";
+                document.getElementById('produto2').innerHTML += "<h5>Morada:</h5>" + "<a href="+linkMaps1+"class='text-decoration-none'>" + morada + "</a>";
+                document.getElementById('produto2').innerHTML += "<h5>Preço:</h5>" + "<p>"+preco+"€"+"</p>";
+                document.getElementById('produto2').innerHTML += "<h5>Poluição:</h5>"+"<p>"+poluicao+"</p>";
 
             }
             
@@ -142,6 +156,65 @@ if(isset($_POST["addCart"])){
         
 
     }
+
+    function reset(){
+        
+        document.getElementById('produto1').innerHTML = "";
+        document.getElementById('produto1').innerHTML = "";
+        document.getElementById('produto1').innerHTML = "";
+        document.getElementById('produto1').innerHTML = "";
+
+        document.getElementById('produto2').innerHTML = "";
+        document.getElementById('produto2').innerHTML = "";
+        document.getElementById('produto2').innerHTML = "";
+        document.getElementById('produto2').innerHTML = "";
+
+        document.getElementById('comparacao').innerHTML = "";
+        document.getElementById('comparacao').innerHTML = "";
+        document.getElementById('comparacao').innerHTML = "";
+        document.getElementById('comparacao').innerHTML = "";
+
+        var preco1 = null
+        var preco2 = null
+        var poluicao1 = null
+        var poluicao2 = null
+        var nome1 = null
+        var nome2 = null
+   
+
+    }
+
+    function resultado(){
+        if( $('#comparacao').is(':empty') ) {
+        absPreco = Math.abs(preco1-preco2)
+        absPoluicao = Math.abs(poluicao1-poluicao2)
+        if(preco1>preco2){
+            strPreco = nome2 + " é mais barato " + absPreco+"€";
+        }else if(preco1<preco2){
+            strPreco = nome1 + " é mais barato " + absPreco+"€";
+
+        }else{
+            strPreco = "Ambos custam o mesmo";
+
+        }
+
+
+        if(poluicao1>poluicao2){
+            strPoluicao = nome2 + " gasta menos " + absPoluicao + " na sua produção";
+        }else if(preco1<preco2){
+            strPoluicao = nome1 + " gastam menos " + absPoluicao + " na sua produção";
+
+        }else{
+            strPoluicao = "Ambos gastam o mesmo na sua produção";
+
+        }
+
+        document.getElementById('comparacao').innerHTML += "<h5>Diferença preços:</h5>" + "<p>"+strPreco+"</p>";
+        document.getElementById('comparacao').innerHTML += "<h5>Diferença na poluição:</h5>" + "<p>"+strPoluicao+"</p>";
+        
+
+    }
+}
 
     
 </script>
@@ -315,10 +388,7 @@ if(isset($_POST["addCart"])){
                     }
                         
                     }
-                    if($counter % 3 != 0){
-                        echo "</div>";
-                        
-                    } 
+                    
                 }
 
                     
@@ -332,24 +402,45 @@ if(isset($_POST["addCart"])){
                 
                 <div class="row">
                     <div class="d-table-cell align-middle">
-                            <h2>Comparar produtos:</h2>
+                        
+                
+                            <h3><b>Comparar produtos</b></h3>
+                        
                         </div>
                 </div>
                 <div class="row">
                     <div class="d-table-cell align-middle">
-                        <h5>Primeiro produto</h5>
+                        
+                
+                        <h3><b>Primeiro produto:</b></h3>
+                        
                         <div id="produto1"></div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="d-table-cell align-middle">
-                        <h5>Segundo produto</h5>
+                        
+                
+                            <h3><b>Segundo produto:</b></h3>
+                        
                         <div id="produto2"></div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="d-table-cell align-middle">
-                        <h5>Diferença entre ambos:</h5>
+                        <h3><b>Diferença entre ambos:<b></h3>
+                        <div id="comparacao"></div>
+                    </div>   
+                </div> 
+                <div class="row">
+                    <div class="d-table-cell align-middle">
+                    <button onclick="reset()" class="btn btn-secondary" title="Reset Dados de Comparação">
+                                                Reset
+                                            </button>
+                    </div> 
+                    <button onclick="resultado()" class="btn btn-secondary" title="Resultado Dados de Comparação">
+                                                Resultado
+                                            </button>
                     </div>   
                 </div> 
                  
