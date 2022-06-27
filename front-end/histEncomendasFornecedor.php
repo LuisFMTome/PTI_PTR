@@ -162,6 +162,8 @@ include "openconn.php";
                                     
                                     <td><button type="submit" name="delete_encomenda" class=btn-sm>Escolher</button></td>
                                     <?php
+                                    }else{
+                                        echo "<td></td>";
                                     }
                                     //echo "<td class=text-left><input type='submit' value='Cancelar' name='delete_encomenda' class=btn-sm></td>";
                                     echo"</form>";

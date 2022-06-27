@@ -11,7 +11,7 @@ if(isset($_POST["addVeiculo"])){
     $pieces = explode("/", $recebi);
     $matricula = $pieces[0];
     $nEncomenda = $pieces[1];
-    echo $matricula;
+    //echo $matricula;
     $addV = "UPDATE [dbo].[Encomenda] SET veiculo = '$matricula' WHERE pedido = '{$nEncomenda}'";
 
     $res = sqlsrv_query($conn, $addV);
@@ -38,6 +38,35 @@ if(isset($_POST["addVeiculo"])){
     $idPro = sqlsrv_get_field($EncomendaEmQuestao, 4);
 
     //dar Update
+
+    //###############################################################################################
+
+    $veiculo_query = "SELECT * FROM [dbo].[Veiculo] WHERE matricula='{$matricula}'";
+    $veiculoNotif = sqlsrv_query($conn, $veiculo_query);
+    if( $veiculoNotif === false ) {
+        die( print_r( sqlsrv_errors(), true));
+    }
+    if( sqlsrv_fetch( $veiculoNotif ) === false) {
+        die( print_r( sqlsrv_errors(), true));
+    }
+    $transportadoraNotif = sqlsrv_get_field( $veiculoNotif, 1);
+
+    $nid = random_int(0, 9000);
+    $data =  date("Y-m-d H:i:s");
+    $mensagem = "Um dos seus veiculos foi requesitado para entrega de encomenda";
+
+    $to_insertNotif = "INSERT INTO [dbo].[Notificacao] ([nid], [utilizador], [datatime], [mensagem]) VALUES ('$nid', '$transportadoraNotif', '$data', '$mensagem')"; 
+
+    $params = array(1, "inserir notificacao");
+    $var = sqlsrv_query( $conn, $to_insertNotif, $params);
+
+    if( $var === false ) {
+        die( print_r( sqlsrv_errors(), true));
+    }
+
+
+    //###############################################################################################
+
     $addP = "UPDATE [dbo].[Veiculo] SET produto = '$idPro' WHERE matricula = '{$matricula}'";
 
     $rest = sqlsrv_query($conn, $addP);
@@ -54,7 +83,7 @@ if(isset($_POST["addVeiculo"])){
 }else{
 
     $nEncomenda = htmlspecialchars($_POST["idEncomenda"]);
-    echo $nEncomenda;
+    //echo $nEncomenda;
 }
 ?>
 <!DOCTYPE html>

@@ -138,9 +138,15 @@ include "openconn.php";
                                 echo "<td class=text-left>" . $row['poluicao'] . "</td>";
                                 echo "<td class=text-left>" . $row['cancelamento']->format('Y-m-d H:i:sP') . "</td>";
                                 echo "<td class=text-left>" . EstadoName($conn, $row['estado']) . "</td>";
+
+                                if($row['estado'] != 3){
                                 ?>
+
                                 <td><button type="submit" name="delete_encomenda" class=btn-sm>Cancelar</button></td>
                                 <?php
+                                }else{
+                                    echo "<td></td>";
+                                }
                                 //echo "<td class=text-left><input type='submit' value='Cancelar' name='delete_encomenda' class=btn-sm></td>";
                                 echo"</form>";
                                 echo "</tr>";
