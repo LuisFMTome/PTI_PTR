@@ -163,7 +163,6 @@ $row_count = sqlsrv_num_rows($query);
 
                         $nomeP = sqlsrv_get_field( $result, 0);
                         $paypalid = sqlsrv_get_field( $result, 1);
-                        console.log($paypalid);
 
                         ?>
                         <tr>
