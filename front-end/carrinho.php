@@ -122,7 +122,7 @@ $row_count = sqlsrv_num_rows($query);
             Limpar carrinho
             </button>
     
-            <button type="submit" name="encomendar" class='btn btn-secondary'>
+            <button id="encomenda" type="submit" name="encomendar" class='btn btn-secondary' disabled>
             Encomendar
             </button>
 
@@ -251,12 +251,14 @@ $row_count = sqlsrv_num_rows($query);
         </footer>
     </div>
     </main>
+
 <script src=<?php echo "https://www.paypal.com/sdk/js?client-id=".$paypalid."&disable-funding=credit,card&currency=EUR"?>></script>
+
 <script>
         var price = document.getElementById("total");
         price = price.innerText;
         price = price.slice(0, -1);
-        console.log(price);
+
         paypal.Buttons({
             style : {
                 color: 'blue',
@@ -273,7 +275,10 @@ $row_count = sqlsrv_num_rows($query);
             },
             onApprove: function (data, actions) {
                 return actions.order.capture().then(function (details) {
-                    console.log(details)
+                    console.log(details);
+                    const encomenda = document.getElementById("encomenda");
+                    encomenda.disabled = false;
+
                 })
             },
             onCancel: function (data) {
