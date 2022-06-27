@@ -179,7 +179,6 @@
                                     echo "<td class='text-center'>".$row['email']."</td>";
                                     echo "<td class='text-center'>".$row['morada']."</td>";
                                     echo "<td class='text-center'>".$row['codigoPostal']."</td>";
-                                    echo "<td class='text-center'>".$row['paypalid']."</td>";
                                     $nome = $row['nome'];
                                     $email = $row['email'];
                                     $morada = $row['morada'];
@@ -218,7 +217,7 @@
                             </div>
                             <div class="col-md-12">
                                 <label class="labels">Paypal ID</label>
-                                <input type="text" class="form-control" placeholder="Morada" name="paypalid_fornecedor" value="<?php echo $paypalid?>">
+                                <input type="text" class="form-control" placeholder="Paypal ID" name="paypalid_fornecedor" value="<?php echo $paypalid?>">
                             </div>
                         </div>
                         <div class="mt-5 text-center">
