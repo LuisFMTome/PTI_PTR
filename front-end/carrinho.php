@@ -166,7 +166,7 @@ $row_count = sqlsrv_num_rows($query);
 
                         ?>
                         <tr>
-                            <td><?php echo $nomeP?></td>
+                            <td><?php echo $nomeP; ?></td>
                             <!--<td><input type="number" value="1"></td>-->
                             <td><?php echo $values["item_price"] . "€" ?></td>
                             <td><a href="carrinho.php?action=delete&id=<?php echo $values["item_id"]; ?>">Remover</a></td>
@@ -252,7 +252,7 @@ $row_count = sqlsrv_num_rows($query);
     </div>
     </main>
 <script src=<?php echo "https://www.paypal.com/sdk/js?client-id=".$paypalid."&disable-funding=credit,card&currency=EUR"?>></script>    <script>
-        var price = <?php echo $total; ?>
+        var price = <?php echo $total; ?>;
         console.log(price.innerText);
         paypal.Buttons({
             style : {
