@@ -96,29 +96,21 @@ $row_count = sqlsrv_num_rows($query);
                                     echo "<li><a class=dropdown-item href=histEncomendas.php>Encomendas</a></li>";
                                 }elseif($_SESSION["tipo"] == "Fornecedor"){
                                     echo "<li><a class=dropdown-item href=perfilFornecedor.php>Perfil</a></li>";
-                                    echo "<li><a class=dropdown-item href=registoArmazem.php>Armazéns</a></li>";
-                                    echo "<li><a class=dropdown-item href=registoProduto.php>Produtos</a></li>";
-                                    echo "<li><a class=dropdown-item href=histEncomendasFornecedor.php>Encomendas</a></li>";
                                 }elseif($_SESSION["tipo"] == "Transportadora"){
                                     echo "<li><a class=dropdown-item href=perfilTransportadora.php>Perfil</a></li>";
-                                    echo"<li><a class=dropdown-item href=registoTransportes.php>Registar veiculos</a></li>";
-                                    echo "<li><a class=dropdown-item href=gerirVeiculos.php>Ver encomendas</a></li>";
                                 }
                                 ?>
                             </ul>
                             </li>
+                            <li class="nav-item">
+                            <a class="nav-link active" href="logout.php">Logout</a>
+                            </li>
+                            
+                    <?php }else{ ?>
+                        <li class="nav-item"><a class="nav-link active" href="conta.php">Login</i></a></li>
+                    <?php } ?>
             </ul>
             </div>
-            <div class="d-flex collapse">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="font-weight: bold;">
-                <li class="nav-item">
-                    <a class="nav-link active" href="logout.php">Logout</a>
-                </li>
-                <?php }else{ ?>
-                    <li class="nav-item"><a class="nav-link active" href="conta.php">Login</i></a></li>
-                <?php } ?>
-            </ul>               
-        </div>
         </div>
         </nav>
         
@@ -157,7 +149,9 @@ $row_count = sqlsrv_num_rows($query);
 
                         $idT = $values["item_id"];
 
-                        $query = "SELECT * FROM [dbo].[Produto] WHERE pid='{$idT}'";
+                        $query = "SELECT p.nome, f.paypalid  
+                        FROM [dbo].[Produto] p, [dbo].[Fornecedor] f, [dbo].[Armazem] a
+                        WHERE p.pid='{$idT}' AND p.morada=a.morada AND a.fornecedor=f.fid";
                         $result = sqlsrv_query($conn, $query);
 
                         if( $result === false ) {
@@ -167,7 +161,9 @@ $row_count = sqlsrv_num_rows($query);
                             die( print_r( sqlsrv_errors(), true));
                         }
 
-                        $nomeP = sqlsrv_get_field( $result, 1);
+                        $nomeP = sqlsrv_get_field( $result, 0);
+                        $paypalid = sqlsrv_get_field( $result, 1);
+                        console.log($paypalid);
 
                         ?>
                         <tr>
