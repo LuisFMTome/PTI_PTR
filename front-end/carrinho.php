@@ -149,7 +149,9 @@ $row_count = sqlsrv_num_rows($query);
 
                         $idT = $values["item_id"];
 
-                        $query = "SELECT * FROM [dbo].[Produto] WHERE pid='{$idT}'";
+                        $query = "SELECT p.nome, f.paypalid  
+                        FROM [dbo].[Produto] p, [dbo].[Fornecedor] f, [dbo].[Armazem] a
+                        WHERE p.pid='{$idT}' AND p.morada=a.morada AND a.fornecedor=f.fid";
                         $result = sqlsrv_query($conn, $query);
 
                         if( $result === false ) {
@@ -159,16 +161,17 @@ $row_count = sqlsrv_num_rows($query);
                             die( print_r( sqlsrv_errors(), true));
                         }
 
-                        $nomeP = sqlsrv_get_field( $result, 1);
+                        $nomeP = sqlsrv_get_field( $result, 0);
+                        $paypalid = sqlsrv_get_field( $result, 1);
 
                         ?>
                         <tr>
-                            <td><?php echo $nomeP?></td>
+                            <td><?php echo $nomeP; ?></td>
                             <!--<td><input type="number" value="1"></td>-->
                             <td><?php echo $values["item_price"] . "€" ?></td>
                             <td><a href="carrinho.php?action=delete&id=<?php echo $values["item_id"]; ?>">Remover</a></td>
                         </tr>
-                        
+
                         <?php
 
                     }
@@ -248,8 +251,8 @@ $row_count = sqlsrv_num_rows($query);
         </footer>
     </div>
     </main>
-<script src="https://www.paypal.com/sdk/js?client-id=ATCfWOTCqypa0ftAUTCfSLiwM8UaQ0zUkWaDSzUIbFdQoo_bcR4mF_SDi7l-KJ5UXtZ3LcORC6FIhZ50&disable-funding=credit,card&currency=EUR"></script>    <script>
-        var price = document.getElementById("total");
+<script src=<?php echo "https://www.paypal.com/sdk/js?client-id=".$paypalid."&disable-funding=credit,card&currency=EUR"?>></script>    <script>
+        var price = <?php echo $total ?>;
         console.log(price.innerText);
         paypal.Buttons({
             style : {
