@@ -16,6 +16,36 @@
     <?php 
         session_start();
         include "openconn.php";
+        //$notification = 0;
+
+        $emailTemp = $_SESSION["email"];
+        $fornecedor_notif_query = "SELECT * FROM [dbo].[Fornecedor] WHERE email='{$emailTemp}'";
+        $id_notif = sqlsrv_query($conn, $fornecedor_notif_query);
+        if( $id_notif === false ) {
+            die( print_r( sqlsrv_errors(), true));
+        }
+        if( sqlsrv_fetch( $id_notif ) === false) {
+            die( print_r( sqlsrv_errors(), true));
+        }
+        $fornecedorNotif = sqlsrv_get_field( $id_notif, 0);
+        //echo $fornecedorNotif;
+        $false = "False";
+        $data =  date("Y-m-d H:i:s");
+        $noti_query = "SELECT * FROM [dbo].[Notificacao] WHERE utilizador='$fornecedorNotif' AND lida= '$false' AND datatime<'$data'";
+        $notificacoes = sqlsrv_query($conn, $noti_query, array(), array( "Scrollable" => 'static' ));
+        $notification = sqlsrv_num_rows($notificacoes);
+
+        if(isset($_GET["action"])){
+
+            $idNotification = $_GET["id"];
+            $true = "True";
+            $update_v = "UPDATE [Notificacao] SET lida = '$true' WHERE nid = '{$idNotification}'";
+
+            $res1 = sqlsrv_query($conn, $update_v);
+            header("Location: perfilFornecedor.php");
+
+        }
+        //echo $notification;
     ?>
     <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: green;">
     <div class="container-fluid">
@@ -59,6 +89,47 @@
         </div>
         <div class="d-flex collapse">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="font-weight: bold;">
+                <li class="nav-item dropdown dropstart">
+                    <a class="nav-link active dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-bell fa-lg" aria-hidden="true"></i>
+                        <?php
+                        if($notification != 0){
+                        ?>
+                        <span class="badge rounded-pill badge-notification bg-danger"><?php echo $notification; ?></span>
+                        <?php
+                        }
+                        ?>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="background-color: green;">
+                        <?php
+                        $emailTemp = $_SESSION["email"];
+                        $fornecedor_notif_query = "SELECT * FROM [dbo].[Fornecedor] WHERE email='{$emailTemp}'";
+                        $id_notif = sqlsrv_query($conn, $fornecedor_notif_query);
+                        if( $id_notif === false ) {
+                            die( print_r( sqlsrv_errors(), true));
+                        }
+                        if( sqlsrv_fetch( $id_notif ) === false) {
+                            die( print_r( sqlsrv_errors(), true));
+                        }
+                        $fornecedorNotif = sqlsrv_get_field( $id_notif, 0);
+                        //echo $fornecedorNotif;
+                        $data =  date("Y-m-d H:i:s");
+                        $false = "False";
+                        $noti_query = "SELECT * FROM [dbo].[Notificacao] WHERE utilizador='$fornecedorNotif' AND lida= '$false' AND datatime<'$data'";
+                        $notificacoes = sqlsrv_query($conn, $noti_query);
+                        
+                        while ($row = sqlsrv_fetch_array($notificacoes)) {
+
+                            ?>
+                            <li><a class=dropdown-item href="perfilFornecedor.php?action=delete&id=<?php echo $row["nid"]; ?>"><?php echo $row['mensagem'] ?></a></li>
+                            <?php
+
+                            
+                        }
+                        ?>
+                    </ul>
+                
+                </li>
                 <li class="nav-item">
                     <a class="nav-link active" href="logout.php">Logout</a>
                 </li>
@@ -102,7 +173,7 @@
                                 echo"<th>nome</th>";
                                 echo"<th>email</th>";
                                 echo"<th>morada</th>";
-                                echo"<th>codigoPostal</th>";
+                                echo"<th>codigo Postal</th>";
                             echo "</tr>";
                             echo"</thead>";
                             while($row = sqlsrv_fetch_array($result)) {
@@ -116,6 +187,7 @@
                                     $email = $row['email'];
                                     $morada = $row['morada'];
                                     $codigoPostal = $row['codigoPostal'];
+                                    $paypalid = $row['paypalid'];
                                 echo "</tr>";
                             }
                             echo"</table>";
@@ -146,6 +218,10 @@
                                 <label class="labels">Código Postal</label>
                                 <!--<input type="text" class="form-control" placeholder="Código Postal" name="codigoPostal_fornecedor" value="">-->
                                 <input class="form-control" placeholder="Código Postal" type="text" value="<?php echo $codigoPostal?>" required name="codigoPostal_fornecedor" pattern="[0-9]{7}" title="7 numeros do codigo postal" />
+                            </div>
+                            <div class="col-md-12">
+                                <label class="labels">Paypal ID</label>
+                                <input type="text" class="form-control" placeholder="Paypal ID" name="paypalid_fornecedor" value="<?php echo $paypalid?>">
                             </div>
                         </div>
                         <div class="mt-5 text-center">

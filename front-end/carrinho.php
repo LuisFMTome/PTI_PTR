@@ -117,22 +117,14 @@ $row_count = sqlsrv_num_rows($query);
         <div class="container small-container carrinho-pagina">
         
         <form method="post" action="fazerEncomenda.php">
-
-            <button type="submit" name="limpar" class='btn btn-secondary'>
-            Limpar carrinho
-            </button>
-    
-            <button id="encomenda" type="submit" name="encomendar" class='btn btn-secondary' disabled>
-            Encomendar
-            </button>
-
+            <button type="submit" name="limpar" class='btn btn-secondary'>Limpar carrinho</button>
+            <button id="encomenda" type="submit" name="encomendar" class='btn btn-secondary'>Encomendar</button>
         </form>
         
             <table>
                 <tr>
                     <th>Produto</th>
                     <th>Preço</th>
-                    <!--<th>Total</th>-->
                     <th>Ação</th>
                 </tr>
 
@@ -167,7 +159,6 @@ $row_count = sqlsrv_num_rows($query);
                         ?>
                         <tr>
                             <td><?php echo $nomeP?></td>
-                            <!--<td><input type="number" value="1"></td>-->
                             <td><?php echo $values["item_price"] . "€" ?></td>
                             <td><a href="carrinho.php?action=delete&id=<?php echo $values["item_id"]; ?>">Remover</a></td>
                         </tr>
@@ -275,10 +266,8 @@ $row_count = sqlsrv_num_rows($query);
             },
             onApprove: function (data, actions) {
                 return actions.order.capture().then(function (details) {
-                    console.log(details);
                     const encomenda = document.getElementById("encomenda");
                     encomenda.disabled = false;
-
                 })
             },
             onCancel: function (data) {
