@@ -74,23 +74,58 @@ if(isset($_POST["addVeiculo"])){
     <script src="sweetalert2.all.min.js"></script>
 </head>
 <body>
-    <nav>
-        <div class="top-nav-bar">
-            <div class="search-box">
-                <a href="index.php">
-                    <img src="img/logotipo.png" class="logo">
-                </a>
-                <!--<input type="text" class="form-control">
-                <span class="input-group-text"><i class="fa fa-search"></i></span>-->
-            </div>
-            <div class="menu-bar">
-                <ul>
-                    <!--<li><a href="index.php">Home</a></li>-->
-                    <li><a href="histEncomendasFornecedor.php">Voltar</a></li>
-                    
-                </ul>
-            </div>
+
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: green;">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="index.php">
+            <img src="img/logotipo.png" class="logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="font-weight: bold;">
+            <li class="nav-item">
+            <a class="nav-link active" href="mercado.php">Mercado</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link active" href="carrinho.php" >Carrinho</a>
+            </li>
+                <?php 
+                    if (isset($_SESSION['email']) != "") {?>
+                        <li class="nav-item dropdown">
+                        <a class="nav-link active dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" >
+                            <?php echo $_SESSION["nome"] ?>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="background-color: green;">
+                            <?php
+                            if($_SESSION["tipo"] == "Consumidor"){
+                                echo "<li><a class=dropdown-item href=perfilUtilizador.php>Perfil</a></li>";
+                                echo "<li><a class=dropdown-item href=histEncomendas.php>Encomendas</a></li>";
+                            }elseif($_SESSION["tipo"] == "Fornecedor"){
+                                echo "<li><a class=dropdown-item href=perfilFornecedor.php>Perfil</a></li>";
+                            }elseif($_SESSION["tipo"] == "Transportadora"){
+                                echo "<li><a class=dropdown-item href=perfilTransportadora.php>Perfil</a></li>";
+                            }
+                            ?>
+                        </ul>
+                        </li>       
+        </ul>
         </div>
+        <div class="d-flex collapse">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="font-weight: bold;">
+                <li class="nav-item">
+                    <a class="nav-link active" href="histEncomendasFornecedor.php">Voltar</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="logout.php">Logout</a>
+                </li>
+                <?php }else{ ?>
+                    <li class="nav-item"><a class="nav-link active" href="conta.php">Login</i></a></li>
+                <?php } ?>
+            </ul>               
+        </div>
+    </div>
     </nav>
     <div class="container rounded bg-white mt-5 mb-5">
         <div class="row">

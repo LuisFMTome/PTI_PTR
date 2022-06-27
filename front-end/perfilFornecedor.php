@@ -17,7 +17,6 @@
         session_start();
         include "openconn.php";
     ?>
-<<<<<<< HEAD
     <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: green;">
     <div class="container-fluid">
         <a class="navbar-brand" href="index.php">
@@ -47,6 +46,9 @@
                                 echo "<li><a class=dropdown-item href=histEncomendas.php>Encomendas</a></li>";
                             }elseif($_SESSION["tipo"] == "Fornecedor"){
                                 echo "<li><a class=dropdown-item href=perfilFornecedor.php>Perfil</a></li>";
+                                echo "<li><a class=dropdown-item href=registoArmazem.php>Armazéns</a></li>";
+                                echo "<li><a class=dropdown-item href=registoProduto.php>Produtos</a></li>";
+                                echo "<li><a class=dropdown-item href=histEncomendasFornecedor.php>Encomendas</a></li>";
                             }elseif($_SESSION["tipo"] == "Transportadora"){
                                 echo "<li><a class=dropdown-item href=perfilTransportadora.php>Perfil</a></li>";
                             }
