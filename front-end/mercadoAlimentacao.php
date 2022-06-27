@@ -17,8 +17,9 @@ session_start();
 
     $produtosPágina = 9;
     $produtoInicial = ($pagina-1)*$produtosPágina;
-    
-    $Queryprodutos = "SELECT * FROM [dbo].[Produto] p, [dbo].[Subtipo] s WHERE p.subtipo = s.sid AND s.tipo = '1' ORDER BY nome OFFSET " . $produtoInicial . " ROWS FETCH NEXT " . $produtosPágina . " ROWS ONLY";
+    $Queryprodutos ="SELECT p.nome, p.preco, p.morada, p.pid FROM [dbo].[Produto] p, [dbo].[Subtipo] subt, [dbo].[Tipo] t WHERE p.subtipo = subt.sid AND subt.tipo = t.tid AND t.tid = 1 ORDER BY nome OFFSET " . $produtoInicial . " ROWS FETCH NEXT " . $produtosPágina . " ROWS ONLY";
+
+    //$Queryprodutos = "SELECT * FROM [dbo].[Produto] p, [dbo].[Subtipo] s WHERE p.subtipo = s.sid AND s.tipo = '1' ORDER BY nome OFFSET " . $produtoInicial . " ROWS FETCH NEXT " . $produtosPágina . " ROWS ONLY";
     $QueryTotalProdutos = "SELECT * FROM [dbo].[Produto] p, [dbo].[Subtipo] s WHERE p.subtipo = s.sid AND s.tipo = '1'";
     $queryProdutos_execute = sqlsrv_query($conn, $Queryprodutos, array(), array( "Scrollable" => 'static' ));
     $total_produtos_execute = sqlsrv_query($conn,$QueryTotalProdutos,array(),array( "Scrollable" => 'static' ));
@@ -252,6 +253,9 @@ if(isset($_POST["addCart"])){
                                     </div>
                                 </div>
                             </form>
+                            <button onclick="produto('<?php echo $row2['nome']?>','<?php  echo $row2['morada']?>','<?php  echo $row2['preco']?>','<?php  echo $row2['poluicao']?>')" class="btn btn-secondary" title="Comparar produto">
+                                                Comparar produto
+                                            </button>
                         </div>
 
                     
@@ -266,16 +270,62 @@ if(isset($_POST["addCart"])){
                     }
                 }
                     
-                }
-                if($counter % 3 != 0){
-                    echo "</div>";
-                    
-                } 
             }
+        }
 
                 
                                
                     ?>
+                            </div>
+            </div>
+            
+            <div class="col-4 p-5 t-1 card sticky-top">
+                
+                <div class="row">
+                    <div class="d-table-cell align-middle">
+                        
+                
+                            <h3><b>Comparar produtos</b></h3>
+                        
+                        </div>
+                </div>
+                <div class="row">
+                    <div class="d-table-cell align-middle">
+                        
+                
+                        <h3><b>Primeiro produto:</b></h3>
+                        
+                        <div id="produto1"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="d-table-cell align-middle">
+                        
+                
+                            <h3><b>Segundo produto:</b></h3>
+                        
+                        <div id="produto2"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="d-table-cell align-middle">
+                        <h3><b>Diferença entre ambos:<b></h3>
+                        <div id="comparacao"></div>
+                    </div>   
+                </div> 
+                <div class="row">
+                    <div class="d-table-cell align-middle">
+                    <button onclick="reset()" class="btn btn-secondary" title="Reset Dados de Comparação">
+                                                Reset
+                                            </button>
+                    </div> 
+                    <button onclick="resultado()" class="btn btn-secondary" title="Resultado Dados de Comparação">
+                                                Resultado
+                                            </button>
+                    </div>   
+                </div> 
+                 
+            </div>
                 <nav aria-label="Page navigation example">
                 <ul class="pagination">
                     <?php for($pagina=1;$pagina<=$numeroPaginas;$pagina++): 
