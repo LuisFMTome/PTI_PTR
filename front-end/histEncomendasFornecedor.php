@@ -145,37 +145,41 @@ include "openconn.php";
                                 $armazem = sqlsrv_query($conn, $armazem_query);
                                 $row2 = sqlsrv_fetch_array($armazem);
 
-                                $ifForn = $row2['fornecedor'];
+                                $temp = $row2['fornecedor'];
 
-                                if($ifForn == $fid){
+                                if(!(is_null($temp))){
 
-                                    echo "<tr>";
-                                    echo "<form action='escolherVeiculo.php' method='post'>";
-                                    echo "<input type='hidden' name='idEncomenda' value=".$row['pedido'].">";
-                                    echo "<td class=text-left>" . $row['origem'] . "</td>";
-                                    echo "<td class=text-left>" . $row['destino'] . "</td>";
-                                    echo "<td class=text-left>" . ProductName($conn, $row['produto']) . "</td>";
-                                    echo "<td class=text-left>" . $row['poluicao'] . "</td>";
-                                    echo "<td class=text-left>" . $row['cancelamento']->format('Y-m-d H:i:sP') . "</td>";
-                                    echo "<td class=text-left>" . $row['veiculo'] . "</td>";
-                                    echo "<td class=text-left>" . EstadoName($conn, $row['estado']) . "</td>";
-                                    if($row['veiculo'] == null){
+                                    $ifForn = $row2['fornecedor'];
 
-                                    ?>
-                                    
-                                    <td><button type="submit" name="delete_encomenda" class=btn-sm>Escolher</button></td>
-                                    <?php
-                                    }else{
-                                        echo "<td></td>";
+                                    if($ifForn == $fid){
+
+                                        echo "<tr>";
+                                        echo "<form action='escolherVeiculo.php' method='post'>";
+                                        echo "<input type='hidden' name='idEncomenda' value=".$row['pedido'].">";
+                                        echo "<td class=text-left>" . $row['origem'] . "</td>";
+                                        echo "<td class=text-left>" . $row['destino'] . "</td>";
+                                        echo "<td class=text-left>" . ProductName($conn, $row['produto']) . "</td>";
+                                        echo "<td class=text-left>" . $row['poluicao'] . "</td>";
+                                        echo "<td class=text-left>" . $row['cancelamento']->format('Y-m-d H:i:sP') . "</td>";
+                                        echo "<td class=text-left>" . $row['veiculo'] . "</td>";
+                                        echo "<td class=text-left>" . EstadoName($conn, $row['estado']) . "</td>";
+                                        if($row['veiculo'] == null){
+
+                                        ?>
+                                        
+                                        <td><button type="submit" name="delete_encomenda" class=btn-sm>Escolher</button></td>
+                                        <?php
+                                        }else{
+                                            echo "<td></td>";
+                                        }
+                                        //echo "<td class=text-left><input type='submit' value='Cancelar' name='delete_encomenda' class=btn-sm></td>";
+                                        echo"</form>";
+                                        echo "</tr>";
+
                                     }
-                                    //echo "<td class=text-left><input type='submit' value='Cancelar' name='delete_encomenda' class=btn-sm></td>";
-                                    echo"</form>";
-                                    echo "</tr>";
-
-                                }
 
                                 
-
+                                }
 
                             }
                             /*

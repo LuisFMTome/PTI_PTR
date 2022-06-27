@@ -66,11 +66,14 @@ session_start();
                 <li class="nav-item">
                     <a class="nav-link active" href="logout.php">Logout</a>
                 </li>
+                
                 <?php }else{ ?>
-                    <li class="nav-item"><a class="nav-link active" href="conta.php">Login</i></a></li>
+                    
+                    <li class="nav-item"><a class="nav-link active" href="conta.php">Login</a></li>
+                    
                 <?php } ?>
             </ul>               
-        </div>
+            </div>
     </div>
     </nav>
 

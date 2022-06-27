@@ -6,6 +6,7 @@ $nome = htmlspecialchars($_POST["nome_fornecedor"]);
 $email = htmlspecialchars($_POST["email_fornecedor"]);
 $morada = htmlspecialchars($_POST["morada_fornecedor"]);
 $codigo_postal = htmlspecialchars($_POST["codigoPostal_fornecedor"]);
+$paypalid = htmlspecialchars($_POST["paypalid_fornecedor"]);
 
 $name = $_SESSION["nome"];
 
@@ -14,7 +15,7 @@ if($nome === "" || $email === "" || $morada === "" || $codigo_postal === ""){
     //header("Location: perfilFornecedor.php");
     header( "refresh:5; url=perfilFornecedor.php" );
 }else{
-    $update_v = "UPDATE [Fornecedor] SET nome = '$nome', email = '$email', morada = '$morada', codigoPostal = '$codigo_postal' WHERE nome = '{$name}'";
+    $update_v = "UPDATE [Fornecedor] SET nome = '$nome', email = '$email', morada = '$morada', codigoPostal = '$codigo_postal', paypalid = '$paypalid' WHERE nome = '{$name}'";
 
     $res1 = sqlsrv_query($conn, $update_v);
 

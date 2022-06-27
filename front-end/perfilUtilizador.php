@@ -16,6 +16,23 @@
     <?php 
     session_start();
     include "openconn.php";
+
+    $emailTemp = $_SESSION["email"];
+    $consum_notif_query = "SELECT * FROM [dbo].[Consumidor] WHERE email='{$emailTemp}'";
+    $id_notif = sqlsrv_query($conn, $consum_notif_query);
+    if( $id_notif === false ) {
+        die( print_r( sqlsrv_errors(), true));
+    }
+    if( sqlsrv_fetch( $id_notif ) === false) {
+        die( print_r( sqlsrv_errors(), true));
+    }
+    $consumNotif = sqlsrv_get_field( $id_notif, 0);
+    //echo $consumNotif;
+    $false = "False";
+    $data =  date("Y-m-d H:i:s");
+    $noti_query = "SELECT * FROM [dbo].[Notificacao] WHERE utilizador='$consumNotif' AND lida= '$false' AND datatime<'$data'";
+    $notificacoes = sqlsrv_query($conn, $noti_query, array(), array( "Scrollable" => 'static' ));
+    $notification = sqlsrv_num_rows($notificacoes);
     ?>
     <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: green;">
     <div class="container-fluid">
@@ -56,11 +73,47 @@
         </div>
         <div class="d-flex collapse">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="font-weight: bold;">
-                <li class="nav-item">
-                    <a class="nav-link active">
+
+                <li class="nav-item dropdown dropstart">
+                    <a class="nav-link active dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fa fa-bell fa-lg" aria-hidden="true"></i>
-                        <span class="badge rounded-pill badge-notification bg-danger">9</span>
+                        <?php
+                        if($notification != 0){
+                        ?>
+                        <span class="badge rounded-pill badge-notification bg-danger"><?php echo $notification; ?></span>
+                        <?php
+                        }
+                        ?>
                     </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="background-color: green;">
+                        <?php
+                        $emailTemp = $_SESSION["email"];
+                        $fornecedor_notif_query = "SELECT * FROM [dbo].[Consumidor] WHERE email='{$emailTemp}'";
+                        $id_notif = sqlsrv_query($conn, $fornecedor_notif_query);
+                        if( $id_notif === false ) {
+                            die( print_r( sqlsrv_errors(), true));
+                        }
+                        if( sqlsrv_fetch( $id_notif ) === false) {
+                            die( print_r( sqlsrv_errors(), true));
+                        }
+                        $consumNotif = sqlsrv_get_field( $id_notif, 0);
+                        //echo $consumNotif;
+                        $data =  date("Y-m-d H:i:s");
+                        $false = "False";
+                        $noti_query = "SELECT * FROM [dbo].[Notificacao] WHERE utilizador='$consumNotif' AND lida= '$false' AND datatime<'$data'";
+                        $notificacoes = sqlsrv_query($conn, $noti_query);
+                        
+                        while ($row = sqlsrv_fetch_array($notificacoes)) {
+
+                            ?>
+                            <li><a class=dropdown-item href="perfilFornecedor.php?action=delete&id=<?php echo $row["nid"]; ?>"><?php echo $row['mensagem'] ?></a></li>
+                            <?php
+
+                            
+                        }
+                        ?>
+                    </ul>
+                
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" href="logout.php">Logout</a>
