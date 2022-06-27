@@ -152,14 +152,17 @@ if(isset($_POST["addCart"])){
                             ?>
                         </ul>
                         </li>
-                        <li class="nav-item">
-                        <a class="nav-link active" href="logout.php">Logout</a>
-                        </li>
-                        
+        </ul>
+        </div>
+        <div class="d-flex collapse">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="font-weight: bold;">
+                <li class="nav-item">
+                    <a class="nav-link active" href="logout.php">Logout</a>
+                </li>
                 <?php }else{ ?>
                     <li class="nav-item"><a class="nav-link active" href="conta.php">Login</i></a></li>
                 <?php } ?>
-        </ul>
+            </ul>               
         </div>
     </div>
     </nav>
@@ -346,59 +349,6 @@ if(isset($_POST["addCart"])){
             </div>
         </footer>
     </div>
-    <table class="table table-bordered table-lg table-light align-top">
-                    <thead>
-                      <tr>
-                        <th scope="col" class="text-center">#</th>
-                        <th scope="col" class="text-center">Nome do Produto</th>
-                        <th scope="col" class="text-center">Morada</th>
-                        <th scope="col" class="text-center">Código Postal</th>
-                        <th scope="col" class="text-center">Tipo</th>
-                        <th scope="col" class="text-center">Ação</th>
-                        
-                      </tr>
-                    </thead>
-                    <tbody>
-<?php 
-
-                        
-                            
-
-    $produtos_query = "SELECT * FROM [dbo].[Produto]";
-    //$stmt = sqlsrv_query( $conn, $user_check_query );
-    $produtos = sqlsrv_query($conn, $produtos_query);
-
-    $query2 = sqlsrv_query($conn, $produtos_query, array(), array( "Scrollable" => 'static' ));
-    $row_count2 = sqlsrv_num_rows($query2);
-
-    if($row_count2 > 0){
-
-        while ($row2 = sqlsrv_fetch_array($produtos)) {
-
-            echo "<tr>";
-            echo "<td>" . $row2['pid'] . "</td>";
-            echo "<td>" . $row2['nome'] . "</td>";
-            echo "<td>" . $row2['morada'] . "</td>";
-            echo "<td>" . $row2['codigoPostal'] . "</td>";
-            echo "<td class='text-center'><a href='Delete'>Delete</a></td>";
-            echo "</tr>";
-
-    }
-
-
-    }
-
-?>
-<script>
-    Swal.bindClickHandler()
-
-Swal.mixin({
-  toast: true,
-}).bindClickHandler('data-swal-toast-template')
-</script>
-                     
-                    </tbody>
-                </table>
 
     <script>
         function openmenu()

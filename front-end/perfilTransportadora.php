@@ -49,14 +49,17 @@
                             ?>
                         </ul>
                         </li>
-                        <li class="nav-item">
-                        <a class="nav-link active" href="logout.php">Logout</a>
-                        </li>
-                    
-                <?php }else{ ?>
-                    <li><a href="conta.php">Login</i></a></li>
-            <?php } ?>
         </ul>
+        </div>
+        <div class="d-flex collapse">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="font-weight: bold;">
+                <li class="nav-item">
+                    <a class="nav-link active" href="logout.php">Logout</a>
+                </li>
+                <?php }else{ ?>
+                    <li class="nav-item"><a class="nav-link active" href="conta.php">Login</i></a></li>
+                <?php } ?>
+            </ul>               
         </div>
     </div>
     </nav>

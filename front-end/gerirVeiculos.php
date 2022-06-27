@@ -59,6 +59,8 @@ if($conn === false) {
                             <?php
                                 if($_SESSION["tipo"] == "Transportadora"){
                                     echo "<li><a class=dropdown-item href=perfilTransportadora.php>Perfil</a></li>";
+                                    echo"<li><a class=dropdown-item href=registoTransportes.php>Registar veiculos</a></li>";
+                                    echo "<li><a class=dropdown-item href=gerirVeiculos.php>Ver encomendas</a></li>";
                                 }
                             ?>
                         </ul>
