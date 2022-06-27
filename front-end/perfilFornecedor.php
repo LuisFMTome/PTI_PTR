@@ -219,7 +219,7 @@
                             <div class="col-md-12">
                                 <label class="labels">PayPal ID</label>
                                 <!--<input type="text" class="form-control" placeholder="Código Postal" name="paypal_fornecedor" value="">-->
-                                <input class="form-control" placeholder="Código Postal" type="text" value="<?php echo $paypalid?>" required name="paypal_fornecedor" pattern="[0-9]{7}" title="7 numeros do codigo postal" />
+                                <input class="form-control" placeholder="Paypal ID" type="text" value="<?php echo $paypalid?>" required name="paypal_fornecedor"/>
                             </div>
                         </div>
                         <div class="mt-5 text-center">
