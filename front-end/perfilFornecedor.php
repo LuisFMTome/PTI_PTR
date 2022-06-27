@@ -30,7 +30,8 @@
         $fornecedorNotif = sqlsrv_get_field( $id_notif, 0);
         //echo $fornecedorNotif;
         $false = "False";
-        $noti_query = "SELECT * FROM [dbo].[Notificacao] WHERE utilizador='$fornecedorNotif' AND lida= '$false'";
+        $data =  date("Y-m-d H:i:s");
+        $noti_query = "SELECT * FROM [dbo].[Notificacao] WHERE utilizador='$fornecedorNotif' AND lida= '$false' AND datatime<'$data'";
         $notificacoes = sqlsrv_query($conn, $noti_query, array(), array( "Scrollable" => 'static' ));
         $notification = sqlsrv_num_rows($notificacoes);
 
@@ -112,14 +113,18 @@
                         }
                         $fornecedorNotif = sqlsrv_get_field( $id_notif, 0);
                         //echo $fornecedorNotif;
+                        $data =  date("Y-m-d H:i:s");
                         $false = "False";
-                        $noti_query = "SELECT * FROM [dbo].[Notificacao] WHERE utilizador='$fornecedorNotif' AND lida= '$false'";
+                        $noti_query = "SELECT * FROM [dbo].[Notificacao] WHERE utilizador='$fornecedorNotif' AND lida= '$false' AND datatime<'$data'";
                         $notificacoes = sqlsrv_query($conn, $noti_query);
+                        
                         while ($row = sqlsrv_fetch_array($notificacoes)) {
 
                             ?>
                             <li><a class=dropdown-item href="perfilFornecedor.php?action=delete&id=<?php echo $row["nid"]; ?>"><?php echo $row['mensagem'] ?></a></li>
                             <?php
+
+                            
                         }
                         ?>
                     </ul>

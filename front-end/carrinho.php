@@ -118,7 +118,7 @@ $row_count = sqlsrv_num_rows($query);
         
         <form method="post" action="fazerEncomenda.php">
             <button type="submit" name="limpar" class='btn btn-secondary'>Limpar carrinho</button>
-            <button id="encomenda" type="submit" name="encomendar" class='btn btn-secondary' disabled>Encomendar</button>
+            <button id="encomenda" type="submit" name="encomendar" class='btn btn-secondary'>Encomendar</button>
         </form>
         
             <table>
