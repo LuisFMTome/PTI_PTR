@@ -130,9 +130,11 @@
                 $idSub = sqlsrv_get_field( $result, 0);
                 
             }
-            
+
+            //data que o produto foi inserido no armazem
+            $data =  date("Y-m-d H:i:s");
             //inserir na base de dados
-            $to_insert = "INSERT INTO [dbo].[Produto] ([pid], [nome], [morada], [codigoPostal], [subtipo], [preco], [poluicao]) VALUES ('$pid', '$nome', '$morada', '$cPostal', '$idSub', '$preco', '$poluicao')"; 
+            $to_insert = "INSERT INTO [dbo].[Produto] ([pid], [nome], [morada], [codigoPostal], [subtipo], [preco], [poluicao], [data]) VALUES ('$pid', '$nome', '$morada', '$cPostal', '$idSub', '$preco', '$poluicao', '$data')"; 
 
             $params = array(1, "inserir produto");
             $var = sqlsrv_query( $conn, $to_insert, $params);

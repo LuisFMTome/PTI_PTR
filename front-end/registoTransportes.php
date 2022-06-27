@@ -50,18 +50,23 @@ include "openconn.php";
                                 echo "<li><a class=dropdown-item href=perfilFornecedor.php>Perfil</a></li>";
                             }elseif($_SESSION["tipo"] == "Transportadora"){
                                 echo "<li><a class=dropdown-item href=perfilTransportadora.php>Perfil</a></li>";
+                                echo"<li><a class=dropdown-item href=registoTransportes.php>Registar veiculos</a></li>";
+                                echo "<li><a class=dropdown-item href=gerirVeiculos.php>Ver encomendas</a></li>";
                             }
                             ?>
                         </ul>
                         </li>
-                        <li class="nav-item">
-                        <a class="nav-link active" href="logout.php">Logout</a>
-                        </li>
-                        
+        </ul>
+        </div>
+        <div class="d-flex collapse">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="font-weight: bold;">
+                <li class="nav-item">
+                    <a class="nav-link active" href="logout.php">Logout</a>
+                </li>
                 <?php }else{ ?>
                     <li class="nav-item"><a class="nav-link active" href="conta.php">Login</i></a></li>
                 <?php } ?>
-        </ul>
+            </ul>               
         </div>
     </div>
     </nav>
