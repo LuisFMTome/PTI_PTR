@@ -33,28 +33,32 @@
             <li class="nav-item">
             <a class="nav-link active" href="carrinho.php" >Carrinho</a>
             </li>
-            <?php 
-                if (isset($_SESSION['email']) != "") {?>
-                    <li class="dropdown">
-                    <button class="dropbtn">
-                        <?php echo $_SESSION["nome"] ?>
-                        <i class="fa fa-caret-down"></i>
-                    </button>
-                    <div class="dropdown-content">
-                        <?php
-                            if($_SESSION["tipo"] == "Transportadora"){
-                                echo"<a href=registoTransportes.php>Registar veiculos</a>";
-                                echo "<a href=gerirVeiculos.php>Ver encomendas</a>";
-                            }
-                        ?>
-                        <a href="logout.php">Logout</a>
-                    </div>
+                <?php 
+                    if (isset($_SESSION['email']) != "") {?>
+                        <li class="nav-item dropdown">
+                        <a class="nav-link active dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" >
+                            <?php echo $_SESSION["nome"] ?>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="background-color: green;">
+                            <?php
+                                if($_SESSION["tipo"] == "Transportadora"){
+                                    echo "<li><a class=dropdown-item href=perfilTransportadora.php>Perfil</a></li>";
+                                    echo"<li><a class=dropdown-item href=registoTransportes.php>Registar veiculos</a></li>";
+                                    echo "<li><a class=dropdown-item href=gerirVeiculos.php>Ver encomendas</a></li>";
+                                }
+                            ?>
+                        </ul>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link active" href="logout.php">Logout</a>
+                        </li>
+                    
                 <?php }else{ ?>
                     <li><a href="conta.php">Login</i></a></li>
             <?php } ?>
-                </ul>
-            </div>
+        </ul>
         </div>
+    </div>
     </nav>
     <div class="container rounded bg-white mt-5 mb-5">
         <div class="row">

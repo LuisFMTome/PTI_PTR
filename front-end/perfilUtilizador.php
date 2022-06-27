@@ -52,15 +52,24 @@
                             ?>
                         </ul>
                         </li>
-                        <li class="nav-item">
-                        <a class="nav-link active" href="logout.php">Logout</a>
-                        </li>
-                        
+        </ul>
+        </div>
+        <div class="d-flex collapse">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="font-weight: bold;">
+                <li class="nav-item">
+                    <a class="nav-link active">
+                        <i class="fa fa-bell fa-lg" aria-hidden="true"></i>
+                        <span class="badge rounded-pill badge-notification bg-danger">9</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="logout.php">Logout</a>
+                </li>
                 <?php }else{ ?>
                     <li class="nav-item"><a class="nav-link active" href="conta.php">Login</i></a></li>
                 <?php } ?>
-        </ul>
-        </div>
+            </ul>               
+        </div> 
     </div>
     </nav>
     <div class="container rounded bg-white mt-5 mb-5">
