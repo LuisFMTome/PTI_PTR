@@ -71,6 +71,9 @@ $row_count = sqlsrv_num_rows($query);
                                 echo "<li><a class=dropdown-item href=histEncomendas.php>Encomendas</a></li>";
                             }elseif($_SESSION["tipo"] == "Fornecedor"){
                                 echo "<li><a class=dropdown-item href=perfilFornecedor.php>Perfil</a></li>";
+                                echo "<li><a class=dropdown-item href=registoArmazem.php>Armazéns</a></li>";
+                                echo "<li><a class=dropdown-item href=registoProduto.php>Produtos</a></li>";
+                                echo "<li><a class=dropdown-item href=histEncomendasFornecedor.php>Encomendas</a></li>";
                             }elseif($_SESSION["tipo"] == "Transportadora"){
                                 echo "<li><a class=dropdown-item href=perfilTransportadora.php>Perfil</a></li>";
                             }
