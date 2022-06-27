@@ -149,9 +149,7 @@ $row_count = sqlsrv_num_rows($query);
 
                         $idT = $values["item_id"];
 
-                        $query = "SELECT p.nome, f.paypalid  
-                        FROM [dbo].[Produto] p, [dbo].[Fornecedor] f, [dbo].[Armazem] a
-                        WHERE p.pid='{$idT}' AND p.morada=a.morada AND a.fornecedor=f.fid";
+                        $query = "SELECT * FROM [dbo].[Produto] WHERE pid='{$idT}'";
                         $result = sqlsrv_query($conn, $query);
 
                         if( $result === false ) {
@@ -161,8 +159,7 @@ $row_count = sqlsrv_num_rows($query);
                             die( print_r( sqlsrv_errors(), true));
                         }
 
-                        $nomeP = sqlsrv_get_field( $result, 0);
-                        $paypalid = sqlsrv_get_field( $result, 1);
+                        $nomeP = sqlsrv_get_field( $result, 1);
 
                         ?>
                         <tr>
