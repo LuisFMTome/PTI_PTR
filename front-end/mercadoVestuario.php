@@ -18,8 +18,9 @@ session_start();
     $produtosPágina = 9;
     $produtoInicial = ($pagina-1)*$produtosPágina;
     
-    $Queryprodutos = "SELECT * FROM [dbo].[Produto] p, [dbo].[Subtipo] subt, [dbo].[Tipo] t WHERE p.subtipo = subt.sid AND subt.tipo = t.tid AND t.tid = 5 ORDER BY nome OFFSET " . $produtoInicial . " ROWS FETCH NEXT " . $produtosPágina . " ROWS ONLY";
-    $QueryTotalProdutos = "SELECT * FROM [dbo].[Produto] p, [dbo].[Subtipo] s WHERE p.subtipo = s.sid AND s.tipo = '5'";
+    
+    $Queryprodutos ="SELECT p.nome, p.preco, p.morada, p.pid FROM [dbo].[Produto] p, [dbo].[Subtipo] subt, [dbo].[Tipo] t WHERE p.subtipo = subt.sid AND subt.tipo = t.tid AND t.tid = 5 ORDER BY nome OFFSET " . $produtoInicial . " ROWS FETCH NEXT " . $produtosPágina . " ROWS ONLY";
+    $QueryTotalProdutos = "SELECT * FROM [dbo].[Produto] p, [dbo].[Subtipo] s WHERE p.subtipo = s.sid AND s.tipo = 5";
     $queryProdutos_execute = sqlsrv_query($conn, $Queryprodutos, array(), array( "Scrollable" => 'static' ));
     $total_produtos_execute = sqlsrv_query($conn,$QueryTotalProdutos,array(),array( "Scrollable" => 'static' ));
     $total_produtos = sqlsrv_num_rows($total_produtos_execute);
@@ -110,7 +111,114 @@ if(isset($_POST["addCart"])){
     <script src="sweetalert2.all.min.js"></script>
 </head>
 <body>
+<script type="text/javascript">
+    var preco1 = null
+    var preco2 = null
+    var poluicao1 = null
+    var poluicao2 = null
+    var nome1 = null
+    var nome2 = null
+    var flag = false
+    function produto(nome,morada,preco,poluicao){
+        console.log("ola");
+        //var produto1IsEmpty = document.getElementById('produto1').innerHTML == "";
+        //var produto2IsEmpty = document.getElementById('produto2').innerHTML == "";
+        //console.log(produto1IsEmpty)
+        if( $('#produto1').is(':empty') ) {
+            
+            var linkMaps1 = "http://maps.google.com/?q=" + morada;
+            preco1 = parseInt(preco)
+            poluicao1 = parseInt(poluicao)
+            nome1 = nome
+            document.getElementById('produto1').innerHTML += "<h5>"+nome+"</h5>";
+            document.getElementById('produto1').innerHTML += "<h5>Morada:</h5>" + "<a href="+linkMaps1+" class='text-decoration-none'>" + morada + "</a>";
+            document.getElementById('produto1').innerHTML += "<h5>Preço:</h5>"+"<p>"+preco+ "€" +"</p>";
+            document.getElementById('produto1').innerHTML += "<h5>Poluição:</h5>"+"<p>"+poluicao+"</p>";
 
+       }else{
+        if( $('#produto2').is(':empty') ) {
+            preco2 = parseInt(preco)
+            poluicao2 = parseInt(poluicao)
+            nome2 = nome
+            flag = true
+                var linkMaps1 = "http://maps.google.com/?q=" + morada
+                document.getElementById('produto2').innerHTML += "<h5>"+nome+"</h5>";
+                document.getElementById('produto2').innerHTML += "<h5>Morada:</h5>" + "<a href="+linkMaps1+"class='text-decoration-none'>" + morada + "</a>";
+                document.getElementById('produto2').innerHTML += "<h5>Preço:</h5>" + "<p>"+preco+"€"+"</p>";
+                document.getElementById('produto2').innerHTML += "<h5>Poluição:</h5>"+"<p>"+poluicao+"</p>";
+
+            }
+            
+
+        }
+        
+
+    }
+
+    function reset(){
+        
+        document.getElementById('produto1').innerHTML = "";
+        document.getElementById('produto1').innerHTML = "";
+        document.getElementById('produto1').innerHTML = "";
+        document.getElementById('produto1').innerHTML = "";
+
+        document.getElementById('produto2').innerHTML = "";
+        document.getElementById('produto2').innerHTML = "";
+        document.getElementById('produto2').innerHTML = "";
+        document.getElementById('produto2').innerHTML = "";
+
+        document.getElementById('comparacao').innerHTML = "";
+        document.getElementById('comparacao').innerHTML = "";
+        document.getElementById('comparacao').innerHTML = "";
+        document.getElementById('comparacao').innerHTML = "";
+
+        var preco1 = null
+        var preco2 = null
+        var poluicao1 = null
+        var poluicao2 = null
+        var nome1 = null
+        var nome2 = null
+   
+
+    }
+
+    function resultado(){
+        if( $('#comparacao').is(':empty') ) {
+        absPreco = Math.abs(preco1-preco2)
+        absPoluicao = Math.abs(poluicao1-poluicao2)
+        if(preco1>preco2){
+            strPreco = nome2 + " é mais barato " + absPreco+"€";
+        }else if(preco1<preco2){
+            strPreco = nome1 + " é mais barato " + absPreco+"€";
+
+        }else{
+            strPreco = "Ambos custam o mesmo";
+
+        }
+
+
+        if(poluicao1>poluicao2){
+            strPoluicao = nome2 + " gasta menos " + absPoluicao + " na sua produção";
+        }else if(preco1<preco2){
+            strPoluicao = nome1 + " gastam menos " + absPoluicao + " na sua produção";
+
+        }else{
+            strPoluicao = "Ambos gastam o mesmo na sua produção";
+
+        }
+        if(flag === true){
+            document.getElementById('comparacao').innerHTML += "<h5>Diferença preços:</h5>" + "<p>"+strPreco+"</p>";
+            document.getElementById('comparacao').innerHTML += "<h5>Diferença na poluição:</h5>" + "<p>"+strPoluicao+"</p>";
+
+        }
+        
+        
+
+    }
+}
+
+    
+</script>
     
 
 
@@ -285,14 +393,14 @@ if(isset($_POST["addCart"])){
                     <?php for($pagina=1;$pagina<=$numeroPaginas;$pagina++): 
                         if($pagina = $pagina){?>
                         <li class="page-item">
-                            <a href="mercado.php?p=<?=$pagina?>" class="page-link">
+                            <a href="mercadoVestuario.php?p=<?=$pagina?>" class="page-link">
                                 <?=$pagina?>
                             </a>
                         </li>
                             
                         <?php }else{?>
                             <li class="page-item">
-                            <a href="mercado.php?p=<?=$pagina?>" class="page-link">
+                            <a href="mercadoVestuario.php?p=<?=$pagina?>" class="page-link">
                                 <?=$pagina?>
                             </a>
                         </li>
