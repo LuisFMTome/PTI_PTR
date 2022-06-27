@@ -17,12 +17,10 @@ session_start();
 
     $produtosPágina = 9;
     $produtoInicial = ($pagina-1)*$produtosPágina;
-    
+    $Queryprodutos ="SELECT p.nome, p.preco, p.morada, p.pid, p.poluicao FROM [dbo].[Produto] p, [dbo].[Subtipo] subt, [dbo].[Tipo] t WHERE p.subtipo = subt.sid AND subt.tipo = t.tid AND t.tid = 5 ORDER BY nome OFFSET " . $produtoInicial . " ROWS FETCH NEXT " . $produtosPágina . " ROWS ONLY";
 
-    
-    $Queryprodutos ="SELECT p.nome, p.preco, p.morada, p.pid FROM [dbo].[Produto] p, [dbo].[Subtipo] subt, [dbo].[Tipo] t WHERE p.subtipo = subt.sid AND subt.tipo = t.tid AND t.tid = 5 ORDER BY nome OFFSET " . $produtoInicial . " ROWS FETCH NEXT " . $produtosPágina . " ROWS ONLY";
+    //$Queryprodutos = "SELECT * FROM [dbo].[Produto] p, [dbo].[Subtipo] s WHERE p.subtipo = s.sid AND s.tipo = '1' ORDER BY nome OFFSET " . $produtoInicial . " ROWS FETCH NEXT " . $produtosPágina . " ROWS ONLY";
     $QueryTotalProdutos = "SELECT * FROM [dbo].[Produto] p, [dbo].[Subtipo] s WHERE p.subtipo = s.sid AND s.tipo = 5";
-    
     $queryProdutos_execute = sqlsrv_query($conn, $Queryprodutos, array(), array( "Scrollable" => 'static' ));
     $total_produtos_execute = sqlsrv_query($conn,$QueryTotalProdutos,array(),array( "Scrollable" => 'static' ));
     $total_produtos = sqlsrv_num_rows($total_produtos_execute);
@@ -111,6 +109,7 @@ if(isset($_POST["addCart"])){
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
     <link href="style.css" rel="stylesheet"/>
     <script src="sweetalert2.all.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
 <script type="text/javascript">
@@ -221,9 +220,6 @@ if(isset($_POST["addCart"])){
 
     
 </script>
-    
-
-
     <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: green;">
     <div class="container-fluid">
         <i class="fa fa-bars" id="menu-btn" onclick="openmenu()"></i>
@@ -335,6 +331,8 @@ if(isset($_POST["addCart"])){
                 <h2>Vestuario</h2>
             </div>
             <div class="row">
+            <div class="col-8 card">
+                <div class="row">
             
             <?php
                 $counter = 0;
@@ -366,6 +364,9 @@ if(isset($_POST["addCart"])){
                                     </div>
                                 </div>
                             </form>
+                            <button onclick="produto('<?php echo $row2['nome']?>','<?php  echo $row2['morada']?>','<?php  echo $row2['preco']?>','<?php  echo $row2['poluicao']?>')" class="btn btn-secondary" title="Comparar produto">
+                                                Comparar produto
+                                            </button>
                         </div>
 
                     
@@ -380,16 +381,62 @@ if(isset($_POST["addCart"])){
                     }
                 }
                     
-                }
-                if($counter % 3 != 0){
-                    echo "</div>";
-                    
-                } 
             }
+        }
 
                 
                                
                     ?>
+            </div>
+            </div>
+            
+            <div class="col-4 p-5 t-1 card sticky-top">
+                
+                <div class="row">
+                    <div class="d-table-cell align-middle">
+                        
+                
+                            <h3><b>Comparar produtos</b></h3>
+                        
+                        </div>
+                </div>
+                <div class="row">
+                    <div class="d-table-cell align-middle">
+                        
+                
+                        <h3><b>Primeiro produto:</b></h3>
+                        
+                        <div id="produto1"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="d-table-cell align-middle">
+                        
+                
+                            <h3><b>Segundo produto:</b></h3>
+                        
+                        <div id="produto2"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="d-table-cell align-middle">
+                        <h3><b>Diferença entre ambos:<b></h3>
+                        <div id="comparacao"></div>
+                    </div>   
+                </div> 
+                <div class="row">
+                    <div class="d-table-cell align-middle">
+                    <button onclick="reset()" class="btn btn-secondary" title="Reset Dados de Comparação">
+                                                Reset
+                                            </button>
+                    </div> 
+                    <button onclick="resultado()" class="btn btn-secondary" title="Resultado Dados de Comparação">
+                                                Resultado
+                                            </button>
+                    </div>   
+                </div> 
+                 
+            </div>
                 <nav aria-label="Page navigation example">
                 <ul class="pagination">
                     <?php for($pagina=1;$pagina<=$numeroPaginas;$pagina++): 
@@ -458,8 +505,7 @@ if(isset($_POST["addCart"])){
             © 2022 Copyright
             </div>
         </footer>
-    </div>
-
+    </div>      
     <script>
         function openmenu()
             {
@@ -473,6 +519,6 @@ if(isset($_POST["addCart"])){
                 document.getElementById("menu-btn").style.display="block";
                 document.getElementById("close-btn").style.display="none";
             }
-    </script>
+    </script>  
 </body>
 </html>
