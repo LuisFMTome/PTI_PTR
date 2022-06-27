@@ -144,7 +144,7 @@ include "openconn.php";
                                 $armazem_query = "SELECT * FROM [dbo].[Armazem] WHERE codigoPostal ='$cPostalArm'";
                                 $armazem = sqlsrv_query($conn, $armazem_query);
                                 $row2 = sqlsrv_fetch_array($armazem);
-
+                                
                                 $temp = $row2['fornecedor'];
 
                                 if(!(is_null($temp))){
@@ -158,7 +158,7 @@ include "openconn.php";
                                         echo "<input type='hidden' name='idEncomenda' value=".$row['pedido'].">";
                                         echo "<td class=text-left>" . $row['origem'] . "</td>";
                                         echo "<td class=text-left>" . $row['destino'] . "</td>";
-                                        echo "<td class=text-left>" . ProductName($conn, $row['produto']) . "</td>";
+                                        echo "<td class=text-left> <a href=product.php?id=" . $row['produto'] .">" . ProductName($conn, $row['produto']) . "</td>";
                                         echo "<td class=text-left>" . $row['poluicao'] . "</td>";
                                         echo "<td class=text-left>" . $row['cancelamento']->format('Y-m-d H:i:sP') . "</td>";
                                         echo "<td class=text-left>" . $row['veiculo'] . "</td>";
