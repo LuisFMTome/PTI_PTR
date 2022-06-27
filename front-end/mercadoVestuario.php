@@ -18,7 +18,7 @@ session_start();
     $produtosPágina = 9;
     $produtoInicial = ($pagina-1)*$produtosPágina;
     
-    $Queryprodutos = "SELECT * FROM [dbo].[Produto] p, [dbo].[Subtipo] s WHERE p.subtipo = s.sid AND s.tipo = '5' ORDER BY nome OFFSET " . $produtoInicial . " ROWS FETCH NEXT " . $produtosPágina . " ROWS ONLY";
+    $Queryprodutos = "SELECT * FROM [dbo].[Produto] p, [dbo].[Subtipo] subt, [dbo].[Tipo] t WHERE p.subtipo = subt.sid AND subt.tipo = t.tid AND t.tid = 5 ORDER BY nome OFFSET " . $produtoInicial . " ROWS FETCH NEXT " . $produtosPágina . " ROWS ONLY";
     $QueryTotalProdutos = "SELECT * FROM [dbo].[Produto] p, [dbo].[Subtipo] s WHERE p.subtipo = s.sid AND s.tipo = '5'";
     $queryProdutos_execute = sqlsrv_query($conn, $Queryprodutos, array(), array( "Scrollable" => 'static' ));
     $total_produtos_execute = sqlsrv_query($conn,$QueryTotalProdutos,array(),array( "Scrollable" => 'static' ));

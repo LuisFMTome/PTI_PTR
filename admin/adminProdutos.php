@@ -132,6 +132,12 @@
                 <span>Consumidores</span>
               </a>
             </li>
+            <li>
+            <a href="adminEncomendas.php"
+              class="nav-link px-3 sidebar-link"
+            >
+            <span>Encomendas</span>
+          </li>
           </ul>
         </nav>
       </div>

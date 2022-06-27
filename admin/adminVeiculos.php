@@ -132,6 +132,12 @@
                 <span>Consumidores</span>
               </a>
             </li>
+            <li>
+            <a href="adminEncomendas.php"
+              class="nav-link px-3 sidebar-link"
+            >
+            <span>Encomendas</span>
+          </li>
           </ul>
         </nav>
       </div>
@@ -149,10 +155,18 @@
                 $queryTransportadoras = sqlsrv_query($conn, $transportadoras, array(), array( "Scrollable" => 'static' ));
                
                 while($row = sqlsrv_fetch_array( $queryTransportadoras, SQLSRV_FETCH_ASSOC)){
-                        ?>
+                  if( $row['nif'] == 0){
+                    ?>
+                    <option value="<?php echo -1;?>"><?php echo $row['nif']; ?></option>
+              <?php  }else{?>
+                <option value="<?php echo $row['nif'];?>"><?php echo $row['nif']; ?></option>
+
+             <?php }
+                    ?>
+                <?php } ?>
+                        
                     
-                    <option value="<?php ++$counter; echo $counter;?>"><?php echo $row['nif'] ; ?></option>
-                    <?php } ?>
+        
             </select>
             <button type="submit" name="submit" value="" class="mt-4">Selecione</button>
         </form>
@@ -174,14 +188,20 @@
                         <th>Matricula</th>
                         <th>Categoria</th>
                         <th>Produto</th>
+                        <th>Recursos</th>
+                        <th>Poluição</th>
                       </tr>
                     </thead>
                     <tbody>
                       <?php
                         if(!empty($_POST['transportadoras'])) {
-                            $mensagem = "";
-                            $selected = $_POST['transportadoras'];
-                            $veiculos = "SELECT matricula, categoria, produto FROM [dbo].[Veiculo] WHERE transportadora =" . $selected;
+                          $selected = $_POST['transportadoras'];
+                          if($selected == -1){
+                              $veiculos = "SELECT matricula, categoria, produto, recursos, poluicao FROM [dbo].[Veiculo] WHERE transportadora = 0";
+                              echo("<script>console.log('PHP: " . $veiculos . "');</script>");
+                          }else{
+                            $veiculos = "SELECT matricula, categoria, produto, recursos, poluicao FROM [dbo].[Veiculo] WHERE transportadora =" . $selected;
+                          }
                             $queryVeiculos = sqlsrv_query($conn, $veiculos, array(), array( "Scrollable" => 'static' ));
                             while($row = sqlsrv_fetch_array( $queryVeiculos, SQLSRV_FETCH_ASSOC)){
                               ?>
@@ -189,12 +209,11 @@
                                 <td><?php echo $row['matricula']; ?></td>
                                 <td><?php echo $row['categoria']; ?></td>
                                 <td><?php echo $row['produto']; ?></td>
+                                <td><?php echo $row['recursos']; ?></td>
+                                <td><?php echo $row['poluicao']; ?></td>
                               </tr>
                       <?php }
-                           }else{
-                            $mensagem = "Selecione uma Transportadora";
-
-                          }?>
+                           }?>
 
                     </tbody>
                     <tfoot>
@@ -202,6 +221,8 @@
                         <th>Matricula</th>
                         <th>Categoria</th>
                         <th>Produto</th>
+                        <th>Recursos</th>
+                        <th>Poluição</th>
                       </tr>
                     </tfoot>
                   </table>
@@ -211,7 +232,7 @@
           </div>
         </div>
       </div>
-      <h2 class="display-4 mt-4 ml-4"><?php echo $mensagem?></h2>
+      
     </main>
     <script src="./js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.2/dist/chart.min.js"></script>
