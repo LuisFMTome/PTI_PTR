@@ -122,6 +122,7 @@ if(isset($_POST["addCart"])){
     var poluicao2 = null
     var nome1 = null
     var nome2 = null
+    var flag = false
     function produto(nome,morada,preco,poluicao){
         console.log("ola");
         //var produto1IsEmpty = document.getElementById('produto1').innerHTML == "";
@@ -143,6 +144,7 @@ if(isset($_POST["addCart"])){
             preco2 = parseInt(preco)
             poluicao2 = parseInt(poluicao)
             nome2 = nome
+            flag = true
                 var linkMaps1 = "http://maps.google.com/?q=" + morada
                 document.getElementById('produto2').innerHTML += "<h5>"+nome+"</h5>";
                 document.getElementById('produto2').innerHTML += "<h5>Morada:</h5>" + "<a href="+linkMaps1+"class='text-decoration-none'>" + morada + "</a>";
@@ -208,9 +210,12 @@ if(isset($_POST["addCart"])){
             strPoluicao = "Ambos gastam o mesmo na sua produção";
 
         }
+        if(flag === true){
+            document.getElementById('comparacao').innerHTML += "<h5>Diferença preços:</h5>" + "<p>"+strPreco+"</p>";
+            document.getElementById('comparacao').innerHTML += "<h5>Diferença na poluição:</h5>" + "<p>"+strPoluicao+"</p>";
 
-        document.getElementById('comparacao').innerHTML += "<h5>Diferença preços:</h5>" + "<p>"+strPreco+"</p>";
-        document.getElementById('comparacao').innerHTML += "<h5>Diferença na poluição:</h5>" + "<p>"+strPoluicao+"</p>";
+        }
+        
         
 
     }
