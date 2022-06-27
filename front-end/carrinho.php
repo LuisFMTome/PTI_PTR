@@ -171,7 +171,7 @@ $row_count = sqlsrv_num_rows($query);
                             <td><?php echo $values["item_price"] . "€" ?></td>
                             <td><a href="carrinho.php?action=delete&id=<?php echo $values["item_id"]; ?>">Remover</a></td>
                         </tr>
-                        <?php echo $nomeP?>
+                        <?php echo $paypalid?>
                         <?php
 
                     }
