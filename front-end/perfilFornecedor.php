@@ -168,7 +168,8 @@
                                 echo"<th>nome</th>";
                                 echo"<th>email</th>";
                                 echo"<th>morada</th>";
-                                echo"<th>codigoPostal</th>";
+                                echo"<th>codigo Postal</th>";
+                                echo"<th>PayPal ID</th>";
                             echo "</tr>";
                             echo"</thead>";
                             while($row = sqlsrv_fetch_array($result)) {
@@ -178,10 +179,12 @@
                                     echo "<td class='text-center'>".$row['email']."</td>";
                                     echo "<td class='text-center'>".$row['morada']."</td>";
                                     echo "<td class='text-center'>".$row['codigoPostal']."</td>";
+                                    echo "<td class='text-center'>".$row['paypalid']."</td>";
                                     $nome = $row['nome'];
                                     $email = $row['email'];
                                     $morada = $row['morada'];
                                     $codigoPostal = $row['codigoPostal'];
+                                    $paypalid = $row['paypalid'];
                                 echo "</tr>";
                             }
                             echo"</table>";
@@ -212,6 +215,11 @@
                                 <label class="labels">Código Postal</label>
                                 <!--<input type="text" class="form-control" placeholder="Código Postal" name="codigoPostal_fornecedor" value="">-->
                                 <input class="form-control" placeholder="Código Postal" type="text" value="<?php echo $codigoPostal?>" required name="codigoPostal_fornecedor" pattern="[0-9]{7}" title="7 numeros do codigo postal" />
+                            </div>
+                            <div class="col-md-12">
+                                <label class="labels">PayPal ID</label>
+                                <!--<input type="text" class="form-control" placeholder="Código Postal" name="paypal_fornecedor" value="">-->
+                                <input class="form-control" placeholder="Código Postal" type="text" value="<?php echo $paypalid?>" required name="paypal_fornecedor" pattern="[0-9]{7}" title="7 numeros do codigo postal" />
                             </div>
                         </div>
                         <div class="mt-5 text-center">
