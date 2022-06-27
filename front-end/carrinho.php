@@ -266,7 +266,7 @@ $row_count = sqlsrv_num_rows($query);
                 return actions.order.create({
                     purchase_units : [{
                         amount: {
-                            value: parseInt(price.innerText)
+                            value: parseInt(price)
                         }
                     }]
                 });
