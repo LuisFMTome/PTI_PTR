@@ -154,8 +154,6 @@ $row_count = sqlsrv_num_rows($query);
                         WHERE p.pid='{$idT}' AND p.morada=a.morada AND a.fornecedor=f.fid";
                         $result = sqlsrv_query($conn, $query);
 
-                        echo $result;
-
                         if( $result === false ) {
                             die( print_r( sqlsrv_errors(), true));
                         }
@@ -164,12 +162,14 @@ $row_count = sqlsrv_num_rows($query);
                         }
 
                         $nomeP = sqlsrv_get_field( $result, 0);
+                        $paypalid = sqlsrv_get_field( $result, 0);
 
                         ?>
                         <tr>
                             <td><?php echo $nomeP?></td>
                             <!--<td><input type="number" value="1"></td>-->
                             <td><?php echo $values["item_price"] . "€" ?></td>
+                            <td><?php echo $paypalid?></td>
                             <td><a href="carrinho.php?action=delete&id=<?php echo $values["item_id"]; ?>">Remover</a></td>
                         </tr>
                         
