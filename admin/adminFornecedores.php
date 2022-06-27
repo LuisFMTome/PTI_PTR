@@ -134,6 +134,12 @@
                 <span>Consumidores</span>
               </a>
             </li>
+            <li>
+            <a href="adminEncomendas.php"
+              class="nav-link px-3 sidebar-link"
+            >
+            <span>Encomendas</span>
+          </li>
           </ul>
         </nav>
       </div>
@@ -173,7 +179,7 @@
           <div class="col-md-12 mb-3">
             <div class="card">
               <div class="card-header">
-                <span><i class="bi bi-table me-2"></i></span> Tabela de Transportes
+                <span><i class="bi bi-table me-2"></i></span> Tabela de Fornecedores
               </div>
               <div class="card-body">
                 <div class="table-responsive">

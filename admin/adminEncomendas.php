@@ -130,6 +130,7 @@
               <a href="adminConsumidores.php" class="nav-link px-3">
                 <span class="me-2"><i class="bi bi-book-fill"></i></span>
                 <span>Consumidores</span>
+               
               </a>
             </li>
             <li>
@@ -148,22 +149,22 @@
         <div class="row">
         <div class="mb-4">
         <form method="POST">
-            <select class="form-select" aria-label="Default select example" name="fornecedores">
-            <option selected>Selecionar Fornecedor:</option>
+            <select class="form-select" aria-label="Default select example" name="consumidores">
+            <option selected>Selecionar Consumidor:</option>
             <?php
-                $fornecedores = "SELECT * FROM [dbo].[Fornecedor]";
-                $queryFornecedores = sqlsrv_query($conn, $fornecedores, array(), array( "Scrollable" => 'static' ));
+                $consumidores = "SELECT * FROM [dbo].[Consumidor]";
+                $queryConsumidores = sqlsrv_query($conn, $consumidores, array(), array( "Scrollable" => 'static' ));
                
-                while($row = sqlsrv_fetch_array( $queryFornecedores, SQLSRV_FETCH_ASSOC)){
-                  if( $row['fid'] == 0){
-                    ?>
-                    <option value="<?php echo -1;?>"><?php echo $row['fid']; ?></option>
-              <?php  }else{?>
-                <option value="<?php echo $row['fid'];?>"><?php echo $row['fid']; ?></option>
+                while($row = sqlsrv_fetch_array( $queryConsumidores, SQLSRV_FETCH_ASSOC)){
+                    if( $row['cid'] == 0){
+                        ?>
+                        <option value="<?php echo -1;?>"><?php echo $row['cid']; ?></option>
+                  <?php  }else{?>
+                    <option value="<?php echo $row['cid'];?>"><?php echo $row['cid']; ?></option>
 
-             <?php }
-                    ?>
-                <?php } ?>
+                 <?php }
+                        ?>
+                    <?php } ?>
             </select>
             <button type="submit" name="submit" value="" class="mt-4">Selecione</button>
         </form>
@@ -171,7 +172,7 @@
           <div class="col-md-12 mb-3">
             <div class="card">
               <div class="card-header">
-                <span><i class="bi bi-table me-2"></i></span> Tabela de Armazéns
+                <span><i class="bi bi-table me-2"></i></span> Tabela de Encomendas
               </div>
               <div class="card-body">
                 <div class="table-responsive">
@@ -182,34 +183,36 @@
                   >
                     <thead>
                       <tr>
-                        <th>Aid</th>
-                        <th>Nome</th>
-                        <th>Morada</th>
-                        <th>Código Postal</th>
-                        <th>Tipo</th>
+                        <th>Id pedido</th>
+                        <th>Origem</th>
+                        <th>Destino</th>
+                        <th>Id produto</th>
+                        <th>Veiculo</th>
+                        <th>Poluição</th>
                       </tr>
                     </thead>
                     <tbody>
                     <?php
-                        if(!empty($_POST['fornecedores'])) {
-                          $selected = $_POST['fornecedores'];
-                          if($selected == -1){
-                              $veiculos = "SELECT aid, nome, morada, codigoPostal, tipo FROM [dbo].[Armazem] WHERE fornecedor = 0";
-                              echo("<script>console.log('PHP: " . $veiculos . "');</script>");
-                          }else{
-                            $veiculos = "SELECT aid, nome, morada, codigoPostal, tipo FROM [dbo].[Armazem] WHERE fornecedor =" . $selected;
-                          }
-                           
-              
+                    
+                        if(!empty($_POST['consumidores'])) {
+                            $selected = $_POST['consumidores'];
+                            if($selected == -1){
+                                $veiculos = "SELECT pedido, origem, destino, produto, veiculo, poluicao FROM [dbo].[Encomenda] WHERE consumidor = 0";
+                                echo("<script>console.log('PHP: " . $veiculos . "');</script>");
+                            }else{
+                                $veiculos = "SELECT pedido, origem, destino, produto, veiculo, poluicao FROM [dbo].[Encomenda] WHERE consumidor =" . $selected;
+                            }
+                            
                             $queryVeiculos = sqlsrv_query($conn, $veiculos, array(), array( "Scrollable" => 'static' ));
                             while($row = sqlsrv_fetch_array( $queryVeiculos, SQLSRV_FETCH_ASSOC)){
                               ?>
                               <tr>
-                                <td><?php echo $row['aid']; ?></td>
-                                <td><?php echo $row['nome']; ?></td>
-                                <td><?php echo $row['morada']; ?></td>
-                                <td><?php echo $row['codigoPostal']; ?></td>
-                                <td><?php echo $row['tipo']; ?></td>
+                                <td><?php echo $row['pedido']; ?></td>
+                                <td><?php echo $row['origem']; ?></td>
+                                <td><?php echo $row['destino']; ?></td>
+                                <td><?php echo $row['produto']; ?></td>
+                                <td><?php echo $row['veiculo']; ?></td>
+                                <td><?php echo $row['poluicao']; ?></td>
                               </tr>
                       <?php }
                            }?>
@@ -217,11 +220,12 @@
                     </tbody>
                     <tfoot>
                       <tr>
-                        <th>Aid</th>
-                        <th>Nome</th>
-                        <th>Morada</th>
-                        <th>Código Postal</th>
-                        <th>Tipo</th>
+                        <th>Id pedido</th>
+                        <th>Origem</th>
+                        <th>Destino</th>
+                        <th>Id produto</th>
+                        <th>Veiculo</th>
+                        <th>Poluição</th>
                       </tr>
                     </tfoot>
                   </table>
@@ -232,7 +236,6 @@
           </div>
         </div>
       </div>
-      
     </main>
     <script src="./js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.2/dist/chart.min.js"></script>
