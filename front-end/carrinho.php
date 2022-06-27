@@ -254,8 +254,9 @@ $row_count = sqlsrv_num_rows($query);
 <script src=<?php echo "https://www.paypal.com/sdk/js?client-id=".$paypalid."&disable-funding=credit,card&currency=EUR"?>></script>
 <script>
         var price = document.getElementById("total");
-        price = price.removeChild(price.lastChild);
-        console.log(price.innerText);
+        price = price.innerText;
+        price = price.slice(0, -1);
+        console.log(price);
         paypal.Buttons({
             style : {
                 color: 'blue',
