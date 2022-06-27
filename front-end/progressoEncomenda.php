@@ -28,7 +28,6 @@ function codPostalProduto($conn, $idProduto) {
     $rowP = sqlsrv_fetch_array($produto);
     $codPos_p = $rowP['codigoPostal'];
     return $codPos_p;
-
 }
 function poluicaoVeiculo($conn, $veiculo) {
     $veiculo_query = "SELECT * FROM [dbo].[veiculo] WHERE matricula = '$veiculo'";
@@ -38,16 +37,16 @@ function poluicaoVeiculo($conn, $veiculo) {
     return $policao_V;
 }
 
-function VerificarSeChegou($conn, $dataInicio, $data_atual, $duracao) {
-    $data_entrega = date_add($dataInicio, $duracao);
-    if (date_diff($data_atual, $dataInicio) > date_diff($data_entrega, $dataInicio)){
+function VerificarSeChegou($dataInicio, $data_atual, $duracao) {
+    $data_entrega = date_add($dataInicio, date_interval_create_from_date_string("$duracao"));
+    if (intval(date_diff(date_create($data_atual), $dataInicio)->format("%R%a days")) > intval(date_diff($data_entrega, $dataInicio)->format("%R%a days"))){
         return true;
     }
     return false;
 }
 
 function updateEncomenda($conn, $encomenda, $poluicao){
-    $entrge_e = "UPDATE [dbo].[Encomenda] SET estado = 2, poluicao = '$poluicao' WHERE pedido = '{$encomenda}'";
+    $entrge_e = "UPDATE [dbo].[Encomenda] SET estado = 2, poluicao = '$poluicao', veiculo = null WHERE pedido = '{$encomenda}'";
     $res = sqlsrv_query($conn, $entrge_e);
     if($res){
         echo "encomenda entregue com sucesso";
@@ -78,13 +77,24 @@ function updateProduto($conn, $produto, $consumidor){
     }
 }
 
+function updateVeiculo($conn, $matricula){
+    $entrege_V = "UPDATE [dbo].[Veiculo] SET produto = null, WHERE matriculo = '$matricula'";
+    $res = sqlsrv_query($conn, $entrege_V);
+    if($res){
+        echo "veiculo esvaiado com sucesso";
+        
+    } else {
+        echo "Erro: nao foi possivel esvaziar o veiculo" . $query . "<br>" . sqlsrv_errors($conn);
+    }
+}
+
 function getDistance($addressFrom, $addressTo, $unit = ''){
     // Google API key
     $apiKey = 'AIzaSyAdJMAIwEnIJqbqAObKsygGg3XV1B9MuEQ';
     
     // Change address format
-    $formattedAddrFrom    = str_replace(' ', '+', $addressFrom);
-    $formattedAddrTo     = str_replace(' ', '+', $addressTo);
+    $formattedAddrFrom = str_replace(' ', '+', $addressFrom);
+    $formattedAddrTo = str_replace(' ', '+', $addressTo);
     
     // Geocoding API request with start address
     $geocodeFrom = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?address='.$formattedAddrFrom.'&sensor=false&key='.$apiKey);
@@ -99,19 +109,19 @@ function getDistance($addressFrom, $addressTo, $unit = ''){
     if(!empty($outputTo->error_message)){
         return $outputTo->error_message;
     }
-    
+    #$time = $outputTo['rows'][0]['elements'][0]['duration']['value'];
     // Get latitude and longitude from the geodata
-    $latitudeFrom    = $outputFrom->results[0]->geometry->location->lat;
-    $longitudeFrom    = $outputFrom->results[0]->geometry->location->lng;
-    $latitudeTo        = $outputTo->results[0]->geometry->location->lat;
-    $longitudeTo    = $outputTo->results[0]->geometry->location->lng;
+    $latitudeFrom = $outputFrom->results[0]->geometry->location->lat;
+    $longitudeFrom = $outputFrom->results[0]->geometry->location->lng;
+    $latitudeTo = $outputTo->results[0]->geometry->location->lat;
+    $longitudeTo = $outputTo->results[0]->geometry->location->lng;
     
     // Calculate distance between latitude and longitude
-    $theta    = $longitudeFrom - $longitudeTo;
-    $dist    = sin(deg2rad($latitudeFrom)) * sin(deg2rad($latitudeTo)) +  cos(deg2rad($latitudeFrom)) * cos(deg2rad($latitudeTo)) * cos(deg2rad($theta));
-    $dist    = acos($dist);
-    $dist    = rad2deg($dist);
-    $miles    = $dist * 60 * 1.1515;
+    $theta = $longitudeFrom - $longitudeTo;
+    $dist = sin(deg2rad($latitudeFrom)) * sin(deg2rad($latitudeTo)) +  cos(deg2rad($latitudeFrom)) * cos(deg2rad($latitudeTo)) * cos(deg2rad($theta));
+    $dist = acos($dist);
+    $dist = rad2deg($dist);
+    $miles = $dist * 60 * 1.1515;
     
     // Convert unit and return distance
     $unit = strtoupper($unit);
@@ -130,8 +140,10 @@ function getDistance($addressFrom, $addressTo, $unit = ''){
     // Get distance in km
     #$distance = getDistance($addressFrom, $addressTo, "K");
 
-function calcDuracao($conn, $distancia){
-
+function calcDuracao($distancia){
+    $intervalo = intval($distancia * 8/60);
+    return "{$intervalo} hours";
+    #date_add($data, date_interval_create_from_date_string("40 hours"));
 }
 
 function formataCodPostal($cod_postal){
@@ -139,6 +151,16 @@ function formataCodPostal($cod_postal){
     $arraycodPostForm = array($codPostalA[0], $codPostalA[1], $codPostalA[2], $codPostalA[3], "-", $codPostalA[4], $codPostalA[5], $codPostalA[6]);
     echo implode($arraycodPostForm);
     return implode($arraycodPostForm);
+}
+
+function createNotificacao($conn, $consumidor, $data , $mensagem){
+    $id = random_int(0, 9999);
+    $to_insert = "INSERT INTO [dbo].[Notificacao] ([nid], [consumidor], [datatime], [mensagem]) VALUES ('$id', '$consumidor', '$data', '$mensagem')";
+    $params = array(1, "inserir notificacao");
+    $var = sqlsrv_query( $conn, $to_insert, $params);
+        if( $var === false ) {
+            die( print_r( sqlsrv_errors(), true));
+    }
 }
 
     $encomendas_query = "SELECT * FROM [dbo].[Encomenda] WHERE estado = 1";
@@ -156,22 +178,28 @@ function formataCodPostal($cod_postal){
             $codPostal_T = codPostalTransportadora($conn, $veiculo);
             $codPostal_P = codPostalProduto($conn, $produto);
             $codPostal_C = $row['destino'];
-            $distancia1 = getDistance($conn, $codPostal_T, $codPostal_P);
-            $distancia2 = getDistance($conn, $codPostal_P, $codPostal_C);
+            //echo getDistance($codPostal_T, $codPostal_P, "k");
+            $distancia1 = intval(getDistance($codPostal_T, $codPostal_P, "k"));
+            $distancia2 = intval(getDistance($codPostal_P, $codPostal_C, "k"));
             $distancia_total = $distancia1 + $distancia2;
-            $duracaoEntrega = calcDuracao($conn, $distancia_total);
+            $duracao_armazem = calcDuracao($distancia1);
+            $duracaoEntrega = calcDuracao($distancia_total);
+            $intDurac_arm = intval($duracao_armazem);
+            $intDurac_entr = intval($duracaoEntrega);
             $poluicaoKm = poluicaoVeiculo($conn, $veiculo);
-            $poluicaoTotal = int($poluicaoKm * $distancia_total);
+            $poluicaoTotal = intval($poluicaoKm * $distancia_total);
             $poluicao = $row['poluicao'] + $poluicaoTotal;
-            if(VerificarSeChegou($conn, $dataInicio_entrega, $dataAtual, $duracaoEntrega)){
-                updateProduto($conn, $produto, $consumidor);
-                updateEncomenda($conn, $encomenda, $poluicaoTotal);
+            if(VerificarSeChegou($dataInicio_entrega, $dataAtual, $duracao_armazem)){
+                createNotificacao($conn, $consumidor, date_format(date_add($dataInicio_entrega, date_interval_create_from_date_string("$duracao_armazem")),"Y/m/d H:i:s")  , "O transporte chegou ao armazem e já tem o seu produto");
             }
-            
-            
+            if(VerificarSeChegou($dataInicio_entrega, $dataAtual, $duracaoEntrega)){
+                updateProduto($conn, $produto, $consumidor);
+                updateVeiculo($conn, $matricula);
+                updateEncomenda($conn, $encomenda, $poluicaoTotal);
+                createNotificacao($conn, $consumidor, date_add($dataInicio_entrega, $duracaoEntrega) , "A sua encomenda Chegou!!!");
+            }
         }
     }
-
 sqlsrv_close($conn);
 
 ?>
