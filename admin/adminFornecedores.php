@@ -84,7 +84,7 @@
               </div>
             </li>
             <li>
-              <a href="indexAdmin.html" class="nav-link px-3 active">
+              <a href="indexAdmin.php" class="nav-link px-3 active">
                 <span class="me-2"><i class="bi bi-speedometer2"></i></span>
                 <span>Dashboard</span>
               </a>
@@ -146,34 +146,7 @@
     </div>
     <!-- offcanvas -->
     <main class="mt-5 pt-3">
-      <div class="container-fluid mt-lg-1">
-        <div class="row">
-          <div class="col-md-3 mb-3">
-            <div class="card bg-success text-white h-100">
-              <div class="card-body py-5">Número Consumidores</div>
-            
-            </div>
-          </div>
-          <div class="col-md-3 mb-3">
-            <div class="card bg-success text-white h-100">
-              <div class="card-body py-5">Número de Fornecedores</div>
-      
-            </div>
-          </div>
-          <div class="col-md-3 mb-3">
-            <div class="card bg-success text-white h-100">
-              <div class="card-body py-5">Número de Transportes</div>
-          
-              </div>
-            </div>
-            <div class="col-md-3 mb-3">
-              <div class="card bg-success text-white h-100">
-                <div class="card-body py-5">Número de Produtos</div>
-              
-              </div>
-            </div>
-          </div>
-        </div>
+
         
         <div class="row">
           <div class="col-md-12 mb-3">

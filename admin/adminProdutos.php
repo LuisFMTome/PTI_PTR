@@ -82,7 +82,7 @@
               </div>
             </li>
             <li>
-              <a href="indexAdmin.html" class="nav-link px-3 active">
+              <a href="indexAdmin.php" class="nav-link px-3 active">
                 <span class="me-2"><i class="bi bi-speedometer2"></i></span>
                 <span>Dashboard</span>
               </a>
