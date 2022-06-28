@@ -59,6 +59,9 @@ include "openconn.php";
                             ?>
                         </ul>
                         </li>
+                        <li class="nav-item">
+                        <a class="nav-link active" href=faq.php><i class="bi bi-question-circle"></i></a> 
+                        </li>    
         </ul>
         </div>
         <div class="d-flex collapse">

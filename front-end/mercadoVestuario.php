@@ -258,6 +258,9 @@ if(isset($_POST["addCart"])){
                             ?>
                         </ul>
                         </li>
+                        <li class="nav-item">
+                        <a class="nav-link active" href=faq.php><i class="bi bi-question-circle"></i></a> 
+                        </li>    
         </ul>
         </div>
         <div class="d-flex collapse">
@@ -328,7 +331,7 @@ if(isset($_POST["addCart"])){
         <div class="container">
             <div class="title-box">
                 
-                <h2>Vestuario</h2>
+                <h2>Chapéus</h2>
             </div>
             <div class="row">
             <div class="col-8 card">
