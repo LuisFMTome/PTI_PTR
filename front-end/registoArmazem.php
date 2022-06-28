@@ -259,33 +259,34 @@ $row_count = sqlsrv_num_rows($query);
         </footer>
     </div>
 
-        <?php
+    <?php
+    //echo "<p>teste</p>";
+    if (isset($_SESSION['statusCode']) != "") {
 
-        //echo "<p>teste</p>";
-        if (isset($_SESSION['status']) != "") {
+        //echo $_SESSION['statusCode'];
+    ?>
 
-            //echo "<p>teste2</p>";
-        ?>
+        <script>
 
-            <script>
-                    
-                    document.addEventListener("DOMContentLoaded", function(event) {
-                        
-                        Swal.fire({
-                        title: "Apagar Armazem",
-                        text: "<?php echo $_SESSION['status']; ?>",
-                        icon: "warning", //warning
-                    });
-                    
-                    });
-                    
-                    
+                document.addEventListener("DOMContentLoaded", function(event) {
 
-            </script>
+                    Swal.fire({
+                    title: "<?php echo $_SESSION['status']; ?>",
+                    text: "clique ok",
+                    icon: "<?php echo $_SESSION['statusCode']; ?>", //warning
+                });
 
-        <?php
-            unset($_SESSION['status']);}
-        ?>
+                });
+                
+                
+
+        </script>
+
+    <?php
+        unset($_SESSION['status']);
+        unset($_SESSION['statusCode']);
+    }
+?>
 
     
 
