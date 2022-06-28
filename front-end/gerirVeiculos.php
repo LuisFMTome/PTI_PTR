@@ -14,6 +14,7 @@ $conn = sqlsrv_connect($serverName, $connectionOptions);
 if($conn === false) {
     die(print_r(sqlsrv_errors(), true));
 }
+#include "progressoEncomenda.php";
 ?>
 
 <!DOCTYPE html>
@@ -142,7 +143,7 @@ if($conn === false) {
                                     $estado = encomendaFase($conn, $encomenda);
                                     echo "<td class=text-center>" . $row['matricula'] . "</td>";
                                     echo "<td class=text-center>" . $row['categoria'] . "</td>";
-                                    echo "<td class=text-left>" . ProductName($conn, $row['produto']) . "</td>";
+                                    echo "<td class=text-left> <a href=product.php?id=" . $row['produto'] .">" . ProductName($conn, $row['produto']) . "</td>";
                                     echo "<input type='hidden' name='idEncomenda' value=".$encomenda.">";
                                     echo "<td class=text-left>" . EstadoName($conn, $estado) . "</td>";
                                     if($estado == 0){

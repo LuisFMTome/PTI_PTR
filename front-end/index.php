@@ -55,6 +55,8 @@ session_start();
                                 echo "<li><a class=dropdown-item href=histEncomendasFornecedor.php>Encomendas</a></li>";
                             }elseif($_SESSION["tipo"] == "Transportadora"){
                                 echo "<li><a class=dropdown-item href=perfilTransportadora.php>Perfil</a></li>";
+                                echo"<li><a class=dropdown-item href=registoTransportes.php>Registar veiculos</a></li>";
+                                echo "<li><a class=dropdown-item href=gerirVeiculos.php>Ver encomendas</a></li>";
                             }
                             ?>
                         </ul>
@@ -73,7 +75,7 @@ session_start();
                     
                 <?php } ?>
             </ul>               
-            </div>
+        </div>
     </div>
     </nav>
 

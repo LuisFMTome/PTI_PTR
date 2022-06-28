@@ -78,7 +78,7 @@ session_start();
 
     <div class="account-page">
         <div class="container">
-            <div class="col-2">
+            <div>
                 <div class="form-container">
                     <h2>Login</h2>
                     <form id="LoginForm" method="post" action="login.php">

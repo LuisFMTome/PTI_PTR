@@ -273,7 +273,7 @@ if(isset($_POST["addCart"])){
     </div>
     </nav>
     <section class="header">
-        <div class="side-menu">
+        <div class="side-menu" id="side-menu">
         <ul>
             <a href="mercadoVestuario.php"><li>Vestuario<i class="fa fa-angle-right"></i></a>
                     <ul>
