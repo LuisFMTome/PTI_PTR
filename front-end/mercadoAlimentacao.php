@@ -199,9 +199,9 @@ if(isset($_POST["addCart"])){
 
 
         if(poluicao1>poluicao2){
-            strPoluicao = nome2 + " gasta menos " + absPoluicao + " na sua produção";
+            strPoluicao = nome2 + " gasta menos " + absPoluicao + "kwH na sua produção";
         }else if(preco1<preco2){
-            strPoluicao = nome1 + " gastam menos " + absPoluicao + " na sua produção";
+            strPoluicao = nome1 + " gastam menos " + absPoluicao + "kwH na sua produção";
 
         }else{
             strPoluicao = "Ambos gastam o mesmo na sua produção";
@@ -258,6 +258,9 @@ if(isset($_POST["addCart"])){
                             ?>
                         </ul>
                         </li>
+                        <li class="nav-item">
+                        <a class="nav-link active" href=faq.php><i class="bi bi-question-circle"></i></a> 
+                        </li>    
         </ul>
         </div>
         <div class="d-flex collapse">
