@@ -78,7 +78,7 @@ session_start();
 
     <div class="account-page">
         <div class="container">
-            <div class="col-2">
+            <div>
                 <div class="form-container">
                     <h2>Registar</h2>
                     <form id="RegisterForm" action="registar.php" method="post">
