@@ -43,6 +43,18 @@ if(isset($_POST["addCart"])){
     }
     $preco = sqlsrv_get_field( $result, 5);
 
+    $query = "SELECT * FROM [dbo].[Produto] WHERE pid='{$idTemp}'";
+    $result = sqlsrv_query($conn, $query);
+    if( $result === false ) {
+        die( print_r( sqlsrv_errors(), true));
+    }
+    if( sqlsrv_fetch( $result ) === false) {
+        die( print_r( sqlsrv_errors(), true));
+    }
+    $poluicao = sqlsrv_get_field( $result, 6);
+    //echo ($poluicao);
+    //echo ($preco);
+
     if(isset($_SESSION["cart"])){
 
         $item_array_id = array_column($_SESSION["cart"], "item_id");        
@@ -51,7 +63,8 @@ if(isset($_POST["addCart"])){
             $count = count($_SESSION["cart"]);
             $item_array = array(
                 'item_id' => $_GET["id"],
-                'item_price' => $preco
+                'item_price' => $preco,
+                'item_polution' => $poluicao
                 //'item_price' => 12
             );
             $_SESSION["cart"][$count] = $item_array;
@@ -84,7 +97,8 @@ if(isset($_POST["addCart"])){
 
         $item_array = array(
             'item_id' => $_GET["id"],
-            'item_price' => $preco
+            'item_price' => $preco,
+            'item_polution' => $poluicao
         );
         $_SESSION["cart"][0] = $item_array;
 

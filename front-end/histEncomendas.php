@@ -143,11 +143,15 @@ include "openconn.php";
                                 echo "<td class=text-left>" . $row['cancelamento']->format('Y-m-d H:i:sP') . "</td>";
                                 echo "<td class=text-left>" . EstadoName($conn, $row['estado']) . "</td>";
 
-                                if($row['estado'] != 3){
+                                if($row['estado'] == 0){
+                                    $data =  date("Y-m-d H:i:s");
+
+                                    if($row['cancelamento'] > $data){
                                 ?>
 
                                 <td><button type="submit" name="delete_encomenda" class=btn-sm>Cancelar</button></td>
                                 <?php
+                                    }
                                 }else{
                                     echo "<td></td>";
                                 }

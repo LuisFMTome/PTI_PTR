@@ -139,6 +139,7 @@ $row_count = sqlsrv_num_rows($query);
                 <tr>
                     <th>Produto</th>
                     <th>Preço</th>
+                    <th>Poluição</th>
                     <th>Ação</th>
                 </tr>
 
@@ -174,6 +175,7 @@ $row_count = sqlsrv_num_rows($query);
                         <tr>
                             <td><?php echo $nomeP?></td>
                             <td><?php echo $values["item_price"] . "€" ?></td>
+                            <td><?php echo $values["item_polution"] ?></td>
                             <td><a href="carrinho.php?action=delete&id=<?php echo $values["item_id"]; ?>">Remover</a></td>
                         </tr>
 
