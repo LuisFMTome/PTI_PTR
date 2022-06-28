@@ -17,9 +17,9 @@ session_start();
 
     $produtosPágina = 9;
     $produtoInicial = ($pagina-1)*$produtosPágina;
-    $Queryprodutos ="SELECT p.nome, p.preco, p.morada, p.pid FROM [dbo].[Produto] p, [dbo].[Subtipo] subt, [dbo].[Tipo] t WHERE p.subtipo = subt.sid AND subt.tipo = t.tid AND t.tid = 2 ORDER BY nome OFFSET " . $produtoInicial . " ROWS FETCH NEXT " . $produtosPágina . " ROWS ONLY";
+    $Queryprodutos ="SELECT p.nome, p.preco, p.morada, p.pid, p.poluicao FROM [dbo].[Produto] p, [dbo].[Subtipo] subt, [dbo].[Tipo] t WHERE p.subtipo = subt.sid AND subt.tipo = t.tid AND t.tid = 2 ORDER BY nome OFFSET " . $produtoInicial . " ROWS FETCH NEXT " . $produtosPágina . " ROWS ONLY";
 
-    //$Queryprodutos = "SELECT * FROM [dbo].[Produto] p, [dbo].[Subtipo] s WHERE p.subtipo = s.sid AND s.tipo = '2' ORDER BY nome OFFSET " . $produtoInicial . " ROWS FETCH NEXT " . $produtosPágina . " ROWS ONLY";
+    //$Queryprodutos = "SELECT * FROM [dbo].[Produto] p, [dbo].[Subtipo] s WHERE p.subtipo = s.sid AND s.tipo = '1' ORDER BY nome OFFSET " . $produtoInicial . " ROWS FETCH NEXT " . $produtosPágina . " ROWS ONLY";
     $QueryTotalProdutos = "SELECT * FROM [dbo].[Produto] p, [dbo].[Subtipo] s WHERE p.subtipo = s.sid AND s.tipo = 2";
     $queryProdutos_execute = sqlsrv_query($conn, $Queryprodutos, array(), array( "Scrollable" => 'static' ));
     $total_produtos_execute = sqlsrv_query($conn,$QueryTotalProdutos,array(),array( "Scrollable" => 'static' ));
@@ -109,11 +109,117 @@ if(isset($_POST["addCart"])){
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
     <link href="style.css" rel="stylesheet"/>
     <script src="sweetalert2.all.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
+<script type="text/javascript">
+    var preco1 = null
+    var preco2 = null
+    var poluicao1 = null
+    var poluicao2 = null
+    var nome1 = null
+    var nome2 = null
+    var flag = false
+    function produto(nome,morada,preco,poluicao){
+        console.log("ola");
+        //var produto1IsEmpty = document.getElementById('produto1').innerHTML == "";
+        //var produto2IsEmpty = document.getElementById('produto2').innerHTML == "";
+        //console.log(produto1IsEmpty)
+        if( $('#produto1').is(':empty') ) {
+            
+            var linkMaps1 = "http://maps.google.com/?q=" + morada;
+            preco1 = parseInt(preco)
+            poluicao1 = parseInt(poluicao)
+            nome1 = nome
+            document.getElementById('produto1').innerHTML += "<h5>"+nome+"</h5>";
+            document.getElementById('produto1').innerHTML += "<h5>Morada:</h5>" + "<a href="+linkMaps1+" class='text-decoration-none'>" + morada + "</a>";
+            document.getElementById('produto1').innerHTML += "<h5>Preço:</h5>"+"<p>"+preco+ "€" +"</p>";
+            document.getElementById('produto1').innerHTML += "<h5>Poluição:</h5>"+"<p>"+poluicao+"</p>";
+
+       }else{
+        if( $('#produto2').is(':empty') ) {
+            preco2 = parseInt(preco)
+            poluicao2 = parseInt(poluicao)
+            nome2 = nome
+            flag = true
+                var linkMaps1 = "http://maps.google.com/?q=" + morada
+                document.getElementById('produto2').innerHTML += "<h5>"+nome+"</h5>";
+                document.getElementById('produto2').innerHTML += "<h5>Morada:</h5>" + "<a href="+linkMaps1+"class='text-decoration-none'>" + morada + "</a>";
+                document.getElementById('produto2').innerHTML += "<h5>Preço:</h5>" + "<p>"+preco+"€"+"</p>";
+                document.getElementById('produto2').innerHTML += "<h5>Poluição:</h5>"+"<p>"+poluicao+"</p>";
+
+            }
+            
+
+        }
+        
+
+    }
+
+    function reset(){
+        
+        document.getElementById('produto1').innerHTML = "";
+        document.getElementById('produto1').innerHTML = "";
+        document.getElementById('produto1').innerHTML = "";
+        document.getElementById('produto1').innerHTML = "";
+
+        document.getElementById('produto2').innerHTML = "";
+        document.getElementById('produto2').innerHTML = "";
+        document.getElementById('produto2').innerHTML = "";
+        document.getElementById('produto2').innerHTML = "";
+
+        document.getElementById('comparacao').innerHTML = "";
+        document.getElementById('comparacao').innerHTML = "";
+        document.getElementById('comparacao').innerHTML = "";
+        document.getElementById('comparacao').innerHTML = "";
+
+        var preco1 = null
+        var preco2 = null
+        var poluicao1 = null
+        var poluicao2 = null
+        var nome1 = null
+        var nome2 = null
+   
+
+    }
+
+    function resultado(){
+        if( $('#comparacao').is(':empty') ) {
+        absPreco = Math.abs(preco1-preco2)
+        absPoluicao = Math.abs(poluicao1-poluicao2)
+        if(preco1>preco2){
+            strPreco = nome2 + " é mais barato " + absPreco+"€";
+        }else if(preco1<preco2){
+            strPreco = nome1 + " é mais barato " + absPreco+"€";
+
+        }else{
+            strPreco = "Ambos custam o mesmo";
+
+        }
+
+
+        if(poluicao1>poluicao2){
+            strPoluicao = nome2 + " gasta menos " + absPoluicao + " na sua produção";
+        }else if(preco1<preco2){
+            strPoluicao = nome1 + " gastam menos " + absPoluicao + " na sua produção";
+
+        }else{
+            strPoluicao = "Ambos gastam o mesmo na sua produção";
+
+        }
+        if(flag === true){
+            document.getElementById('comparacao').innerHTML += "<h5>Diferença preços:</h5>" + "<p>"+strPreco+"</p>";
+            document.getElementById('comparacao').innerHTML += "<h5>Diferença na poluição:</h5>" + "<p>"+strPoluicao+"</p>";
+
+        }
+        
+        
+
+    }
+}
 
     
-
+</script>
     <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: green;">
     <div class="container-fluid">
         <i class="fa fa-bars" id="menu-btn" onclick="openmenu()"></i>
@@ -140,7 +246,7 @@ if(isset($_POST["addCart"])){
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="background-color: green;">
 
-                           <?php
+                            <?php
                             if($_SESSION["tipo"] == "Consumidor"){
                                 echo "<li><a class=dropdown-item href=perfilUtilizador.php>Perfil</a></li>";
                                 echo "<li><a class=dropdown-item href=histEncomendas.php>Encomendas</a></li>";
@@ -152,14 +258,17 @@ if(isset($_POST["addCart"])){
                             ?>
                         </ul>
                         </li>
-                        <li class="nav-item">
-                        <a class="nav-link active" href="logout.php">Logout</a>
-                        </li>
-                        
+        </ul>
+        </div>
+        <div class="d-flex collapse">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="font-weight: bold;">
+                <li class="nav-item">
+                    <a class="nav-link active" href="logout.php">Logout</a>
+                </li>
                 <?php }else{ ?>
                     <li class="nav-item"><a class="nav-link active" href="conta.php">Login</i></a></li>
                 <?php } ?>
-        </ul>
+            </ul>               
         </div>
     </div>
     </nav>
@@ -222,6 +331,8 @@ if(isset($_POST["addCart"])){
                 <h2>Casa</h2>
             </div>
             <div class="row">
+            <div class="col-8 card">
+                <div class="row">
             
             <?php
                 $counter = 0;
@@ -253,6 +364,9 @@ if(isset($_POST["addCart"])){
                                     </div>
                                 </div>
                             </form>
+                            <button onclick="produto('<?php echo $row2['nome']?>','<?php  echo $row2['morada']?>','<?php  echo $row2['preco']?>','<?php  echo $row2['poluicao']?>')" class="btn btn-secondary" title="Comparar produto">
+                                                Comparar produto
+                                            </button>
                         </div>
 
                     
@@ -267,29 +381,75 @@ if(isset($_POST["addCart"])){
                     }
                 }
                     
-                }
-                if($counter % 3 != 0){
-                    echo "</div>";
-                    
-                } 
             }
+        }
 
                 
                                
                     ?>
+            </div>
+            </div>
+            
+            <div class="col-4 p-5 t-1 card sticky-top">
+                
+                <div class="row">
+                    <div class="d-table-cell align-middle">
+                        
+                
+                            <h3><b>Comparar produtos</b></h3>
+                        
+                        </div>
+                </div>
+                <div class="row">
+                    <div class="d-table-cell align-middle">
+                        
+                
+                        <h3><b>Primeiro produto:</b></h3>
+                        
+                        <div id="produto1"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="d-table-cell align-middle">
+                        
+                
+                            <h3><b>Segundo produto:</b></h3>
+                        
+                        <div id="produto2"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="d-table-cell align-middle">
+                        <h3><b>Diferença entre ambos:<b></h3>
+                        <div id="comparacao"></div>
+                    </div>   
+                </div> 
+                <div class="row">
+                    <div class="d-table-cell align-middle">
+                    <button onclick="reset()" class="btn btn-secondary" title="Reset Dados de Comparação">
+                                                Reset
+                                            </button>
+                    </div> 
+                    <button onclick="resultado()" class="btn btn-secondary" title="Resultado Dados de Comparação">
+                                                Resultado
+                                            </button>
+                    </div>   
+                </div> 
+                 
+            </div>
                 <nav aria-label="Page navigation example">
                 <ul class="pagination">
                     <?php for($pagina=1;$pagina<=$numeroPaginas;$pagina++): 
                         if($pagina = $pagina){?>
                         <li class="page-item">
-                            <a href="mercado.php?p=<?=$pagina?>" class="page-link">
+                            <a href="mercadoCasa.php?p=<?=$pagina?>" class="page-link">
                                 <?=$pagina?>
                             </a>
                         </li>
                             
                         <?php }else{?>
                             <li class="page-item">
-                            <a href="mercado.php?p=<?=$pagina?>" class="page-link">
+                            <a href="mercadoCasa.php?p=<?=$pagina?>" class="page-link">
                                 <?=$pagina?>
                             </a>
                         </li>
@@ -345,7 +505,7 @@ if(isset($_POST["addCart"])){
             © 2022 Copyright
             </div>
         </footer>
-    </div>
+    </div>      
     <script>
         function openmenu()
             {
