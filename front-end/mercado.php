@@ -137,7 +137,7 @@ if(isset($_POST["addCart"])){
             document.getElementById('produto1').innerHTML += "<h5>"+nome+"</h5>";
             document.getElementById('produto1').innerHTML += "<h5>Morada:</h5>" + "<a href="+linkMaps1+" class='text-decoration-none'>" + morada + "</a>";
             document.getElementById('produto1').innerHTML += "<h5>Preço:</h5>"+"<p>"+preco+ "€" +"</p>";
-            document.getElementById('produto1').innerHTML += "<h5>Poluição:</h5>"+"<p>"+poluicao+"</p>";
+            document.getElementById('produto1').innerHTML += "<h5>Poluição:</h5>"+"<p>"+poluicao+" kwH</p>";
 
        }else{
         if( $('#produto2').is(':empty') ) {
@@ -149,7 +149,7 @@ if(isset($_POST["addCart"])){
                 document.getElementById('produto2').innerHTML += "<h5>"+nome+"</h5>";
                 document.getElementById('produto2').innerHTML += "<h5>Morada:</h5>" + "<a href="+linkMaps1+"class='text-decoration-none'>" + morada + "</a>";
                 document.getElementById('produto2').innerHTML += "<h5>Preço:</h5>" + "<p>"+preco+"€"+"</p>";
-                document.getElementById('produto2').innerHTML += "<h5>Poluição:</h5>"+"<p>"+poluicao+"</p>";
+                document.getElementById('produto2').innerHTML += "<h5>Poluição:</h5>"+"<p>"+poluicao+" kwH</p>";
 
             }
             

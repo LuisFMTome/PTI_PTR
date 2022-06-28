@@ -331,7 +331,7 @@ if(isset($_POST["addCart"])){
         <div class="container">
             <div class="title-box">
                 
-                <h2>Chapéus</h2>
+                <h2>Vestuário</h2>
             </div>
             <div class="row">
             <div class="col-8 card">
