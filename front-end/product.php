@@ -19,6 +19,73 @@ session_start();
             exit("Produto não existe");
         }
     }
+
+    if(isset($_POST["addCart"])){
+
+        $idTemp = $_GET["id"];
+    
+        $query = "SELECT * FROM [dbo].[Produto] WHERE pid='{$idTemp}'";
+        $result = sqlsrv_query($conn, $query);
+        if( $result === false ) {
+            die( print_r( sqlsrv_errors(), true));
+        }
+        if( sqlsrv_fetch( $result ) === false) {
+            die( print_r( sqlsrv_errors(), true));
+        }
+        $preco = sqlsrv_get_field( $result, 5);
+    
+        if(isset($_SESSION["cart"])){
+    
+            $item_array_id = array_column($_SESSION["cart"], "item_id");        
+            if(!in_array($_GET["id"], $item_array_id)){
+    
+                $count = count($_SESSION["cart"]);
+                $item_array = array(
+                    'item_id' => $_GET["id"],
+                    'item_price' => $preco
+                    //'item_price' => 12
+                );
+                $_SESSION["cart"][$count] = $item_array;
+    
+            }else{
+    
+                //echo '<script>alert("item ja no carrinho")</script>';
+                ?>
+                <script>
+                
+                    document.addEventListener("DOMContentLoaded", function(event) {
+                        
+                        Swal.fire({
+                        title: "item ja no carrinho",
+                        text: "clique ok",
+                        icon: "error", //warning
+                    });
+                    
+                    });
+            
+                </script>
+    
+                <?php
+    
+    
+            }
+    
+        }else{
+    
+            $item_array = array(
+                'item_id' => $_GET["id"],
+                'item_price' => $preco
+            );
+            $_SESSION["cart"][0] = $item_array;
+    
+        }
+        //$temp = $_SESSION["cart"][0];
+        //echo $temp;
+    }
+        
+        
+        ?>
+    
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -35,7 +102,7 @@ session_start();
     <link href="style.css" rel="stylesheet"/>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: green;">
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: green;">
     <div class="container-fluid">
         <i class="fa fa-bars" id="menu-btn" onclick="openmenu()"></i>
         <i class="fa fa-times" id="close-btn" onclick="closemenu()"></i>
@@ -60,6 +127,7 @@ session_start();
                             <?php echo $_SESSION["nome"] ?>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="background-color: green;">
+
                             <?php
                             if($_SESSION["tipo"] == "Consumidor"){
                                 echo "<li><a class=dropdown-item href=perfilUtilizador.php>Perfil</a></li>";
@@ -72,6 +140,9 @@ session_start();
                             ?>
                         </ul>
                         </li>
+                        <li class="nav-item">
+                        <a class="nav-link active" href=faq.php><i class="bi bi-question-circle"></i></a> 
+                        </li>    
         </ul>
         </div>
         <div class="d-flex collapse">
@@ -87,61 +158,57 @@ session_start();
     </div>
     </nav>
     <section class="header">
-        <div class="side-menu">
-            <ul>
-                <li>Descontos<i class="fa fa-angle-right"></i>
+        <div class="side-menu" id="side-menu">
+        <ul>
+            <a href="mercadoVestuario.php"><li>Vestuario<i class="fa fa-angle-right"></i></a>
                     <ul>
-                        <li>Sub Menu 1</li>
-                        <li>Sub Menu 1</li>
-                        <li>Sub Menu 1</li>
-                        <li>Sub Menu 1</li>
+                        <a href="mercadoVestuario51.php"><li>Chapéus<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoVestuario52.php"><li>Camisas<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoVestuario53.php"><li>Casacos<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoVestuario54.php"><li>Calças<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoVestuario55.php"><li>Sapatos<i class="fa fa-angle-right"></i></a>
                     </ul>
                 </li>
-                <li>Computadores<i class="fa fa-angle-right"></i>
+                <a href="mercadoCasa.php"><li>Casa<i class="fa fa-angle-right"></i></a>
                     <ul>
-                        <li>Sub Menu 2</li>
-                        <li>Sub Menu 2</li>
-                        <li>Sub Menu 2</li>
-                        <li>Sub Menu 2</li>
+                        <a href="mercadoCasa21.php"><li>Sala de Estar<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoCasa22.php"><li>Cozinha<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoCasa23.php"><li>Casa de Banho<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoCasa24.php"><li>Quarto<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoCasa25.php"><li>Quintal<i class="fa fa-angle-right"></i></a>
                     </ul>
                 </li>
-                <li>Telemóveis<i class="fa fa-angle-right"></i>
+                <a href="mercadoDesporto.php"><li>Desporto<i class="fa fa-angle-right"></i></a>
                     <ul>
-                        <li>Sub Menu 3</li>
-                        <li>Sub Menu 3</li>
-                        <li>Sub Menu 3</li>
-                        <li>Sub Menu 3</li>
+                        <a href="mercadoDesporto31.php"><li>Ginasio<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoDesporto32.php"><li>Futebol<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoDesporto33.php"><li>Basket<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoDesporto34.php"><li>Outdoor<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoDesporto35.php"><li>Indoor<i class="fa fa-angle-right"></i></a>
                     </ul>
                 </li>
-                <li>Livros<i class="fa fa-angle-right"></i>
+                <a href="mercadoTecnologia.php"><li>Tecnologia<i class="fa fa-angle-right"></i></a>
                     <ul>
-                        <li>Sub Menu 4</li>
-                        <li>Sub Menu 4</li>
-                        <li>Sub Menu 4</li>
-                        <li>Sub Menu 4</li>
+                        <a href="mercadoTecnologia41.php"><li>Portatéis<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoTecnologia42.php"><li>Computadores<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoTecnologia43.php"><li>Telemóveis<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoTecnologia44.php"><li>Periféricos<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoTecnologia45.php"><li>Televisões<i class="fa fa-angle-right"></i></a>
                     </ul>
                 </li>
-                <li>Jogos<i class="fa fa-angle-right"></i>
+                <a href="mercadoAlimentacao.php"><li>Alimentação<i class="fa fa-angle-right"></i></a>
                     <ul>
-                        <li>Sub Menu 5</li>
-                        <li>Sub Menu 5</li>
-                        <li>Sub Menu 5</li>
-                        <li>Sub Menu 5</li>
-                    </ul>
-                </li>
-                <li>Alimentos<i class="fa fa-angle-right"></i>
-                    <ul>
-                        <li>Sub Menu 6</li>
-                        <li>Sub Menu 6</li>
-                        <li>Sub Menu 6</li>
-                        <li>Sub Menu 6</li>
+                        <a href="mercadoAlimentacao11.php"><li>Vegetais<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoAlimentacao12.php"><li>Fruta<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoAlimentacao13.php"><li>Carne<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoAlimentacao14.php"><li>Peixe<i class="fa fa-angle-right"></i></a>
+                        <a href="mercadoAlimentacao15.php"><li>Outros<i class="fa fa-angle-right"></i></a>
                     </ul>
                 </li>
             </ul>
         </div>
         
     </section>
-
     <div class="product-top row align-items-center">
     <div class="d-flex justify-content-center container mt-5">
         <div class="card p-3 bg-white">
@@ -151,14 +218,16 @@ session_start();
                 </div>
             </div>
             <div class="stats mt-2">
-                <div class="d-flex justify-content-between p-price"><span>Poluição</span><span><?php echo $produto['poluicao']?>€</span></div>
+                <div class="d-flex justify-content-between p-price"><span>Poluição</span><span><?php echo $produto['poluicao']?> KwH</span></div>
                 
             </div>
+            <form method="post" action="mercado.php?action=add&id=<?php echo $produto['pid']; ?>">
             <div class="d-flex justify-content-between total font-weight-bold mt-4"><span>Total</span><span><?php echo $produto['preco']?>€</span></div>
-            <button type="button" class="btn btn-secondary" title="Adicionar ao Carrinho">
+            <button type="submit" name="addCart" class="btn btn-secondary" title="Adicionar ao Carrinho">
                 <i class="fa fa-shopping-cart"></i>
             </button>
         </div>
+        </form>
             
     </div>
         
